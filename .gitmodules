@@ -1,0 +1,9 @@
+[submodule "libs/Ash"]
+	path = libs/Ash
+	url = https://github.com/richardlord/Ash.git
+[submodule "libs/Starling-Framework"]
+	path = libs/Starling-Framework
+	url = https://github.com/PrimaryFeather/Starling-Framework.git
+[submodule "libs/away3d-core-fp11"]
+	path = libs/away3d-core-fp11
+	url = https://github.com/away3d/away3d-core-fp11.git
