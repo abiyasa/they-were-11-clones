@@ -1,5 +1,6 @@
 package mobi.papatong.sabelas
 {
+	import mobi.papatong.sabelas.ScreenManager;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.text.TextField;
@@ -9,7 +10,7 @@ package mobi.papatong.sabelas
 	 */
 	public class StarlingRootApplication extends Sprite
 	{
-		//private var _screenManager:ScreenManager;
+		private var _screenManager:ScreenManager;
 		
 		public function StarlingRootApplication()
 		{
