@@ -22,9 +22,9 @@ package mobi.papatong.sabelas.configs
 		{
 			var tempObject:Dictionary = new Dictionary();
 			tempObject[SCREEN_MAIN_MENU] = MainMenuScreen;
+			tempObject[SCREEN_CONFIG] = ConfigScreen;
 			/*
 			tempObject[SCREEN_PLAY_GAME] = PlayScreen;
-			tempObject[SCREEN_CONFIG] = ConfigScreen;
 			*/
 			
 			return tempObject;
