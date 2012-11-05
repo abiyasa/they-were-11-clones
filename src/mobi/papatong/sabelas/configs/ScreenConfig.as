@@ -10,6 +10,8 @@ package mobi.papatong.sabelas.configs
 	public class ScreenConfig
 	{
 		public static const SCREEN_MAIN_MENU:String = 'mainMenu';
+		public static const SCREEN_PLAY_GAME:String = 'playGame';
+		public static const SCREEN_CONFIG:String = 'config';
 		
 		/**
 		 * Gets dictionary which is a mapping between screen name and screen class

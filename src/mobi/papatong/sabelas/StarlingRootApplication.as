@@ -1,5 +1,6 @@
 package mobi.papatong.sabelas
 {
+	import mobi.papatong.sabelas.configs.ScreenConfig
 	import mobi.papatong.sabelas.ScreenManager;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -19,14 +20,8 @@ package mobi.papatong.sabelas
 		
 		private function start(event:Event):void
 		{
-			/*
 			_screenManager = new ScreenManager(this, ScreenConfig.getScreenMapping());
 			_screenManager.start(ScreenConfig.SCREEN_MAIN_MENU);
-			*/
-			var text:TextField = new TextField(this.stage.stageWidth, this.stage.stageHeight,
-				'Ohai :3', 'Tahoma, Geneva, sans-serif', 14, 0xcccccc, true);
-			text.hAlign = 'center';
-			this.addChild(text);
 		}
 	}
 }
