@@ -1,0 +1,23 @@
+package mobi.papatong.sabelas.components
+{
+	import flash.geom.Point;
+	
+	/**
+	 * Position and rotation
+	 * @author Abiyasa
+	 */
+	public class Position
+	{
+		public var position:Point;
+		public var rotation:Number = 0;
+		public var collisionRadius:int = 0;
+		
+		public function Position(x:int, y:int, rotation:Number, collisionRadius:int)
+		{
+			position = new Point(x, y);
+			this.rotation = rotation;
+			this.collisionRadius = collisionRadius;
+		}
+	}
+
+}
