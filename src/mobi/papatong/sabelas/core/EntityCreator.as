@@ -5,6 +5,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.components.GameState;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
+	import mobi.papatong.sabelas.components.SpinningMotion;
 	import mobi.papatong.sabelas.graphics.DummyQuadView;
 	import mobi.papatong.sabelas.graphics.DummySphere;
 	import net.richardlord.ash.core.Entity;
@@ -55,6 +56,7 @@ package mobi.papatong.sabelas.core
 			var dummyQuad:Entity = new Entity()
 				.add(new DummyObject())
 				.add(new Position(x, y, 0, size))
+				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Display(new DummyQuadView(size)));
 			_game.addEntity(dummyQuad);
 			
@@ -74,6 +76,7 @@ package mobi.papatong.sabelas.core
 			var dummyQuad:Entity = new Entity()
 				.add(new DummyObject())
 				.add(new Position(x, y, 0, size))
+				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Display3D(new DummySphere(size, 0x009EEF)));
 			_game.addEntity(dummyQuad);
 			

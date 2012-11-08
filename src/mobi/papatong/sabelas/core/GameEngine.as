@@ -8,6 +8,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.systems.GameManager;
 	import mobi.papatong.sabelas.systems.RenderSystem;
 	import mobi.papatong.sabelas.systems.RenderSystem3D;
+	import mobi.papatong.sabelas.systems.SpinningMotionSystem;
 	import mobi.papatong.sabelas.systems.SystemPriorities;
 	import mobi.papatong.sabelas.utils.Stage3DUtils;
 	import net.richardlord.ash.core.Entity;
@@ -64,6 +65,7 @@ package mobi.papatong.sabelas.core
 			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
 			_game.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
 				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
+			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
