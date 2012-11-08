@@ -38,8 +38,9 @@ package mobi.papatong.sabelas.systems
 			{
 				if (_dummyObjects.empty)
 				{
-					// create one dummy object on the center
+					// create dummy object on the center
 					_entityCreator.createDummyQuad(50, _config.width / 2, _config.height / 2);
+					_entityCreator.createDummySphere(50, _config.width / 2, _config.height / 2);
 				}
 			}
 		}
