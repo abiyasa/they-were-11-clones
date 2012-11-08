@@ -7,6 +7,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.configs.GameConfig;
 	import mobi.papatong.sabelas.systems.GameManager;
 	import mobi.papatong.sabelas.systems.RenderSystem;
+	import mobi.papatong.sabelas.systems.RenderSystem3D;
 	import mobi.papatong.sabelas.systems.SystemPriorities;
 	import mobi.papatong.sabelas.utils.Stage3DUtils;
 	import net.richardlord.ash.core.Entity;
@@ -57,21 +58,12 @@ package mobi.papatong.sabelas.core
 			
 			// TODO init input (keypoll)
 			
-			// get stage3d proxy for Away3D
-			var activeStaring:Starling = Starling.current;
-			_stage3dProxy = Stage3DUtils.getActiveStage3DProxy(activeStaring.nativeStage, activeStaring.stage3D);
-			if (_stage3dProxy == null)
-			{
-				trace(DEBUG_TAG + "Error! Cannot found the stage3dproxy");
-			}
-			else
-			{
-				trace(DEBUG_TAG, 'getting stage3dproxy at index=' + _stage3dProxy.stage3DIndex);
-			}
-			
 			// add systems
 			_game.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
 			_game.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
+			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
+			_game.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
+				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
