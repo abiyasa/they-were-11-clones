@@ -1,10 +1,12 @@
 package mobi.papatong.sabelas.core
 {
+	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.DummyObject;
 	import mobi.papatong.sabelas.components.GameState;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.graphics.DummyQuadView;
+	import mobi.papatong.sabelas.graphics.DummySphere;
 	import net.richardlord.ash.core.Entity;
 	import net.richardlord.ash.core.Game;
 	
@@ -58,5 +60,25 @@ package mobi.papatong.sabelas.core
 			
 			return dummyQuad;
 		}
+		
+		/**
+		 * Creates a dummy 3D sphere to test if the game system works
+		 *
+		 * @param	size sphere radius
+		 * @param	x cube position
+		 * @param	y cube position
+		 * @return
+		 */
+		public function createDummySphere(size:int, x:int, y:int):Entity
+		{
+			var dummyQuad:Entity = new Entity()
+				.add(new DummyObject())
+				.add(new Position(x, y, 0, size))
+				.add(new Display3D(new DummySphere(size, 0x009EEF)));
+			_game.addEntity(dummyQuad);
+			
+			return dummyQuad;
+		}
+		
 	}
 }
