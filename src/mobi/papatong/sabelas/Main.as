@@ -1,5 +1,6 @@
 package mobi.papatong.sabelas
 {
+	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DManager;
 	import away3d.core.managers.Stage3DProxy;
 	import away3d.events.Stage3DEvent;
@@ -7,6 +8,7 @@ package mobi.papatong.sabelas
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import mobi.papatong.sabelas.utils.Stage3DUtils;
 	import starling.core.Starling;
 	
 	[SWF(width='320', height='240', frameRate='45', backgroundColor='#FFFFFF')]
@@ -14,6 +16,7 @@ package mobi.papatong.sabelas
 	{
 		private var _starling:Starling;
 		private var _stage3dProxy:Stage3DProxy;
+		private var _view3D:View3D;
 		
 		public function Main()
 		{
@@ -44,31 +47,46 @@ package mobi.papatong.sabelas
 		{
 			// Drop down to 30 FPS for software render mode
 			var driverInfo:String = _stage3dProxy.context3D.driverInfo.toLowerCase();
+			var antiAlias:int = 4;
 			if (driverInfo.indexOf("software") != -1)
 			{
+				// low quality
 				this.stage.frameRate = 30;
-				
 				trace('dropping framerate to 30 due to software rendering');
+				
+				antiAlias = 0;
 			}
-			
-			// handle render manually
-			_stage3dProxy.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			_stage3dProxy.antiAlias = antiAlias;
 			
 			// init starling
 			_starling = new Starling(StarlingRootApplication, stage, _stage3dProxy.viewPort, _stage3dProxy.stage3D);
-			_starling.antiAliasing = 0;
+			_starling.antiAliasing = antiAlias;
 			_starling.start();
+
+			// create view3D
+			_view3D = new View3D();
+			_view3D.stage3DProxy = _stage3dProxy;
+			_view3D.shareContext = true;
+			_view3D.antiAlias = antiAlias;
+			this.addChild(_view3D);
+			
+			// store at stage3DUtils
+			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
+			stage3DUtils.currentView3D = _view3D;
+			stage3DUtils.currentStage3DProxy = _stage3dProxy;
+			
+			// handle render manually
+			_stage3dProxy.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		/**
-		 * Render stage3D context manually
+		 * Render stage3D context (Away3D and Starling) manually
 		 * @param	event
 		 */
 		private function onEnterFrame(event:Event):void
 		{
-			_stage3dProxy.clear();
+			_view3D.render();
 			_starling.nextFrame();
-			_stage3dProxy.present();
 		}
 		
 		private function deinit(event:Event):void
@@ -78,6 +96,11 @@ package mobi.papatong.sabelas
 			if (_starling != null)
 			{
 				_starling.stop();
+			}
+			
+			if (_view3D != null)
+			{
+				_view3D.dispose();
 			}
 			
 			if (_stage3dProxy != null)
