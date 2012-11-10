@@ -1,8 +1,11 @@
 package mobi.papatong.sabelas.core
 {
+	import flash.ui.Keyboard;
 	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.DummyObject;
 	import mobi.papatong.sabelas.components.GameState;
+	import mobi.papatong.sabelas.components.Motion;
+	import mobi.papatong.sabelas.components.MotionControl;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.components.SpinningMotion;
@@ -77,6 +80,8 @@ package mobi.papatong.sabelas.core
 				.add(new DummyObject())
 				.add(new Position(x, y, 0, size))
 				.add(new SpinningMotion(Math.PI * 0.5))
+				.add(new Motion(0, 0, 10))
+				.add(new MotionControl(Keyboard.UP, Keyboard.LEFT, Keyboard.RIGHT, Keyboard.DOWN, 10))
 				.add(new Display3D(new DummySphere(size, 0x009EEF)));
 			_game.addEntity(dummyQuad);
 			

@@ -7,6 +7,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.configs.GameConfig;
 	import mobi.papatong.sabelas.input.KeyPoll;
 	import mobi.papatong.sabelas.systems.GameManager;
+	import mobi.papatong.sabelas.systems.MotionControlSystem;
 	import mobi.papatong.sabelas.systems.RenderSystem;
 	import mobi.papatong.sabelas.systems.RenderSystem3D;
 	import mobi.papatong.sabelas.systems.SpinningMotionSystem;
@@ -35,7 +36,7 @@ package mobi.papatong.sabelas.core
 		private var _entityCreator:EntityCreator;
 		private var _tickProvider:TickProvider;
 		private var _gameState:GameState;
-		private var _keyPool:KeyPoll;
+		private var _keyPoll:KeyPoll;
 		
 		/**
 		 * The shared Stage3D context
@@ -60,7 +61,7 @@ package mobi.papatong.sabelas.core
 			_config.height = _container.stage.stageHeight;
 			
 			// init inputs
-			_keyPool = new KeyPoll(_container.stage);
+			_keyPoll = new KeyPoll(_container.stage);
 			
 			// add systems
 			_game.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
@@ -69,6 +70,7 @@ package mobi.papatong.sabelas.core
 			_game.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
 				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
 			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
+			_game.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
@@ -80,12 +82,12 @@ package mobi.papatong.sabelas.core
 			_game.removeAllEntities();
 			_game.removeAllSystems();
 			
-			_keyPool.destroy();
+			_keyPoll.destroy();
 		}
 		
 		public function start():void
 		{
-			_keyPool.reset();
+			_keyPoll.reset();
 			
 			_tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
 			_tickProvider.add(_game.update);
