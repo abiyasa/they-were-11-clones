@@ -5,9 +5,9 @@
     <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\they-were-11-clones.swf" />
-    <movie fps="30" />
-    <movie width="320" />
-    <movie height="240" />
+    <movie fps="45" />
+    <movie width="640" />
+    <movie height="480" />
     <movie version="11" />
     <movie minorVersion="3" />
     <movie platform="Flash Player" />
