@@ -34,8 +34,8 @@ package mobi.papatong.sabelas.systems
 			// init camera
 			// TODO should be configurable from external parameter
 			var camera:Camera3D = _view3D.camera;
-			camera.z = -500;
-			camera.y = 500;
+			camera.z = -1000;
+			camera.y = 1000;
 			camera.x = 0;
 			camera.lookAt(new Vector3D(0, 0, 0));
 			
