@@ -61,6 +61,7 @@ package mobi.papatong.sabelas
 			// init starling
 			_starling = new Starling(StarlingRootApplication, stage, _stage3dProxy.viewPort, _stage3dProxy.stage3D);
 			_starling.antiAliasing = antiAlias;
+			_starling.showStats = true;
 			_starling.start();
 
 			// create view3D
