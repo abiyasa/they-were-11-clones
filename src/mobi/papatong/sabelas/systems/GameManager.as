@@ -43,7 +43,7 @@ package mobi.papatong.sabelas.systems
 					_entityCreator.createDummyQuad(30, _config.width / 2, 30);
 					
 					// TODO load game characters
-					_entityCreator.createDummySphere(50, 0, 0);
+					_entityCreator.createBlockyPeople(0, 0);
 				}
 			}
 		}

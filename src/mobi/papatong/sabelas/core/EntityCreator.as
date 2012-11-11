@@ -9,6 +9,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.components.SpinningMotion;
+	import mobi.papatong.sabelas.graphics.BlockyPeople;
 	import mobi.papatong.sabelas.graphics.DummyQuadView;
 	import mobi.papatong.sabelas.graphics.DummySphere;
 	import net.richardlord.ash.core.Entity;
@@ -86,6 +87,26 @@ package mobi.papatong.sabelas.core
 			_game.addEntity(dummyQuad);
 			
 			return dummyQuad;
+		}
+
+		/**
+		 * Creates a block people, controllable by player
+		 *
+		 * @param	x position
+		 * @param	y position
+		 * @return
+		 */
+		public function createBlockyPeople(x:int, y:int):Entity
+		{
+			var blockyPeople:Entity = new Entity()
+				.add(new DummyObject())
+				.add(new Position(x, y, 0, 50))
+				.add(new Motion(0, 0, 200))
+				.add(new MotionControl(Keyboard.UP, Keyboard.LEFT, Keyboard.RIGHT, Keyboard.DOWN, 200))
+				.add(new Display3D(new BlockyPeople(100, 200, 100, 0x009EEF)));
+			_game.addEntity(blockyPeople);
+			
+			return blockyPeople;
 		}
 		
 	}
