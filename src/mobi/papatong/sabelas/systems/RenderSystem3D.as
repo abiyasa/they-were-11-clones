@@ -1,9 +1,11 @@
 package mobi.papatong.sabelas.systems
 {
+	import away3d.cameras.Camera3D;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DProxy;
+	import flash.geom.Vector3D;
 	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.nodes.RenderNode3D;
@@ -31,9 +33,11 @@ package mobi.papatong.sabelas.systems
 			
 			// init camera
 			// TODO should be configurable from external parameter
-			_view3D.camera.z = -240;
-			_view3D.camera.y = stage3dProxy.viewPort.height / 2;
-			_view3D.camera.x = stage3dProxy.viewPort.width / 2;
+			var camera:Camera3D = _view3D.camera;
+			camera.z = -500;
+			camera.y = 500;
+			camera.x = 0;
+			camera.lookAt(new Vector3D(0, 0, 0));
 			
 			nodes = game.getNodeList(RenderNode3D);
 			for(var node:RenderNode3D = nodes.head; node; node = node.next)
@@ -67,8 +71,8 @@ package mobi.papatong.sabelas.systems
 				position = node.position;
 				
 				object3D.x = position.position.x;
-				object3D.y = position.position.y;
-				object3D.rotationZ = position.rotation * 180 / Math.PI;
+				object3D.z = position.position.y;
+				object3D.rotationY = position.rotation * 180 / Math.PI;
 			}
 		}
 

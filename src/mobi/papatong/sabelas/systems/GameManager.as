@@ -36,15 +36,14 @@ package mobi.papatong.sabelas.systems
 			var node:GameStateNode;
 			for (node = _gameStateNodes.head; node; node = node.next)
 			{
-				// TODO check game state
-				
+				// TODO use game state instead of _gameObjects list
 				if (_gameObjects.empty)
 				{
 					// create dummy HUD item on the top middle
 					_entityCreator.createDummyQuad(30, _config.width / 2, 30);
 					
 					// TODO load game characters
-					_entityCreator.createDummySphere(50, _config.width / 2, _config.height / 2);
+					_entityCreator.createDummySphere(50, 0, 0);
 				}
 			}
 		}
