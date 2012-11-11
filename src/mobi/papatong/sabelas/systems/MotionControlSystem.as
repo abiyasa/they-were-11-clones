@@ -32,15 +32,11 @@ package mobi.papatong.sabelas.systems
 			// horizontal movement
 			if (_keyPoll.isDown(control.keyMoveLeft))
 			{
-				trace('move left');
-				
 				// TODO rotate object facing left
 				motion.velocity.x = -motion.maxSpeed;
 			}
 			else if (_keyPoll.isDown(control.keyMoveRight))
 			{
-				trace('move right');
-				
 				// TODO rotate object facing right
 				motion.velocity.x = motion.maxSpeed;
 			}
@@ -52,15 +48,11 @@ package mobi.papatong.sabelas.systems
 			// vertical movement
 			if (_keyPoll.isDown(control.keyMoveUp))
 			{
-				trace('move up');
-				
 				// TODO rotate object facing up
 				motion.velocity.y = motion.maxSpeed;
 			}
 			else if (_keyPoll.isDown(control.keyMoveDown))
 			{
-				trace('move down');
-				
 				// TODO rotate object facing down
 				motion.velocity.y = -motion.maxSpeed;
 			}

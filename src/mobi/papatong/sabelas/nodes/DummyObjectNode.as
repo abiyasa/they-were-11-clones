@@ -5,7 +5,7 @@ package mobi.papatong.sabelas.nodes
 	import mobi.papatong.sabelas.components.Position;
 
 	/**
-	 * Node for dummy objects.
+	 * Node for dummy objects, object which cannot move
 	 */
 	public class DummyObjectNode extends Node
 	{
