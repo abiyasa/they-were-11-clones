@@ -33,12 +33,12 @@ package mobi.papatong.sabelas.systems
 			if (_keyPoll.isDown(control.keyMoveLeft))
 			{
 				// TODO rotate object facing left
-				motion.velocity.x = -motion.maxSpeed;
+				motion.velocity.x = -motion.maxSpeed * time;
 			}
 			else if (_keyPoll.isDown(control.keyMoveRight))
 			{
 				// TODO rotate object facing right
-				motion.velocity.x = motion.maxSpeed;
+				motion.velocity.x = motion.maxSpeed * time;
 			}
 			else
 			{
@@ -49,12 +49,12 @@ package mobi.papatong.sabelas.systems
 			if (_keyPoll.isDown(control.keyMoveUp))
 			{
 				// TODO rotate object facing up
-				motion.velocity.y = motion.maxSpeed;
+				motion.velocity.y = motion.maxSpeed * time;
 			}
 			else if (_keyPoll.isDown(control.keyMoveDown))
 			{
 				// TODO rotate object facing down
-				motion.velocity.y = -motion.maxSpeed;
+				motion.velocity.y = -motion.maxSpeed * time;
 			}
 			else
 			{
