@@ -7,14 +7,13 @@ package mobi.papatong.sabelas.nodes
 	
 	/**
 	 * Node for motion control, able to update object
-	 * position using motion data and input control data
+	 * motion data based on the current input control data
 	 *
 	 * @author Abiyasa
 	 */
 	public class MotionControlNode extends Node
 	{
 		public var control:MotionControl;
-		public var position:Position;
 		public var motion:Motion;
 	}
 
