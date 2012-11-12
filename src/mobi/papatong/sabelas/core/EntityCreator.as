@@ -82,7 +82,7 @@ package mobi.papatong.sabelas.core
 				.add(new Position(x, y, 0, size))
 				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Motion(0, 0, 10))
-				.add(new MotionControl(Keyboard.UP, Keyboard.LEFT, Keyboard.RIGHT, Keyboard.DOWN, 10))
+				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 				.add(new Display3D(new DummySphere(size, 0x009EEF)));
 			_game.addEntity(dummyQuad);
 			
@@ -102,8 +102,8 @@ package mobi.papatong.sabelas.core
 				.add(new DummyObject())
 				.add(new Position(x, y, 0, 50))
 				.add(new Motion(0, 0, 200))
-				.add(new MotionControl(Keyboard.UP, Keyboard.LEFT, Keyboard.RIGHT, Keyboard.DOWN, 200))
-				.add(new Display3D(new BlockyPeople(100, 200, 100, 0x009EEF)));
+				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
+				.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
 			_game.addEntity(blockyPeople);
 			
 			return blockyPeople;
