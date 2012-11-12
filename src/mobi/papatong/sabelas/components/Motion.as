@@ -8,13 +8,18 @@ package mobi.papatong.sabelas.components
 	 */
 	public class Motion
 	{
-		public var velocity:Point = new Point();
+		// movement angle, in radian. 0 means moving 'up'
+		public var angle:Number;
+		
+		// current speed, moving towards the direction defined in angle
+		public var speed:Number;
+		
 		public var maxSpeed:Number;
 		
-		public function Motion(speedX:Number, speedY:Number, maxSpeed:Number)
+		public function Motion(angle:Number, speed:Number, maxSpeed:Number)
 		{
-			velocity.x = speedX;
-			velocity.y = speedY;
+			this.angle = angle;
+			this.speed = speed;
 			this.maxSpeed = maxSpeed;
 		}
 	}
