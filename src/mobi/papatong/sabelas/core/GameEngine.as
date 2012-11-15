@@ -9,6 +9,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.systems.GameManager;
 	import mobi.papatong.sabelas.systems.MotionControlSystem;
 	import mobi.papatong.sabelas.systems.MotionSystem;
+	import mobi.papatong.sabelas.systems.MouseMotionControlSystem;
 	import mobi.papatong.sabelas.systems.RenderSystem;
 	import mobi.papatong.sabelas.systems.RenderSystem3D;
 	import mobi.papatong.sabelas.systems.SpinningMotionSystem;
@@ -73,6 +74,7 @@ package mobi.papatong.sabelas.core
 			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
+			_game.addSystem(new MouseMotionControlSystem(_container.stage), SystemPriorities.UPDATE);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();

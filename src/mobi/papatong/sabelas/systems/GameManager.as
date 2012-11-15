@@ -44,6 +44,7 @@ package mobi.papatong.sabelas.systems
 					
 					// TODO load game characters
 					_entityCreator.createBlockyPeople(0, 0);
+					//_entityCreator.createBlockyPeople(100, 100);
 				}
 			}
 		}

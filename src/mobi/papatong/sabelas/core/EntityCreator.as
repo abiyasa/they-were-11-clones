@@ -6,6 +6,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.components.GameState;
 	import mobi.papatong.sabelas.components.Motion;
 	import mobi.papatong.sabelas.components.MotionControl;
+	import mobi.papatong.sabelas.components.MouseControl;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.components.SpinningMotion;
@@ -103,6 +104,7 @@ package mobi.papatong.sabelas.core
 				.add(new Position(x, y, 0, 50))
 				.add(new Motion(0, 0, 200))
 				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
+				.add(new MouseControl())
 				.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
 			_game.addEntity(blockyPeople);
 			
