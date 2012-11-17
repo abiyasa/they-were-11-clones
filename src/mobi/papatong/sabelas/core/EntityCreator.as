@@ -1,6 +1,7 @@
 package mobi.papatong.sabelas.core
 {
 	import flash.ui.Keyboard;
+	import mobi.papatong.sabelas.components.Collision;
 	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.DummyObject;
 	import mobi.papatong.sabelas.components.GameState;
@@ -64,7 +65,7 @@ package mobi.papatong.sabelas.core
 		{
 			var dummyQuad:Entity = new Entity()
 				.add(new DummyObject())
-				.add(new Position(x, y, 0, size))
+				.add(new Position(x, y, 0))
 				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Display(new DummyQuadView(size)));
 			_game.addEntity(dummyQuad);
@@ -84,7 +85,8 @@ package mobi.papatong.sabelas.core
 		{
 			var dummyQuad:Entity = new Entity()
 				.add(new DummyObject())
-				.add(new Position(x, y, 0, size))
+				.add(new Position(x, y, 0))
+				.add(new Collision(size))
 				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Motion(0, 0, 10))
 				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
@@ -106,7 +108,7 @@ package mobi.papatong.sabelas.core
 		{
 			var blockyPeople:Entity = new Entity()
 				.add(new DummyObject())
-				.add(new Position(x, y, 0, 50));
+				.add(new Position(x, y, 0));
 				
 			switch (peopleCode)
 			{
@@ -115,6 +117,7 @@ package mobi.papatong.sabelas.core
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new MouseControl())
 					.add(new Motion(0, 0, 200))
+					.add(new Collision(50))
 					.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
 				break;
 			
@@ -122,6 +125,7 @@ package mobi.papatong.sabelas.core
 			default:
 				blockyPeople
 					.add(new Motion(0, 0, 200))
+					.add(new Collision(50))
 					.add(new Display3D(new BlockyPeople(100, 200, 80, 0xff8080)));
 				break;
 			}

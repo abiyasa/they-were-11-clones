@@ -12,11 +12,10 @@ package mobi.papatong.sabelas.components
 		public var rotation:Number = 0;
 		public var collisionRadius:int = 0;
 		
-		public function Position(x:int, y:int, rotation:Number, collisionRadius:int)
+		public function Position(x:int, y:int, rotation:Number)
 		{
 			position = new Point(x, y);
 			this.rotation = rotation;
-			this.collisionRadius = collisionRadius;
 		}
 	}
 
