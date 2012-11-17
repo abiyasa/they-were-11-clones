@@ -1,6 +1,9 @@
 package mobi.papatong.sabelas.systems
 {
+	import away3d.containers.View3D;
+	import away3d.tools.utils.Drag3D;
 	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.MouseControl;
 	import mobi.papatong.sabelas.nodes.MouseControlNode;
@@ -19,15 +22,17 @@ package mobi.papatong.sabelas.systems
 	public class MouseMotionControlSystem extends ListIteratingSystem
 	{
 		private var _container:DisplayObjectContainer;
-		private var _lastPosX:int;
-		private var _lastPosY:int;
+		private var _lastPosX:Number;
+		private var _lastPosY:Number;
+		private var _drag3D:Drag3D;
 		
-		public function MouseMotionControlSystem(container:DisplayObjectContainer)
+		public function MouseMotionControlSystem(container:DisplayObjectContainer, view3D:View3D)
 		{
 			super(MouseControlNode, updateNode);
 			
 			_container = container;
 			_container.addEventListener(TouchEvent.TOUCH, onTouch);
+			_drag3D = new Drag3D(view3D, null, Drag3D.PLANE_XZ);
 			_lastPosX = _container.stage.stageWidth / 2;
 			_lastPosY = 0;
 		}
@@ -65,14 +70,14 @@ package mobi.papatong.sabelas.systems
 		
 		private function updateNode(node:MouseControlNode, time:Number):void
 		{
-			// facing the last stored mouse position
-			// TODO node position is 3D position, convert between 3d n 2d
-			var position:Position = node.position;
-			var distX:Number = _lastPosX - position.position.x;
-			var distY:Number = _lastPosY - position.position.y;
-			position.rotation = Math.atan2(distY, distX);
+			// project mouse pos to plane XZ
+			var pos3d:Vector3D = _drag3D.getIntersect(_lastPosX, _lastPosY);
 			
-			//trace('facing to ' + position.rotation);
+			// rotate position, make it facing the last stored mouse position
+			var position:Position = node.position;
+			var positionPoint:Point = position.position;
+			position.rotation = Math.atan2(pos3d.x - positionPoint.x,
+				pos3d.z - positionPoint.y);
 		}
 	}
 

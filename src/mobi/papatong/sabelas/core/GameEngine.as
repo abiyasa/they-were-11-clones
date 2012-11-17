@@ -74,7 +74,8 @@ package mobi.papatong.sabelas.core
 			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
-			_game.addSystem(new MouseMotionControlSystem(_container.stage), SystemPriorities.UPDATE);
+			_game.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
+				SystemPriorities.UPDATE);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
