@@ -38,7 +38,6 @@ package mobi.papatong.sabelas
 				_stage3dProxy = stage3dManager.getFreeStage3DProxy();
 				_stage3dProxy.antiAlias = 4;
 				_stage3dProxy.color = 0xFFFFFF;
-				_stage3dProxy.enableDepthAndStencil = false;
 				_stage3dProxy.addEventListener(Stage3DEvent.CONTEXT3D_CREATED, onContextCreated);
 			}
 		}
