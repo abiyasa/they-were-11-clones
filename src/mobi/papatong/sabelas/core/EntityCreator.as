@@ -25,6 +25,10 @@ package mobi.papatong.sabelas.core
 	{
 		private var _game:Game;
 		
+		public static const PEOPLE_DUMMY:int = 0;
+		public static const PEOPLE_ENEMY:int = 10;
+		public static const PEOPLE_HERO:int = 20;
+		
 		public function EntityCreator(game:Game)
 		{
 			_game = game;
@@ -95,17 +99,32 @@ package mobi.papatong.sabelas.core
 		 *
 		 * @param	x position
 		 * @param	y position
+		 * @param	peopleCode Determine enemy or hero
 		 * @return
 		 */
-		public function createBlockyPeople(x:int, y:int):Entity
+		public function createBlockyPeople(x:int, y:int, peopleCode:int):Entity
 		{
 			var blockyPeople:Entity = new Entity()
 				.add(new DummyObject())
-				.add(new Position(x, y, 0, 50))
-				.add(new Motion(0, 0, 200))
-				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
-				.add(new MouseControl())
-				.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
+				.add(new Position(x, y, 0, 50));
+				
+			switch (peopleCode)
+			{
+			case PEOPLE_HERO:
+				blockyPeople
+					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
+					.add(new MouseControl())
+					.add(new Motion(0, 0, 200))
+					.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
+				break;
+			
+			case PEOPLE_ENEMY:
+			default:
+				blockyPeople
+					.add(new Motion(0, 0, 200))
+					.add(new Display3D(new BlockyPeople(100, 200, 80, 0xff8080)));
+				break;
+			}
 			_game.addEntity(blockyPeople);
 			
 			return blockyPeople;
