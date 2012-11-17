@@ -43,7 +43,11 @@ package mobi.papatong.sabelas.systems
 					_entityCreator.createDummyQuad(30, _config.width / 2, 30);
 					
 					// TODO load game characters
-					_entityCreator.createBlockyPeople(0, 0, EntityCreator.PEOPLE_HERO);
+					_entityCreator.createBlockyPeople(0, -200, EntityCreator.PEOPLE_HERO);
+					_entityCreator.createBlockyPeople(400, -200, EntityCreator.PEOPLE_HERO);
+					_entityCreator.createBlockyPeople(0, -400, EntityCreator.PEOPLE_HERO);
+					_entityCreator.createBlockyPeople(200, -400, EntityCreator.PEOPLE_HERO);
+					_entityCreator.createBlockyPeople(400, -400, EntityCreator.PEOPLE_HERO);
 					
 					// add enemies
 					_entityCreator.createBlockyPeople(200, 200, EntityCreator.PEOPLE_ENEMY);
