@@ -8,7 +8,10 @@ package mobi.papatong.sabelas.systems
 	import net.richardlord.ash.core.System;
 	
 	/**
-	 * System for managing collistion between objects
+	 * System for managing collistion between objects.
+	 * This will check if a moving object is colliding with other objects
+	 * If a collision happens, the moving object will not move.
+	 *
 	 * @author Abiyasa
 	 */
 	public class CollisionSystem extends System
@@ -26,34 +29,53 @@ package mobi.papatong.sabelas.systems
 			_movingObjects = game.getNodeList(CollisionNode);
 		}
 		
-		override public function update( time : Number ) : void
+		override public function update(time:Number):void
 		{
 			var sourceRadius:Number;
+			var sourceSpeed:Number;
 			var sourcePosition:Point;
 			var movingObjectTarget:CollisionNode;
 			var movingObjectSource:CollisionNode;
 			for (movingObjectSource = _movingObjects.head; movingObjectSource; movingObjectSource = movingObjectSource.next)
 			{
-				sourceRadius = movingObjectSource.collision.radius;
-				sourcePosition = movingObjectSource.position.position;
+				sourceSpeed = movingObjectSource.motion.speed;
+				if ((sourceSpeed < 0.01) && (sourceSpeed > -0.01))
+				{
+					// skipping none moving object
+					continue;
+				}
+				sourceSpeed = sourceSpeed * time;
+
+				// caculate next position
+				var angle:Number = movingObjectSource.motion.angle;
+				sourcePosition = movingObjectSource.position.position.clone();
+				sourcePosition.x += Math.sin(angle) * sourceSpeed;
+				sourcePosition.y += Math.cos(angle) * sourceSpeed;
 				
+				// check collision with the rest
+				sourceRadius = movingObjectSource.collision.radius;
 				movingObjectTarget = movingObjectSource.next;
 				while (movingObjectTarget != null)
 				{
 					if (Point.distance(sourcePosition, movingObjectTarget.position.position) <=
 						(sourceRadius + movingObjectTarget.collision.radius))
 					{
-						// TODO handle collision!
-						trace('collision happen');
+						// collision happens, prevent moving
+						movingObjectSource.motion.speed = 0;
+						
+						// stop checking, skip the rest since the source object will stop to move
+						movingObjectTarget = null;
 					}
-					
-					// next to compare
-					movingObjectTarget = movingObjectTarget.next;
+					else  // no collision yet
+					{
+						// next to compare
+						movingObjectTarget = movingObjectTarget.next;
+					}
 				}
 			}
 		}
 
-		override public function removeFromGame( game : Game ) : void
+		override public function removeFromGame(game:Game):void
 		{
 			_movingObjects = null;
 		}
