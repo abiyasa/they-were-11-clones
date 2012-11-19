@@ -26,6 +26,12 @@ package mobi.papatong.sabelas.core
 	{
 		private var _game:Game;
 		
+		// list of heroes
+		private var _heroGroup:Array = [];
+
+		// list of enemies
+		private var _enemyGroup:Array = [];
+	
 		public static const PEOPLE_DUMMY:int = 0;
 		public static const PEOPLE_ENEMY:int = 10;
 		public static const PEOPLE_HERO:int = 20;
@@ -33,6 +39,8 @@ package mobi.papatong.sabelas.core
 		public function EntityCreator(game:Game)
 		{
 			_game = game;
+			
+			_heroGroup = [];
 		}
 		
 		public function destroyEntity(entity:Entity):void
@@ -119,6 +127,9 @@ package mobi.papatong.sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
+					
+					// TODO re-arrange the hero group
+					_heroGroup.push(blockyPeople);
 				break;
 			
 			case PEOPLE_ENEMY:
@@ -127,8 +138,11 @@ package mobi.papatong.sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(new BlockyPeople(100, 200, 80, 0xff8080)));
+					
+				_enemyGroup.push(blockyPeople);
 				break;
 			}
+			
 			_game.addEntity(blockyPeople);
 			
 			return blockyPeople;
