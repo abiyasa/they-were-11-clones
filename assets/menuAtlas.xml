@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:1f3adfe4749c55e8a1975d8dc53aaf24$ -->
+<TextureAtlas imagePath="menuAtlas.png">
+    <SubTexture name="bg" x="2" y="207" width="640" height="480"/>
+    <SubTexture name="button_about" x="145" y="2" width="148" height="50" frameX="-2" frameY="0" frameWidth="150" frameHeight="50"/>
+    <SubTexture name="button_start" x="2" y="2" width="141" height="50"/>
+    <SubTexture name="title" x="295" y="2" width="385" height="203"/>
+</TextureAtlas>
