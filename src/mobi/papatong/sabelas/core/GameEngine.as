@@ -98,7 +98,6 @@ package mobi.papatong.sabelas.core
 			
 			_tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
 			_tickProvider.add(_game.update);
-			_tickProvider.add(frameTick);
 			_tickProvider.start();
 		}
 		
@@ -108,26 +107,6 @@ package mobi.papatong.sabelas.core
 			_tickProvider.remove(_game.update);
 
 			destroy();
-		}
-		
-		/**
-		 * For controlling frame loop
-		 * @param	time
-		 */
-		public function frameTick(time:Number):void
-		{
-			// TODO Is there any better way to notify game over?
-			// 	Maybe use GameManager?
-			/*
-			switch (_gameState.status)
-			{
-			case GameState.STATUS_GAME_OVER:
-				tickProvider.stop();
-				
-				container.dispatchEvent(new AsteroidsEvent(AsteroidsEvent.GAME_OVER));
-				break;
-			}
-			*/
 		}
 	}
 

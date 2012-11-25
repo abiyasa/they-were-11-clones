@@ -4,6 +4,7 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.core.EntityCreator;
 	import mobi.papatong.sabelas.nodes.DummyObjectNode;
 	import mobi.papatong.sabelas.nodes.GameStateNode;
+	import mobi.papatong.sabelas.components.GameState;
 	import net.richardlord.ash.core.Game;
 	import net.richardlord.ash.core.NodeList;
 	import net.richardlord.ash.core.System;
@@ -34,11 +35,13 @@ package mobi.papatong.sabelas.systems
 		override public function update(time:Number):void
 		{
 			var node:GameStateNode;
+			var gameState:GameState;
 			for (node = _gameStateNodes.head; node; node = node.next)
 			{
-				// TODO use game state instead of _gameObjects list
-				if (_gameObjects.empty)
+				gameState = node.gameState;
+				switch (gameState.state)
 				{
+				case GameState.STATE_INIT:
 					// create dummy HUD item on the top middle
 					_entityCreator.createDummyQuad(30, _config.width / 2, 30);
 					
@@ -53,6 +56,9 @@ package mobi.papatong.sabelas.systems
 					_entityCreator.createBlockyPeople(200, 200, EntityCreator.PEOPLE_ENEMY);
 					_entityCreator.createBlockyPeople(200, 400, EntityCreator.PEOPLE_ENEMY);
 					_entityCreator.createBlockyPeople(200, 600, EntityCreator.PEOPLE_ENEMY);
+					
+					gameState.state = GameState.STATE_PLAY;
+					break;
 				}
 			}
 		}
