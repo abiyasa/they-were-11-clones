@@ -6,11 +6,14 @@ package mobi.papatong.sabelas.graphics
 	import away3d.events.LoaderEvent;
 	import away3d.loaders.Loader3D;
 	import away3d.loaders.misc.AssetLoaderContext;
+	import away3d.materials.MaterialBase;
 	import away3d.materials.TextureMaterial;
 	import away3d.textures.BitmapTexture;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.geom.ColorTransform;
 	
 	/**
 	 * Factory and manager 3D assets.
@@ -28,7 +31,7 @@ package mobi.papatong.sabelas.graphics
 		[Embed(source="../../../../../assets/blocky.obj", mimeType="application/octet-stream")]
 		private static const BlockyMesh:Class;
 		
-		private var _blockyTexture:TextureMaterial;
+		private var _blockyTextures:Array = [];
 		
 		private var _blockyMesh:Mesh;
 		
@@ -46,9 +49,18 @@ package mobi.papatong.sabelas.graphics
 		 */
 		public function init(options:Object = null):void
 		{
-			// create texture
-			var theBitmap:Bitmap = Bitmap(new BlockyTexture());
-			_blockyTexture = new TextureMaterial(new BitmapTexture(theBitmap.bitmapData));
+			// create bitmap texture
+			var textureBitmapData:BitmapData = Bitmap(new BlockyTexture()).bitmapData;
+			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
+			
+			// create textures
+			_blockyTextures = [];
+			var tempTexture:TextureMaterial;
+			tempTexture = new TextureMaterial(bitmapTexture);
+			_blockyTextures.push(tempTexture);
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
+			_blockyTextures.push(tempTexture);
 			
 			loadMesh();
 		}
@@ -61,10 +73,11 @@ package mobi.papatong.sabelas.graphics
 				_blockyMesh = null;
 			}
 			
-			if (_blockyTexture != null)
+			var temp:MaterialBase;
+			while (_blockyTextures.length > 0)
 			{
-				_blockyTexture.dispose();
-				_blockyTexture = null;
+				temp = _blockyTextures.pop() as MaterialBase;
+				temp.dispose();
 			}
 		}
 		
@@ -93,7 +106,7 @@ package mobi.papatong.sabelas.graphics
 			if (numOfMeshes > 0)
 			{
 				mesh = Mesh(loadedGroup.getChildAt(0));
-				mesh.material = _blockyTexture;
+				mesh.material = _blockyTextures[0] as MaterialBase;
 			}
 			else
 			{
@@ -113,10 +126,24 @@ package mobi.papatong.sabelas.graphics
 		 */
 		public function createBlockyPeople(config:Object = null):ObjectContainer3D
 		{
+			if (config == null)
+			{
+				config = {};
+			}
+			
 			var tempResult:ObjectContainer3D = new ObjectContainer3D();
 			if (_blockyMesh != null)
 			{
-				tempResult.addChild(Mesh(_blockyMesh.clone()));
+				var mesh:Mesh = Mesh(_blockyMesh.clone());
+				tempResult.addChild(mesh);
+				
+				// colorize
+				var type:int = int(config.type);
+				if (type == 1)
+				{
+					// colorize enemy
+					mesh.material = _blockyTextures[1] as MaterialBase;
+				}
 			}
 			return tempResult;
 		}

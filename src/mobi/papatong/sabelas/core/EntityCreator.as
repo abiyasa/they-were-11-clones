@@ -165,7 +165,7 @@ package mobi.papatong.sabelas.core
 					.add(new MouseControl())
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(_assetManager.createBlockyPeople()));
+					.add(new Display3D(_assetManager.createBlockyPeople({ type : 0 })));
 					
 					// TODO re-arrange the hero group
 					_heroGroup.push(blockyPeople);
@@ -176,7 +176,7 @@ package mobi.papatong.sabelas.core
 				blockyPeople
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(new BlockyPeople(100, 200, 80, 0xff8080)));
+					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 					
 				_enemyGroup.push(blockyPeople);
 				break;
