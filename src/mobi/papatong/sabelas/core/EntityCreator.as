@@ -1,5 +1,8 @@
 package mobi.papatong.sabelas.core
 {
+	import away3d.containers.ObjectContainer3D;
+	import flash.events.EventDispatcher;
+	import flash.events.Event;
 	import flash.ui.Keyboard;
 	import mobi.papatong.sabelas.components.Collision;
 	import mobi.papatong.sabelas.components.Display3D;
@@ -11,6 +14,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.components.SpinningMotion;
+	import mobi.papatong.sabelas.graphics.AssetManager;
 	import mobi.papatong.sabelas.graphics.BlockyPeople;
 	import mobi.papatong.sabelas.graphics.DummyQuadView;
 	import mobi.papatong.sabelas.graphics.DummySphere;
@@ -22,7 +26,7 @@ package mobi.papatong.sabelas.core
 	 *
 	 * @author Abiyasa
 	 */
-	public class EntityCreator
+	public class EntityCreator extends EventDispatcher
 	{
 		private var _game:Game;
 		
@@ -32,6 +36,13 @@ package mobi.papatong.sabelas.core
 		// list of enemies
 		private var _enemyGroup:Array = [];
 	
+		// for loading 3D assets
+		private var _assetManager:AssetManager;
+		
+		// flag to indicate assets has been loaded
+		private var _assetsLoaded:Boolean;
+		public function get assetsLoaded():Boolean { return _assetsLoaded; }
+		
 		public static const PEOPLE_DUMMY:int = 0;
 		public static const PEOPLE_ENEMY:int = 10;
 		public static const PEOPLE_HERO:int = 20;
@@ -41,6 +52,34 @@ package mobi.papatong.sabelas.core
 			_game = game;
 			
 			_heroGroup = [];
+		}
+		
+		/**
+		 * Init entity creator before use.
+		 * Will dispatch event Event.COMPLETE
+		 */
+		public function initAssets():void
+		{
+			_assetsLoaded = false;
+			_assetManager = new AssetManager();
+			_assetManager.addEventListener(Event.COMPLETE, onCompleteAssets, false, 0, true);
+			_assetManager.init();
+		}
+		
+		protected function onCompleteAssets(event:Event):void
+		{
+			_assetManager.removeEventListener(Event.COMPLETE, onCompleteAssets);
+			_assetsLoaded = true;
+			
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
+		public function destroy():void
+		{
+			if (_assetManager != null)
+			{
+				_assetManager.destroy();
+			}
 		}
 		
 		public function destroyEntity(entity:Entity):void
@@ -126,7 +165,7 @@ package mobi.papatong.sabelas.core
 					.add(new MouseControl())
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(new BlockyPeople(100, 200, 80, 0x009EEF)));
+					.add(new Display3D(_assetManager.createBlockyPeople()));
 					
 					// TODO re-arrange the hero group
 					_heroGroup.push(blockyPeople);

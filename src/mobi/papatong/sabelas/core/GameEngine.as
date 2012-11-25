@@ -90,6 +90,8 @@ package mobi.papatong.sabelas.core
 			_game.removeAllSystems();
 			
 			_keyPoll.destroy();
+			
+			_entityCreator.destroy();
 		}
 		
 		public function start():void
