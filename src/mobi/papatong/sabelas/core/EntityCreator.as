@@ -7,6 +7,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.components.Collision;
 	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.GameState;
+	import mobi.papatong.sabelas.components.HeroClone;
 	import mobi.papatong.sabelas.components.Motion;
 	import mobi.papatong.sabelas.components.MotionControl;
 	import mobi.papatong.sabelas.components.MouseControl;
@@ -29,9 +30,6 @@ package mobi.papatong.sabelas.core
 	{
 		private var _game:Game;
 		
-		// list of heroes
-		private var _heroGroup:Array = [];
-
 		// list of enemies
 		private var _enemyGroup:Array = [];
 	
@@ -45,12 +43,11 @@ package mobi.papatong.sabelas.core
 		public static const PEOPLE_DUMMY:int = 0;
 		public static const PEOPLE_ENEMY:int = 10;
 		public static const PEOPLE_HERO:int = 20;
+		public static const PEOPLE_HERO_LEADER:int = 21;
 		
 		public function EntityCreator(game:Game)
 		{
 			_game = game;
-			
-			_heroGroup = [];
 		}
 		
 		/**
@@ -156,15 +153,17 @@ package mobi.papatong.sabelas.core
 			switch (peopleCode)
 			{
 			case PEOPLE_HERO:
+			case PEOPLE_HERO_LEADER:
+				var isLeader:Boolean = peopleCode == PEOPLE_HERO_LEADER;
 				blockyPeople
+					.add(new HeroClone(isLeader))
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new MouseControl())
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(_assetManager.createBlockyPeople({ type : 0 })));
-					
-					// TODO re-arrange the hero group
-					_heroGroup.push(blockyPeople);
+					.add(new Display3D(_assetManager.createBlockyPeople({
+						type : isLeader ? 0 : 1
+					})));
 				break;
 			
 			case PEOPLE_ENEMY:
@@ -172,7 +171,7 @@ package mobi.papatong.sabelas.core
 				blockyPeople
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
+					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
 					
 				_enemyGroup.push(blockyPeople);
 				break;

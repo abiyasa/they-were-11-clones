@@ -56,13 +56,13 @@ package mobi.papatong.sabelas.systems
 				case GameState.STATE_LOADING:
 					trace('GameState.STATE_LOADING');
 					
-					// TODO check if we're done loading
+					// check if we're done loading
 					if (_entityCreator.assetsLoaded)
 					{
 						trace('assets has been loaded');
 						
-						// TODO load game characters
-						_entityCreator.createBlockyPeople(0, -200, EntityCreator.PEOPLE_HERO);
+						// add game characters
+						_entityCreator.createBlockyPeople(0, -200, EntityCreator.PEOPLE_HERO_LEADER);
 						_entityCreator.createBlockyPeople(400, -200, EntityCreator.PEOPLE_HERO);
 						_entityCreator.createBlockyPeople(0, -400, EntityCreator.PEOPLE_HERO);
 						_entityCreator.createBlockyPeople(200, -400, EntityCreator.PEOPLE_HERO);

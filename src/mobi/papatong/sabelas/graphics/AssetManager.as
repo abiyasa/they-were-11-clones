@@ -57,10 +57,15 @@ package mobi.papatong.sabelas.graphics
 			_blockyTextures = [];
 			var tempTexture:TextureMaterial;
 			tempTexture = new TextureMaterial(bitmapTexture);
-			_blockyTextures.push(tempTexture);
+			_blockyTextures[0] = tempTexture;
+			
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
+			_blockyTextures[1] = tempTexture;
+			
 			tempTexture = new TextureMaterial(bitmapTexture);
 			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
-			_blockyTextures.push(tempTexture);
+			_blockyTextures[2] = tempTexture;
 			
 			loadMesh();
 		}
@@ -139,10 +144,17 @@ package mobi.papatong.sabelas.graphics
 				
 				// colorize
 				var type:int = int(config.type);
-				if (type == 1)
+				switch (type )
 				{
+				case 1:
 					// colorize enemy
 					mesh.material = _blockyTextures[1] as MaterialBase;
+					break;
+					
+				case 2:
+					// colorize enemy
+					mesh.material = _blockyTextures[2] as MaterialBase;
+					break;
 				}
 			}
 			return tempResult;
