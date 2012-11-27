@@ -3,7 +3,6 @@ package mobi.papatong.sabelas.systems
 	import flash.events.Event;
 	import mobi.papatong.sabelas.configs.GameConfig;
 	import mobi.papatong.sabelas.core.EntityCreator;
-	import mobi.papatong.sabelas.nodes.DummyObjectNode;
 	import mobi.papatong.sabelas.nodes.GameStateNode;
 	import mobi.papatong.sabelas.components.GameState;
 	import net.richardlord.ash.core.Game;
@@ -19,7 +18,6 @@ package mobi.papatong.sabelas.systems
 		private var _entityCreator:EntityCreator;
 		
 		private var _gameStateNodes:NodeList;
-		private var _gameObjects:NodeList;
 		
 		public function GameManager(creator:EntityCreator, config:GameConfig)
 		{
@@ -30,7 +28,6 @@ package mobi.papatong.sabelas.systems
 		override public function addToGame(game:Game):void
 		{
 			_gameStateNodes = game.getNodeList(GameStateNode);
-			_gameObjects = game.getNodeList(DummyObjectNode);
 		}
 		
 		override public function update(time:Number):void
@@ -89,7 +86,6 @@ package mobi.papatong.sabelas.systems
 		override public function removeFromGame(game:Game):void
 		{
 			_gameStateNodes = null;
-			_gameObjects = null;
 		}
 	}
 }

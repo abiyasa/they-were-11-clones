@@ -6,7 +6,6 @@ package mobi.papatong.sabelas.core
 	import flash.ui.Keyboard;
 	import mobi.papatong.sabelas.components.Collision;
 	import mobi.papatong.sabelas.components.Display3D;
-	import mobi.papatong.sabelas.components.DummyObject;
 	import mobi.papatong.sabelas.components.GameState;
 	import mobi.papatong.sabelas.components.Motion;
 	import mobi.papatong.sabelas.components.MotionControl;
@@ -111,7 +110,6 @@ package mobi.papatong.sabelas.core
 		public function createDummyQuad(size:int, x:int, y:int):Entity
 		{
 			var dummyQuad:Entity = new Entity()
-				.add(new DummyObject())
 				.add(new Position(x, y, 0))
 				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Display(new DummyQuadView(size)));
@@ -131,7 +129,6 @@ package mobi.papatong.sabelas.core
 		public function createDummySphere(size:int, x:int, y:int):Entity
 		{
 			var dummyQuad:Entity = new Entity()
-				.add(new DummyObject())
 				.add(new Position(x, y, 0))
 				.add(new Collision(size))
 				.add(new SpinningMotion(Math.PI * 0.5))
@@ -154,7 +151,6 @@ package mobi.papatong.sabelas.core
 		public function createBlockyPeople(x:int, y:int, peopleCode:int):Entity
 		{
 			var blockyPeople:Entity = new Entity()
-				.add(new DummyObject())
 				.add(new Position(x, y, 0));
 				
 			switch (peopleCode)
