@@ -8,6 +8,7 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.input.KeyPoll;
 	import mobi.papatong.sabelas.systems.CollisionSystem;
 	import mobi.papatong.sabelas.systems.GameManager;
+	import mobi.papatong.sabelas.systems.HeroClonePositioningSystem;
 	import mobi.papatong.sabelas.systems.MotionControlSystem;
 	import mobi.papatong.sabelas.systems.MotionSystem;
 	import mobi.papatong.sabelas.systems.MouseMotionControlSystem;
@@ -74,6 +75,7 @@ package mobi.papatong.sabelas.core
 				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
 			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
+			_game.addSystem(new HeroClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
 			_game.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.UPDATE);
 			_game.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
 			_game.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
