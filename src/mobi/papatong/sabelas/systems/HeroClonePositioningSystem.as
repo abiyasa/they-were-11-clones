@@ -1,6 +1,7 @@
 package mobi.papatong.sabelas.systems
 {
 	import flash.geom.Point;
+	import mobi.papatong.sabelas.components.HeroClone;
 	import mobi.papatong.sabelas.core.EntityCreator;
 	import mobi.papatong.sabelas.nodes.HeroClonesNode;
 	import net.richardlord.ash.core.Game;
@@ -41,9 +42,11 @@ package mobi.papatong.sabelas.systems
 		{
 			var sourceClone:HeroClonesNode;
 			var targetClone:HeroClonesNode;
+			var sourceHeroClone:HeroClone;
 			var leaderNode:HeroClonesNode;
-			var sourcePosition:Point;
-			var distance:Number;
+			var sourceIsLeader:Boolean;
+			var sourcePosition:Point, targetPosition:Point;
+			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;
 			var sourceRadius:Number;
 			var repulsiveForce:Number;
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
@@ -51,8 +54,16 @@ package mobi.papatong.sabelas.systems
 				// check if this is a leader
 				if (sourceClone.heroClone.isLeader)
 				{
+					sourceIsLeader = true;
 					leaderNode = sourceClone;
 				}
+				else
+				{
+					sourceIsLeader = false;
+				}
+				
+				sourceHeroClone = sourceClone.heroClone;
+				sourceHeroClone.resetCloneForce();
 				
 				// handle repulsive force between clones
 				sourcePosition = sourceClone.position.position;
@@ -61,7 +72,10 @@ package mobi.papatong.sabelas.systems
 				while (targetClone != null)
 				{
 					// calculate distance between source and target clones
-					distance = Point.distance(sourcePosition, targetClone.position.position)
+					targetPosition = targetClone.position.position;
+					dx = targetPosition.x - sourcePosition.x;
+					dy = targetPosition.y - sourcePosition.y;
+					distance = Math.sqrt((dx * dx) + (dy * dy));
 					
 					// calculate the repulsive force between clones
 					if (distance < IDEAL_DISTANCE)
@@ -72,14 +86,24 @@ package mobi.papatong.sabelas.systems
 						{
 							// nodes are colliding, repluse at full power
 							repulsiveForce = MAX_REPULSIVE_ENERGY;
+							distance = 0.01;
 						}
 						else  // nodes are not colliding
 						{
 							repulsiveForce = calculateForceReplusive(distance);
 						}
 						
-						// TODO modify the source and the target cloneForce vector, unless it's the leader
-						
+						// modify the source and the target cloneForce vector, unless it's the leader
+						repulsiveForce *= 0.001;
+						tempX = (dx / distance) * repulsiveForce;
+						tempY = (dy / distance) * repulsiveForce;
+						if (!sourceIsLeader)
+						{
+							sourceHeroClone.cloneForceX += tempX;
+							sourceHeroClone.cloneForceY += tempY;
+						}
+						targetClone.heroClone.cloneForceX -= tempX;
+						targetClone.heroClone.cloneForceY -= tempY;
 					}
 					
 					// next to compare
@@ -100,8 +124,13 @@ package mobi.papatong.sabelas.systems
 						continue;
 					}
 					
+					// calculate distance
+					targetPosition = targetClone.position.position;
+					dx = targetPosition.x - sourcePosition.x;
+					dy = targetPosition.y - sourcePosition.y;
+					distance = Math.sqrt((dx * dx) + (dy * dy));
+					
 					// calculate the force
-					distance = Point.distance(sourcePosition, targetClone.position.position);
 					if (distance < IDEAL_DISTANCE)
 					{
 						// consider radius
@@ -112,13 +141,22 @@ package mobi.papatong.sabelas.systems
 							attractiveForce = calculateForceAttractive(distance);
 						}
 						
-						// TODO modify the target cloneForce vector using attractiveForce
+						// modify the target cloneForce vector using attractiveForce
+						tempX = dx / distance * attractiveForce * 0.1;
+						tempY = dy / distance * attractiveForce * 0.1;
+						targetClone.heroClone.cloneForceX -= tempX;
+						targetClone.heroClone.cloneForceY -= tempY;
 					}
 				}
 			}
 			
 			// TODO in the end, apply cloneForce to speed
-				// TODO set cloneForce to 0
+			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
+			{
+				// TODO should apply to speed, NOT position
+				sourceClone.position.position.x += sourceClone.heroClone.cloneForceX;
+				sourceClone.position.position.y += sourceClone.heroClone.cloneForceY;
+			}
 		}
 
 		override public function removeFromGame(game:Game):void

@@ -17,7 +17,12 @@ package mobi.papatong.sabelas.components
 		public function HeroClone(isLeader:Boolean = false)
 		{
 			this.isLeader = isLeader;
-			
+			resetCloneForce();
+		}
+		
+		// Resets the clone attract & repulse force
+		public function resetCloneForce():void
+		{
 			cloneForceX = 0;
 			cloneForceY = 0;
 		}
