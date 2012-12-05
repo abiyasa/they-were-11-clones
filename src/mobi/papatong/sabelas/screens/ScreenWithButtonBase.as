@@ -57,6 +57,32 @@ package mobi.papatong.sabelas.screens
 		}
 		
 		/**
+		 * Creates and add dummy buttons
+		 *
+		 * @param	buttonConfigs Array of button config. Each config is an
+		 * Object literal with name, label, and screenEvent
+		 */
+		protected function createDummyButtons(buttonConfigs:Array):void
+		{
+			// add dummy buttons
+			for each (var buttonData:Object in buttonConfigs)
+			{
+				var dummyButton:Button = ScreenUtils.createDummyButton(buttonData.name, buttonData.label);
+				dummyButton.x = buttonData.x;
+				dummyButton.y = buttonData.y;
+				this.addChild(dummyButton);
+				_buttons.push(dummyButton);
+				dummyButton.addEventListener(Event.TRIGGERED, onClickButton);
+				
+				// map button event to screen changed event
+				if (buttonData.hasOwnProperty('screenEvent'))
+				{
+					_buttonEventMap[buttonData.name] = buttonData.screenEvent;
+				}
+			}
+		}
+		
+		/**
 		 * Handle button click
 		 * @param	e
 		 */

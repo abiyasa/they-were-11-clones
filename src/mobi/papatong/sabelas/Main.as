@@ -11,7 +11,7 @@ package mobi.papatong.sabelas
 	import mobi.papatong.sabelas.utils.Stage3DUtils;
 	import starling.core.Starling;
 	
-	[SWF(width='640', height='480', frameRate='45', backgroundColor='#FFFFFF')]
+	[SWF(width='320', height='240', frameRate='45', backgroundColor='#FFFFFF')]
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
