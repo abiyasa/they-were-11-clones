@@ -2,11 +2,13 @@ package mobi.papatong.sabelas.screens
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.ui.Keyboard;
 	import mobi.papatong.sabelas.configs.ScreenConfig;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.KeyboardEvent;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
@@ -69,6 +71,14 @@ package mobi.papatong.sabelas.screens
 			]);
 		}
 		
+		override protected function init(e:Event):void
+		{
+			super.init(e);
+			
+			// add keyboard shortcut
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard);
+		}
+		
 		override protected function destroy(e:Event):void
 		{
 			trace(DEBUG_TAG, 'destroy()');
@@ -76,7 +86,20 @@ package mobi.papatong.sabelas.screens
 			this.removeChild(_bgScreen, true);
 			_textureAtlas.dispose();
 			
+			this.stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyboard);
+			
 			super.destroy(e);
+		}
+		
+		// Handles keyboard shortcut
+		protected function handleKeyboard(event:KeyboardEvent):void
+		{
+			switch (event.keyCode)
+			{
+			case Keyboard.ENTER:
+				triggerButton('start');
+				break;
+			}
 		}
 	}
 }

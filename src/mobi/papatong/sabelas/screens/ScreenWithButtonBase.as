@@ -88,6 +88,32 @@ package mobi.papatong.sabelas.screens
 				trace(DEBUG_TAG, 'button is unmapped, cannot generate event');
 			}
 		}
+		
+		/**
+		 * Trigger event on a specfied button
+		 * @param	buttonName
+		 */
+		protected function triggerButton(buttonName:String):void
+		{
+			// find buttons on array
+			var willTriggerButtons:Array = [];
+			var button:Button;
+			for each (button in _buttons)
+			{
+				if (button.name == buttonName)
+				{
+					willTriggerButtons.push(button);
+					
+					trace(DEBUG_TAG, 'found button with name=' + buttonName);
+				}
+			}
+			
+			// trigger buttons
+			for each (button in willTriggerButtons)
+			{
+				button.dispatchEvent(new Event(Event.TRIGGERED));
+			}
+		}
 	}
 
 }
