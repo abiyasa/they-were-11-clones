@@ -48,6 +48,8 @@ package mobi.papatong.sabelas.systems
 			var sourcePosition:Point, targetPosition:Point;
 			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;
 			var sourceRadius:Number;
+			
+			// handle repulsive force between clones
 			var repulsiveForce:Number;
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
@@ -63,9 +65,8 @@ package mobi.papatong.sabelas.systems
 				}
 				
 				sourceHeroClone = sourceClone.heroClone;
-				sourceHeroClone.resetCloneForce();
 				
-				// handle repulsive force between clones
+				// calculate repulsive force
 				sourcePosition = sourceClone.position.position;
 				sourceRadius = sourceClone.collision.radius;
 				targetClone = sourceClone.next;
@@ -95,15 +96,14 @@ package mobi.papatong.sabelas.systems
 						
 						// modify the source and the target cloneForce vector, unless it's the leader
 						repulsiveForce *= 0.001;
+						// TODO there should be minimum repulsive energy
 						tempX = (dx / distance) * repulsiveForce;
 						tempY = (dy / distance) * repulsiveForce;
 						if (!sourceIsLeader)
 						{
-							sourceHeroClone.cloneForceX += tempX;
-							sourceHeroClone.cloneForceY += tempY;
+							sourceHeroClone.addForce(-tempX, -tempY);
 						}
-						targetClone.heroClone.cloneForceX -= tempX;
-						targetClone.heroClone.cloneForceY -= tempY;
+						targetClone.heroClone.addForce(tempX, tempY);
 					}
 					
 					// next to compare
@@ -130,31 +130,33 @@ package mobi.papatong.sabelas.systems
 					dy = targetPosition.y - sourcePosition.y;
 					distance = Math.sqrt((dx * dx) + (dy * dy));
 					
-					// calculate the force
-					if (distance < IDEAL_DISTANCE)
-					{
-						// consider radius
-						distance -= (sourceRadius + targetClone.collision.radius);
-						if (distance > 0)
-						{
-							// nodes are not colliding, they can attracted now
-							attractiveForce = calculateForceAttractive(distance);
-						}
-						
-						// modify the target cloneForce vector using attractiveForce
-						tempX = dx / distance * attractiveForce * 0.1;
-						tempY = dy / distance * attractiveForce * 0.1;
-						targetClone.heroClone.cloneForceX -= tempX;
-						targetClone.heroClone.cloneForceY -= tempY;
-					}
+					// consider radius
+					distance -= (sourceRadius + targetClone.collision.radius);
+					attractiveForce = calculateForceAttractive(distance);
+					// TODO there should be minimum attractive energy!
+					
+					// modify the target cloneForce vector using attractiveForce
+					attractiveForce *= 0.1;
+					tempX = dx / distance * attractiveForce;
+					tempY = dy / distance * attractiveForce;
+					targetClone.heroClone.addForce(-tempX, -tempY);
 				}
 			}
 			
 			// apply cloneForce
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
-				sourceClone.motion.forceX += sourceClone.heroClone.cloneForceX;
-				sourceClone.motion.forceY += sourceClone.heroClone.cloneForceY;
+				sourceHeroClone = sourceClone.heroClone;
+				if (sourceHeroClone.cloneForceChanged)
+				{
+					sourceClone.motion.forceX += sourceHeroClone.cloneForceX;
+					sourceClone.motion.forceY += sourceHeroClone.cloneForceY;
+					
+					//trace('original force for clone x=' + sourceHeroClone.cloneForceX + ', y=' + sourceHeroClone.cloneForceY);
+					//trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
+					
+					sourceHeroClone.resetCloneForce();
+				}
 			}
 		}
 
