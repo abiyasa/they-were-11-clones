@@ -44,13 +44,12 @@ package mobi.papatong.sabelas.systems
 					// skipping none moving object
 					continue;
 				}
-				sourceSpeed = sourceSpeed * time;
 
 				// caculate next position
 				var angle:Number = movingObjectSource.motion.angle;
 				sourcePosition = movingObjectSource.position.position.clone();
-				sourcePosition.x += Math.sin(angle) * sourceSpeed;
-				sourcePosition.y += Math.cos(angle) * sourceSpeed;
+				sourcePosition.x += movingObjectSource.motion.calculateDeltaX(time);
+				sourcePosition.y += movingObjectSource.motion.calculateDeltaY(time);
 				
 				// check collision with the rest
 				sourceRadius = movingObjectSource.collision.radius;

@@ -23,11 +23,9 @@ package mobi.papatong.sabelas.systems
 			var motion:Motion = node.motion;
 			
 			// calculate speed
-			var angle:Number = motion.angle;
-			var speed:Number = motion.speed * time;
 			var position:Position = node.position;
-			position.position.x += (Math.sin(angle) * speed) + motion.forceX;
-			position.position.y += (Math.cos(angle) * speed) + motion.forceY;
+			position.position.x += motion.calculateDeltaX(time);
+			position.position.y += motion.calculateDeltaY(time);
 			
 			motion.resetForce();
 		}

@@ -39,6 +39,28 @@ package mobi.papatong.sabelas.components
 			forceX = 0.0;
 			forceY = 0.0;
 		}
+		
+		/**
+		 * Calculate distance changes based on current speed, force, and given time
+		 *
+		 * @param	time
+		 * @return The distance changes
+		 */
+		public function calculateDeltaX(time:Number):Number
+		{
+			return (Math.sin(angle) * speed * time) + forceX;
+		}
+		
+		/**
+		 * Calculate distance changes based on current speed, force, and given time
+		 *
+		 * @param	time
+		 * @return The distance changes
+		 */
+		public function calculateDeltaY(time:Number):Number
+		{
+			return (Math.cos(angle) * speed * time) + forceY;
+		}
 	}
 
 }
