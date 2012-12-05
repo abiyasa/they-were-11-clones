@@ -76,7 +76,7 @@ package mobi.papatong.sabelas.screens
 			super.init(e);
 			
 			// add keyboard shortcut
-			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard);
+			this.stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyboard);
 		}
 		
 		override protected function destroy(e:Event):void
