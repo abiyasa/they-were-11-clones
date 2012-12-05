@@ -20,12 +20,16 @@ package mobi.papatong.sabelas.systems
 		
 		private function updateNode(node:MotionNode, time:Number):void
 		{
-			// calculate spped
-			var angle:Number = node.motion.angle;
-			var speed:Number = node.motion.speed * time;
+			var motion:Motion = node.motion;
+			
+			// calculate speed
+			var angle:Number = motion.angle;
+			var speed:Number = motion.speed * time;
 			var position:Position = node.position;
-			position.position.x += Math.sin(angle) * speed;
-			position.position.y += Math.cos(angle) * speed;
+			position.position.x += (Math.sin(angle) * speed) + motion.forceX;
+			position.position.y += (Math.cos(angle) * speed) + motion.forceY;
+			
+			motion.resetForce();
 		}
 	}
 

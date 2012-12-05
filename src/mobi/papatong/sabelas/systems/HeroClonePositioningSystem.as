@@ -150,12 +150,11 @@ package mobi.papatong.sabelas.systems
 				}
 			}
 			
-			// TODO in the end, apply cloneForce to speed
+			// apply cloneForce
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
-				// TODO should apply to speed, NOT position
-				sourceClone.position.position.x += sourceClone.heroClone.cloneForceX;
-				sourceClone.position.position.y += sourceClone.heroClone.cloneForceY;
+				sourceClone.motion.forceX += sourceClone.heroClone.cloneForceX;
+				sourceClone.motion.forceY += sourceClone.heroClone.cloneForceY;
 			}
 		}
 
