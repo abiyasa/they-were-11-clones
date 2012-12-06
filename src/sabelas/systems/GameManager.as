@@ -1,10 +1,10 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
 	import flash.events.Event;
-	import mobi.papatong.sabelas.configs.GameConfig;
-	import mobi.papatong.sabelas.core.EntityCreator;
-	import mobi.papatong.sabelas.nodes.GameStateNode;
-	import mobi.papatong.sabelas.components.GameState;
+	import sabelas.configs.GameConfig;
+	import sabelas.core.EntityCreator;
+	import sabelas.nodes.GameStateNode;
+	import sabelas.components.GameState;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;

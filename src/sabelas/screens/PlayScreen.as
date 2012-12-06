@@ -1,10 +1,10 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
-	import mobi.papatong.sabelas.configs.ScreenConfig;
-	import mobi.papatong.sabelas.core.GameEngine;
-	import mobi.papatong.sabelas.screens.ScreenWithButtonBase;
+	import sabelas.configs.ScreenConfig;
+	import sabelas.core.GameEngine;
+	import sabelas.screens.ScreenWithButtonBase;
 	import starling.display.Button;
 	import starling.display.Quad;
 	import starling.events.Event;

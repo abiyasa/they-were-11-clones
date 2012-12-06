@@ -1,8 +1,8 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.geom.Rectangle;
-	import mobi.papatong.sabelas.configs.ScreenConfig;
-	import mobi.papatong.sabelas.screens.ScreenWithDummyButtonBase;
+	import sabelas.configs.ScreenConfig;
+	import sabelas.screens.ScreenWithDummyButtonBase;
 	import starling.display.Button;
 	import starling.display.Quad;
 	import starling.events.Event;

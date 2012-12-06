@@ -1,9 +1,9 @@
-package mobi.papatong.sabelas
+package sabelas
 {
 	import flash.utils.Dictionary;
 	import starling.display.DisplayObjectContainer;
-	import mobi.papatong.sabelas.events.ShowScreenEvent;
-	import mobi.papatong.sabelas.screens.ScreenBase;
+	import sabelas.events.ShowScreenEvent;
+	import sabelas.screens.ScreenBase;
 	
 	/**
 	 * For managing screens, including the game screen.

@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.graphics
+package sabelas.graphics
 {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.entities.Mesh;
@@ -25,10 +25,10 @@ package mobi.papatong.sabelas.graphics
 	{
 		public static const DEBUG_TAG:String = "AssetManager";
 		
-		[Embed(source="../../../../../assets/blocky_texture.png")]
+		[Embed(source="../../../assets/blocky_texture.png")]
 		private static const BlockyTexture:Class;
 
-		[Embed(source="../../../../../assets/blocky.obj", mimeType="application/octet-stream")]
+		[Embed(source="../../../assets/blocky.obj", mimeType="application/octet-stream")]
 		private static const BlockyMesh:Class;
 		
 		private var _blockyTextures:Array = [];

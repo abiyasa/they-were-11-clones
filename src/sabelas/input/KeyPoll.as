@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.input
+package sabelas.input
 {
 	/**
 	 * KeyPoll which stores the last keyboard key states.

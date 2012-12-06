@@ -1,7 +1,7 @@
-package mobi.papatong.sabelas.nodes
+package sabelas.nodes
 {
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.components.MouseControl;
+	import sabelas.components.Position;
+	import sabelas.components.MouseControl;
 	import ash.core.Node;
 	
 	/**

@@ -1,9 +1,9 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
-	import mobi.papatong.sabelas.configs.ScreenConfig;
+	import sabelas.configs.ScreenConfig;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -20,10 +20,10 @@ package mobi.papatong.sabelas.screens
 	{
 		public static const DEBUG_TAG:String = 'MainMenuScreen';
 		
-		[Embed(source="../../../../../assets/menuAtlas.png")]
+		[Embed(source="../../../assets/menuAtlas.png")]
 		private static const AtlasTexture:Class;
 
-		[Embed(source="../../../../../assets/menuAtlas.xml", mimeType="application/octet-stream")]
+		[Embed(source="../../../assets/menuAtlas.xml", mimeType="application/octet-stream")]
 		private static const AtlasXML:Class;
 		
 		private var _textureAtlas:TextureAtlas;

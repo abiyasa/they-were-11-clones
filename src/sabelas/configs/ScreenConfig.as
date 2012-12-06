@@ -1,7 +1,7 @@
-package mobi.papatong.sabelas.configs
+package sabelas.configs
 {
 	import flash.utils.Dictionary;
-	import mobi.papatong.sabelas.screens.*;
+	import sabelas.screens.*;
 	
 	/**
 	 * A static class which provide config and mappings

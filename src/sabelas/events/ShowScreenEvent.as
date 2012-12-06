@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.events
+package sabelas.events
 {
 	import starling.events.Event;
 

@@ -1,8 +1,8 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
 	import flash.geom.Point;
-	import mobi.papatong.sabelas.core.EntityCreator;
-	import mobi.papatong.sabelas.nodes.CollisionNode;
+	import sabelas.core.EntityCreator;
+	import sabelas.nodes.CollisionNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;

@@ -1,7 +1,7 @@
-package mobi.papatong.sabelas
+package sabelas
 {
-	import mobi.papatong.sabelas.configs.ScreenConfig
-	import mobi.papatong.sabelas.ScreenManager;
+	import sabelas.configs.ScreenConfig
+	import sabelas.ScreenManager;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.text.TextField;

@@ -1,12 +1,12 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
 	import away3d.containers.View3D;
 	import away3d.tools.utils.Drag3D;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.components.MouseControl;
-	import mobi.papatong.sabelas.nodes.MouseControlNode;
+	import sabelas.components.Position;
+	import sabelas.components.MouseControl;
+	import sabelas.nodes.MouseControlNode;
 	import ash.core.Engine;
 	import ash.tools.ListIteratingSystem;
 	import starling.display.DisplayObjectContainer;

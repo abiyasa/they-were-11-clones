@@ -1,8 +1,8 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
-	import mobi.papatong.sabelas.components.Display;
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.nodes.RenderNode;
+	import sabelas.components.Display;
+	import sabelas.components.Position;
+	import sabelas.nodes.RenderNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;

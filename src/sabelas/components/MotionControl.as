@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.components
+package sabelas.components
 {
 	/**
 	 * Component for controlling motion via keyboard

@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas
+package sabelas
 {
 	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DManager;
@@ -8,7 +8,7 @@ package mobi.papatong.sabelas
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import mobi.papatong.sabelas.utils.Stage3DUtils;
+	import sabelas.utils.Stage3DUtils;
 	import starling.core.Starling;
 	
 	[SWF(width='640', height='480', frameRate='45', backgroundColor='#FFFFFF')]

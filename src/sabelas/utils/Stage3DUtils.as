@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.utils
+package sabelas.utils
 {
 	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DManager;

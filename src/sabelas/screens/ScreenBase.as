@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.utils.Dictionary;
 	import starling.display.Sprite;

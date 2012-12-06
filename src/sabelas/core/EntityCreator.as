@@ -1,23 +1,23 @@
-package mobi.papatong.sabelas.core
+package sabelas.core
 {
 	import away3d.containers.ObjectContainer3D;
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
-	import mobi.papatong.sabelas.components.Collision;
-	import mobi.papatong.sabelas.components.Display3D;
-	import mobi.papatong.sabelas.components.GameState;
-	import mobi.papatong.sabelas.components.HeroClone;
-	import mobi.papatong.sabelas.components.Motion;
-	import mobi.papatong.sabelas.components.MotionControl;
-	import mobi.papatong.sabelas.components.MouseControl;
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.components.Display;
-	import mobi.papatong.sabelas.components.SpinningMotion;
-	import mobi.papatong.sabelas.graphics.AssetManager;
-	import mobi.papatong.sabelas.graphics.BlockyPeople;
-	import mobi.papatong.sabelas.graphics.DummyQuadView;
-	import mobi.papatong.sabelas.graphics.DummySphere;
+	import sabelas.components.Collision;
+	import sabelas.components.Display3D;
+	import sabelas.components.GameState;
+	import sabelas.components.HeroClone;
+	import sabelas.components.Motion;
+	import sabelas.components.MotionControl;
+	import sabelas.components.MouseControl;
+	import sabelas.components.Position;
+	import sabelas.components.Display;
+	import sabelas.components.SpinningMotion;
+	import sabelas.graphics.AssetManager;
+	import sabelas.graphics.BlockyPeople;
+	import sabelas.graphics.DummyQuadView;
+	import sabelas.graphics.DummySphere;
 	import ash.core.Entity;
 	import ash.core.Engine;
 	

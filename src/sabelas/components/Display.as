@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.components
+package sabelas.components
 {
 	import starling.display.DisplayObject;
 	

@@ -1,7 +1,7 @@
-package mobi.papatong.sabelas.nodes
+package sabelas.nodes
 {
 	import ash.core.Node;
-	import mobi.papatong.sabelas.components.GameState;
+	import sabelas.components.GameState;
 
 	/**
 	 * Node for the game state. Used by GameManager

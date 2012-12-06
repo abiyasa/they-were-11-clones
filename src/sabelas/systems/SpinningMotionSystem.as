@@ -1,8 +1,8 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.components.SpinningMotion;
-	import mobi.papatong.sabelas.nodes.SpinningMotionNode;
+	import sabelas.components.Position;
+	import sabelas.components.SpinningMotion;
+	import sabelas.nodes.SpinningMotionNode;
 	import ash.tools.ListIteratingSystem;
 	
 	/**

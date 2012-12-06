@@ -1,7 +1,7 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.utils.Dictionary;
-	import mobi.papatong.sabelas.events.ShowScreenEvent;
+	import sabelas.events.ShowScreenEvent;
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.textures.TextureAtlas;

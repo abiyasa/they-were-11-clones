@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.components
+package sabelas.components
 {
 	import flash.geom.Point;
 	

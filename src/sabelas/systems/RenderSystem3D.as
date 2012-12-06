@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
 	import away3d.cameras.Camera3D;
 	import away3d.containers.ObjectContainer3D;
@@ -6,9 +6,9 @@ package mobi.papatong.sabelas.systems
 	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DProxy;
 	import flash.geom.Vector3D;
-	import mobi.papatong.sabelas.components.Display3D;
-	import mobi.papatong.sabelas.components.Position;
-	import mobi.papatong.sabelas.nodes.RenderNode3D;
+	import sabelas.components.Display3D;
+	import sabelas.components.Position;
+	import sabelas.nodes.RenderNode3D;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;

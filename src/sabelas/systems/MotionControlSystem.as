@@ -1,9 +1,9 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
-	import mobi.papatong.sabelas.components.Motion;
-	import mobi.papatong.sabelas.components.MotionControl;
-	import mobi.papatong.sabelas.nodes.MotionControlNode;
-	import mobi.papatong.sabelas.input.KeyPoll;
+	import sabelas.components.Motion;
+	import sabelas.components.MotionControl;
+	import sabelas.nodes.MotionControlNode;
+	import sabelas.input.KeyPoll;
 	import ash.tools.ListIteratingSystem;
 	
 	/**

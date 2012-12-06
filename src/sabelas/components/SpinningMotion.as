@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.components
+package sabelas.components
 {
 	/**
 	 * Component which will spin your entity like crazy

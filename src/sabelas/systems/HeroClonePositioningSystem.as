@@ -1,9 +1,9 @@
-package mobi.papatong.sabelas.systems
+package sabelas.systems
 {
 	import flash.geom.Point;
-	import mobi.papatong.sabelas.components.HeroClone;
-	import mobi.papatong.sabelas.core.EntityCreator;
-	import mobi.papatong.sabelas.nodes.HeroClonesNode;
+	import sabelas.components.HeroClone;
+	import sabelas.core.EntityCreator;
+	import sabelas.nodes.HeroClonesNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;

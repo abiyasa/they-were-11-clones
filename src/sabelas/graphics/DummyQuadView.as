@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.graphics
+package sabelas.graphics
 {
 	import starling.display.Sprite;
 	import starling.display.Quad;

@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.configs
+package sabelas.configs
 {
 	/**
 	 * The game configuration

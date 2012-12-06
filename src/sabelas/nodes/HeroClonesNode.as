@@ -1,9 +1,9 @@
-package mobi.papatong.sabelas.nodes
+package sabelas.nodes
 {
-	import mobi.papatong.sabelas.components.Collision;
-	import mobi.papatong.sabelas.components.HeroClone;
-	import mobi.papatong.sabelas.components.Motion;
-	import mobi.papatong.sabelas.components.Position;
+	import sabelas.components.Collision;
+	import sabelas.components.HeroClone;
+	import sabelas.components.Motion;
+	import sabelas.components.Position;
 	import ash.core.Node;
 	
 	/**

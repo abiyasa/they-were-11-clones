@@ -1,22 +1,22 @@
-package mobi.papatong.sabelas.core
+package sabelas.core
 {
 	import away3d.core.managers.Stage3DProxy;
 	import flash.events.EventDispatcher;
-	import mobi.papatong.sabelas.core.EntityCreator;
-	import mobi.papatong.sabelas.components.GameState;
-	import mobi.papatong.sabelas.configs.GameConfig;
-	import mobi.papatong.sabelas.input.KeyPoll;
-	import mobi.papatong.sabelas.systems.CollisionSystem;
-	import mobi.papatong.sabelas.systems.GameManager;
-	import mobi.papatong.sabelas.systems.HeroClonePositioningSystem;
-	import mobi.papatong.sabelas.systems.MotionControlSystem;
-	import mobi.papatong.sabelas.systems.MotionSystem;
-	import mobi.papatong.sabelas.systems.MouseMotionControlSystem;
-	import mobi.papatong.sabelas.systems.RenderSystem;
-	import mobi.papatong.sabelas.systems.RenderSystem3D;
-	import mobi.papatong.sabelas.systems.SpinningMotionSystem;
-	import mobi.papatong.sabelas.systems.SystemPriorities;
-	import mobi.papatong.sabelas.utils.Stage3DUtils;
+	import sabelas.core.EntityCreator;
+	import sabelas.components.GameState;
+	import sabelas.configs.GameConfig;
+	import sabelas.input.KeyPoll;
+	import sabelas.systems.CollisionSystem;
+	import sabelas.systems.GameManager;
+	import sabelas.systems.HeroClonePositioningSystem;
+	import sabelas.systems.MotionControlSystem;
+	import sabelas.systems.MotionSystem;
+	import sabelas.systems.MouseMotionControlSystem;
+	import sabelas.systems.RenderSystem;
+	import sabelas.systems.RenderSystem3D;
+	import sabelas.systems.SpinningMotionSystem;
+	import sabelas.systems.SystemPriorities;
+	import sabelas.utils.Stage3DUtils;
 	import ash.core.Entity;
 	import ash.core.Engine;
 	import ash.integration.starling.StarlingFrameTickProvider;

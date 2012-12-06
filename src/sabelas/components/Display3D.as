@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.components
+package sabelas.components
 {
 	import away3d.containers.ObjectContainer3D;
 	

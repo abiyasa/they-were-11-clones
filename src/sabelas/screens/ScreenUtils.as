@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.screens
+package sabelas.screens
 {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;

@@ -1,4 +1,4 @@
-package mobi.papatong.sabelas.graphics
+package sabelas.graphics
 {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.entities.Mesh;
