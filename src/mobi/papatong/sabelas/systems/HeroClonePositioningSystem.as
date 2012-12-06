@@ -4,9 +4,9 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.HeroClone;
 	import mobi.papatong.sabelas.core.EntityCreator;
 	import mobi.papatong.sabelas.nodes.HeroClonesNode;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.core.NodeList;
-	import net.richardlord.ash.core.System;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 	
 	/**
 	 * System for managing hero clones. This system will handle the positioning of the clones,
@@ -33,9 +33,10 @@ package mobi.papatong.sabelas.systems
 			_creator = creator;
 		}
 
-		override public function addToGame(game:Game):void
+		override public function addToEngine(engine:Engine):void
 		{
-			_clones = game.getNodeList(HeroClonesNode);
+			super.addToEngine(engine);
+			_clones = engine.getNodeList(HeroClonesNode);
 		}
 		
 		override public function update(time:Number):void
@@ -160,8 +161,9 @@ package mobi.papatong.sabelas.systems
 			}
 		}
 
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
+			super.removeFromEngine(engine);
 			_clones = null;
 		}
 		

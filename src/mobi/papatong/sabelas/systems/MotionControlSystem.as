@@ -4,7 +4,7 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.MotionControl;
 	import mobi.papatong.sabelas.nodes.MotionControlNode;
 	import mobi.papatong.sabelas.input.KeyPoll;
-	import net.richardlord.ash.tools.ListIteratingSystem;
+	import ash.tools.ListIteratingSystem;
 	
 	/**
 	 * System for updating object motion data based on

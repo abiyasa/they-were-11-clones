@@ -3,9 +3,9 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.Display;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.nodes.RenderNode;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.core.NodeList;
-	import net.richardlord.ash.core.System;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 
@@ -24,9 +24,11 @@ package mobi.papatong.sabelas.systems
 			_container = container;
 		}
 		
-		override public function addToGame(game:Game):void
+		override public function addToEngine(engine:Engine):void
 		{
-			nodes = game.getNodeList(RenderNode);
+			super.addToEngine(engine);
+			
+			nodes = engine.getNodeList(RenderNode);
 			for(var node:RenderNode = nodes.head; node; node = node.next)
 			{
 				addToDisplay(node);
@@ -64,8 +66,9 @@ package mobi.papatong.sabelas.systems
 			}
 		}
 
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
+			super.removeFromEngine(engine);
 			nodes = null;
 		}
 	}

@@ -3,7 +3,7 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.Motion;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.nodes.MotionNode;
-	import net.richardlord.ash.tools.ListIteratingSystem;
+	import ash.tools.ListIteratingSystem;
 	
 	/**
 	 * System for updating object position based on its motion data

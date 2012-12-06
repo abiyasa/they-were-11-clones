@@ -2,7 +2,7 @@ package mobi.papatong.sabelas.nodes
 {
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.MouseControl;
-	import net.richardlord.ash.core.Node;
+	import ash.core.Node;
 	
 	/**
 	 * Node for motion control, able to update object

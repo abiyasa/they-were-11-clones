@@ -18,8 +18,8 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.graphics.BlockyPeople;
 	import mobi.papatong.sabelas.graphics.DummyQuadView;
 	import mobi.papatong.sabelas.graphics.DummySphere;
-	import net.richardlord.ash.core.Entity;
-	import net.richardlord.ash.core.Game;
+	import ash.core.Entity;
+	import ash.core.Engine;
 	
 	/**
 	 * Creator or destroyer entites during game play
@@ -28,7 +28,7 @@ package mobi.papatong.sabelas.core
 	 */
 	public class EntityCreator extends EventDispatcher
 	{
-		private var _game:Game;
+		private var _engine:Engine;
 		
 		// list of enemies
 		private var _enemyGroup:Array = [];
@@ -45,9 +45,9 @@ package mobi.papatong.sabelas.core
 		public static const PEOPLE_HERO:int = 20;
 		public static const PEOPLE_HERO_LEADER:int = 21;
 		
-		public function EntityCreator(game:Game)
+		public function EntityCreator(engine:Engine)
 		{
-			_game = game;
+			_engine = engine;
 		}
 		
 		/**
@@ -80,7 +80,7 @@ package mobi.papatong.sabelas.core
 		
 		public function destroyEntity(entity:Entity):void
 		{
-			_game.removeEntity(entity);
+			_engine.removeEntity(entity);
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package mobi.papatong.sabelas.core
 		{
 			var gameEntity:Entity = new Entity()
 				.add(new GameState());
-			_game.addEntity(gameEntity);
+			_engine.addEntity(gameEntity);
 			
 			return gameEntity;
 		}
@@ -110,7 +110,7 @@ package mobi.papatong.sabelas.core
 				.add(new Position(x, y, 0))
 				.add(new SpinningMotion(Math.PI * 0.5))
 				.add(new Display(new DummyQuadView(size)));
-			_game.addEntity(dummyQuad);
+			_engine.addEntity(dummyQuad);
 			
 			return dummyQuad;
 		}
@@ -132,7 +132,7 @@ package mobi.papatong.sabelas.core
 				.add(new Motion(0, 0, 10))
 				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 				.add(new Display3D(new DummySphere(size, 0x009EEF)));
-			_game.addEntity(dummyQuad);
+			_engine.addEntity(dummyQuad);
 			
 			return dummyQuad;
 		}
@@ -177,7 +177,7 @@ package mobi.papatong.sabelas.core
 				break;
 			}
 			
-			_game.addEntity(blockyPeople);
+			_engine.addEntity(blockyPeople);
 			
 			return blockyPeople;
 		}

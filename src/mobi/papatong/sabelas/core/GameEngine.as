@@ -17,10 +17,10 @@ package mobi.papatong.sabelas.core
 	import mobi.papatong.sabelas.systems.SpinningMotionSystem;
 	import mobi.papatong.sabelas.systems.SystemPriorities;
 	import mobi.papatong.sabelas.utils.Stage3DUtils;
-	import net.richardlord.ash.core.Entity;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.integration.starling.StarlingFrameTickProvider;
-	import net.richardlord.ash.tick.TickProvider;
+	import ash.core.Entity;
+	import ash.core.Engine;
+	import ash.integration.starling.StarlingFrameTickProvider;
+	import ash.tick.ITickProvider;
 	import starling.core.Starling;
 	import starling.display.DisplayObjectContainer;
 	
@@ -34,12 +34,12 @@ package mobi.papatong.sabelas.core
 	{
 		public static const DEBUG_TAG:String = "GameEngine";
 		
-		private var _game:Game;
+		private var _engine:Engine;
 		private var _container:DisplayObjectContainer;
 		private var _config:GameConfig;
 		private var _entityCreator:EntityCreator;
-		private var _tickProvider:TickProvider;
-		private var _gameState:GameState;
+		private var _tickProvider:ITickProvider;
+		private var _engineState:GameState;
 		private var _keyPoll:KeyPoll;
 		
 		/**
@@ -57,8 +57,8 @@ package mobi.papatong.sabelas.core
 		
 		public function init():void
 		{
-			_game = new Game();
-			_entityCreator = new EntityCreator(_game);
+			_engine = new Engine();
+			_entityCreator = new EntityCreator(_engine);
 			
 			_config = new GameConfig();
 			_config.width = _container.stage.stageWidth;
@@ -68,28 +68,28 @@ package mobi.papatong.sabelas.core
 			_keyPoll = new KeyPoll(_container.stage);
 			
 			// add systems
-			_game.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
-			_game.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
+			_engine.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
+			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
-			_game.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
+			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
 				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
-			_game.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
-			_game.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
-			_game.addSystem(new HeroClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
-			_game.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.UPDATE);
-			_game.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
-			_game.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
+			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
+			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
+			_engine.addSystem(new HeroClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
+			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.UPDATE);
+			_engine.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
+			_engine.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
 				SystemPriorities.UPDATE);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
-			_gameState = gameStateEntity.get(GameState) as GameState;
+			_engineState = gameStateEntity.get(GameState) as GameState;
 		}
 		
 		private function destroy():void
 		{
-			_game.removeAllEntities();
-			_game.removeAllSystems();
+			_engine.removeAllEntities();
+			_engine.removeAllSystems();
 			
 			_keyPoll.destroy();
 			
@@ -101,14 +101,14 @@ package mobi.papatong.sabelas.core
 			_keyPoll.reset();
 			
 			_tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
-			_tickProvider.add(_game.update);
+			_tickProvider.add(_engine.update);
 			_tickProvider.start();
 		}
 		
 		public function stop():void
 		{
 			_tickProvider.stop();
-			_tickProvider.remove(_game.update);
+			_tickProvider.remove(_engine.update);
 
 			destroy();
 		}

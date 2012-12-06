@@ -9,9 +9,9 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.Display3D;
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.nodes.RenderNode3D;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.core.NodeList;
-	import net.richardlord.ash.core.System;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 
 	public class RenderSystem3D extends System
 	{
@@ -27,8 +27,9 @@ package mobi.papatong.sabelas.systems
 			this.stage3dProxy = stage3dproxy;
 		}
 		
-		override public function addToGame(game:Game):void
+		override public function addToEngine(engine:Engine):void
 		{
+			super.addToEngine(engine);
 			_scene = _view3D.scene;
 			
 			// init camera
@@ -39,7 +40,7 @@ package mobi.papatong.sabelas.systems
 			camera.x = 0;
 			camera.lookAt(new Vector3D(0, 0, 0));
 			
-			nodes = game.getNodeList(RenderNode3D);
+			nodes = engine.getNodeList(RenderNode3D);
 			for(var node:RenderNode3D = nodes.head; node; node = node.next)
 			{
 				addToDisplay(node);
@@ -76,8 +77,9 @@ package mobi.papatong.sabelas.systems
 			}
 		}
 
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
+			super.removeFromEngine(engine);
 			nodes = null;
 			
 			_view3D = null;

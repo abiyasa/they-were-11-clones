@@ -5,9 +5,9 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.core.EntityCreator;
 	import mobi.papatong.sabelas.nodes.GameStateNode;
 	import mobi.papatong.sabelas.components.GameState;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.core.NodeList;
-	import net.richardlord.ash.core.System;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 
 	/**
 	 * Managing game states and adding/removing entities
@@ -25,9 +25,10 @@ package mobi.papatong.sabelas.systems
 			_config = config;
 		}
 
-		override public function addToGame(game:Game):void
+		override public function addToEngine(engine:Engine):void
 		{
-			_gameStateNodes = game.getNodeList(GameStateNode);
+			super.addToEngine(engine);
+			_gameStateNodes = engine.getNodeList(GameStateNode);
 		}
 		
 		override public function update(time:Number):void
@@ -83,8 +84,9 @@ package mobi.papatong.sabelas.systems
 			}
 		}
 		
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
+			super.removeFromEngine(engine);
 			_gameStateNodes = null;
 		}
 	}

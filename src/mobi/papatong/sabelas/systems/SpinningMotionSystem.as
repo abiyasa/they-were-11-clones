@@ -3,7 +3,7 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.SpinningMotion;
 	import mobi.papatong.sabelas.nodes.SpinningMotionNode;
-	import net.richardlord.ash.tools.ListIteratingSystem;
+	import ash.tools.ListIteratingSystem;
 	
 	/**
 	 * System for spinning the object.

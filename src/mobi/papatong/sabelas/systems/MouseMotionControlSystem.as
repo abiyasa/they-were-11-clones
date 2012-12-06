@@ -7,8 +7,8 @@ package mobi.papatong.sabelas.systems
 	import mobi.papatong.sabelas.components.Position;
 	import mobi.papatong.sabelas.components.MouseControl;
 	import mobi.papatong.sabelas.nodes.MouseControlNode;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.tools.ListIteratingSystem;
+	import ash.core.Engine;
+	import ash.tools.ListIteratingSystem;
 	import starling.display.DisplayObjectContainer;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -37,9 +37,9 @@ package mobi.papatong.sabelas.systems
 			_lastPosY = 0;
 		}
 		
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
-			super.removeFromGame(game);
+			super.removeFromEngine(engine);
 			
 			_container.removeEventListener(TouchEvent.TOUCH, onTouch);
 		}

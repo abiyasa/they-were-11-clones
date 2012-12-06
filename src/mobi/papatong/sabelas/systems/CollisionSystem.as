@@ -3,9 +3,9 @@ package mobi.papatong.sabelas.systems
 	import flash.geom.Point;
 	import mobi.papatong.sabelas.core.EntityCreator;
 	import mobi.papatong.sabelas.nodes.CollisionNode;
-	import net.richardlord.ash.core.Game;
-	import net.richardlord.ash.core.NodeList;
-	import net.richardlord.ash.core.System;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 	
 	/**
 	 * System for managing collistion between objects.
@@ -24,9 +24,10 @@ package mobi.papatong.sabelas.systems
 			_creator = creator;
 		}
 
-		override public function addToGame(game:Game):void
+		override public function addToEngine(engine:Engine):void
 		{
-			_movingObjects = game.getNodeList(CollisionNode);
+			super.addToEngine(engine);
+			_movingObjects = engine.getNodeList(CollisionNode);
 		}
 		
 		override public function update(time:Number):void
@@ -74,8 +75,9 @@ package mobi.papatong.sabelas.systems
 			}
 		}
 
-		override public function removeFromGame(game:Game):void
+		override public function removeFromEngine(engine:Engine):void
 		{
+			super.removeFromEngine(engine);
 			_movingObjects = null;
 		}
 	}
