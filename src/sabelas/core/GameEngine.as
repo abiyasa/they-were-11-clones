@@ -8,6 +8,7 @@ package sabelas.core
 	import sabelas.input.KeyPoll;
 	import sabelas.systems.CollisionSystem;
 	import sabelas.systems.GameManager;
+	import sabelas.systems.HeroCloneControlSystem;
 	import sabelas.systems.HeroClonePositioningSystem;
 	import sabelas.systems.MotionControlSystem;
 	import sabelas.systems.MotionSystem;
@@ -67,19 +68,21 @@ package sabelas.core
 			// init inputs
 			_keyPoll = new KeyPoll(_container.stage);
 			
+			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
+			
 			// add systems
 			_engine.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
-			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
-			var stage3DUtils:Stage3DUtils = Stage3DUtils.getInstance();
-			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
-				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
-			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new HeroClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
-			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.UPDATE);
-			_engine.addSystem(new MotionSystem(), SystemPriorities.UPDATE);
+			_engine.addSystem(new HeroCloneControlSystem(_entityCreator, _keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
 				SystemPriorities.UPDATE);
+			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
+			_engine.addSystem(new MotionSystem(), SystemPriorities.MOVE);
+			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.MOVE);
+			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
+			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
+				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
