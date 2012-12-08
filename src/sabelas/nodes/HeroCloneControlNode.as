@@ -1,5 +1,6 @@
 package sabelas.nodes
 {
+	import sabelas.components.HeroClone;
 	import sabelas.components.HeroCloneControl;
 	import ash.core.Node;
 	
@@ -10,6 +11,7 @@ package sabelas.nodes
 	public class HeroCloneControlNode extends Node
 	{
 		public var heroCloneControl:HeroCloneControl;
+		public var heroClone:HeroClone;
 	}
 
 }
