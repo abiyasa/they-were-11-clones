@@ -8,6 +8,7 @@ package sabelas.core
 	import sabelas.components.Display3D;
 	import sabelas.components.GameState;
 	import sabelas.components.HeroClone;
+	import sabelas.components.HeroCloneControl;
 	import sabelas.components.Motion;
 	import sabelas.components.MotionControl;
 	import sabelas.components.MouseControl;
@@ -30,9 +31,6 @@ package sabelas.core
 	{
 		private var _engine:Engine;
 		
-		// list of enemies
-		private var _enemyGroup:Array = [];
-	
 		// for loading 3D assets
 		private var _assetManager:AssetManager;
 		
@@ -116,36 +114,14 @@ package sabelas.core
 		}
 		
 		/**
-		 * Creates a dummy 3D sphere to test if the game system works
-		 *
-		 * @param	size sphere radius
-		 * @param	x cube position
-		 * @param	y cube position
-		 * @return
-		 */
-		public function createDummySphere(size:int, x:int, y:int):Entity
-		{
-			var dummyQuad:Entity = new Entity()
-				.add(new Position(x, y, 0))
-				.add(new Collision(size))
-				.add(new SpinningMotion(Math.PI * 0.5))
-				.add(new Motion(0, 0, 10))
-				.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
-				.add(new Display3D(new DummySphere(size, 0x009EEF)));
-			_engine.addEntity(dummyQuad);
-			
-			return dummyQuad;
-		}
-
-		/**
-		 * Creates a block people, controllable by player
+		 * Internal function to create blocky people
 		 *
 		 * @param	x position
 		 * @param	y position
-		 * @param	peopleCode Determine enemy or hero
+		 * @param	peopleCode enemy or hero
 		 * @return
 		 */
-		public function createBlockyPeople(x:int, y:int, peopleCode:int):Entity
+		protected function createBlockyPeople(x:int, y:int, peopleCode:int):Entity
 		{
 			var blockyPeople:Entity = new Entity()
 				.add(new Position(x, y, 0));
@@ -164,6 +140,11 @@ package sabelas.core
 					.add(new Display3D(_assetManager.createBlockyPeople({
 						type : isLeader ? 0 : 1
 					})));
+					
+				if (isLeader)
+				{
+					blockyPeople..add(new HeroCloneControl(Keyboard.SPACE));
+				}
 				break;
 			
 			case PEOPLE_ENEMY:
@@ -172,8 +153,6 @@ package sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
-					
-				_enemyGroup.push(blockyPeople);
 				break;
 			}
 			
@@ -182,5 +161,16 @@ package sabelas.core
 			return blockyPeople;
 		}
 		
+		/**
+		 * Create the main hero or its clone
+		 * @param	x position
+		 * @param	y position
+		 */
+		public function createHero(x:int, y:int, isClone:Boolean = false):void
+		{
+			createBlockyPeople(x, y, isClone ? PEOPLE_HERO : PEOPLE_HERO_LEADER);
+		}
+		
 	}
+	
 }

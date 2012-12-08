@@ -63,16 +63,14 @@ package sabelas.systems
 						trace('assets has been loaded');
 						
 						// add game characters
-						_entityCreator.createBlockyPeople(0, -200, EntityCreator.PEOPLE_HERO_LEADER);
-						_entityCreator.createBlockyPeople(400, -200, EntityCreator.PEOPLE_HERO);
-						_entityCreator.createBlockyPeople(0, -400, EntityCreator.PEOPLE_HERO);
-						_entityCreator.createBlockyPeople(200, -400, EntityCreator.PEOPLE_HERO);
-						_entityCreator.createBlockyPeople(400, -400, EntityCreator.PEOPLE_HERO);
+						_entityCreator.createHero(0, -200);
 						
-						// add enemies
+						// TODO add enemies
+						/*
 						_entityCreator.createBlockyPeople(200, 200, EntityCreator.PEOPLE_ENEMY);
 						_entityCreator.createBlockyPeople(200, 400, EntityCreator.PEOPLE_ENEMY);
 						_entityCreator.createBlockyPeople(200, 600, EntityCreator.PEOPLE_ENEMY);
+						*/
 						
 						// TODO entityCreator stops loading animation
 						
