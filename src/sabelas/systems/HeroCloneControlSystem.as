@@ -20,6 +20,8 @@ package sabelas.systems
 	{
 		public static const DEBUG_TAG:String = '[HeroCloneControlSystem]';
 		
+		public static const MAX_NUM_OF_CLONES:int = 11;
+		
 		protected var _keyPoll:KeyPoll;
 		protected var _entityCreator:EntityCreator;
 		protected var _heroCloneControlNodes:NodeList;
@@ -82,21 +84,31 @@ package sabelas.systems
 		{
 			trace(DEBUG_TAG, 'cloning an item');
 			
-			// loop hero clones find the leader
+			// loop hero clones find the leader & count total clones
 			var clones:HeroClonesNode;
+			var leaderNode:HeroClonesNode = null;
+			var numOfClones:int = 0;
 			for (clones = _heroCloneNodes.head; clones; clones = clones.next)
 			{
 				if (clones.heroClone.isLeader)
 				{
-					trace(DEBUG_TAG, 'git the leader. clone 1');
-					
-					// create clone from leader
-					
-					// TODO create clone behind the leader (use leader's moving direction)
-					_entityCreator.createHero(clones.position.position.x,
-						clones.position.position.y - 300, true);
-					break;
+					leaderNode = clones;
 				}
+				numOfClones++;
+			}
+			
+			// create clone from leader
+			if ((leaderNode != null) && (numOfClones < MAX_NUM_OF_CLONES))
+			{
+				trace(DEBUG_TAG, 'cloning from the leader. NUm of clones before cloning=' + numOfClones);
+				
+				// TODO create clone behind the leader (use leader's moving direction)
+				_entityCreator.createHero(leaderNode.position.position.x,
+					leaderNode.position.position.y - 300, true);
+			}
+			else
+			{
+				trace(DEBUG_TAG, 'CANNOT clone anymore, too much clones=' + numOfClones);
 			}
 		}
 	}
