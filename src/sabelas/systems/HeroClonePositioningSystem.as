@@ -24,9 +24,11 @@ package sabelas.systems
 		
 		/** Maximum repulsive energy */
 		public static const MAX_REPULSIVE_ENERGY:Number = 5000;
+		public static const MAX_REPULSIVE_ENERGY_SQUARE:Number = MAX_REPULSIVE_ENERGY * MAX_REPULSIVE_ENERGY;
 		
 		/** Minimum repulsive energy */
-		public static const MIN_REPULSIVE_ENERGY:Number = -5000;
+		public static const MIN_REPULSIVE_ENERGY:Number = -MAX_REPULSIVE_ENERGY;
+		public static const MIN_REPULSIVE_ENERGY_SQUARE:Number = MAX_REPULSIVE_ENERGY_SQUARE;
 		
 		public function HeroClonePositioningSystem(creator:EntityCreator)
 		{
@@ -96,7 +98,6 @@ package sabelas.systems
 						}
 						
 						// modify the source and the target cloneForce vector, unless it's the leader
-						repulsiveForce *= 0.001;
 						// TODO there should be minimum repulsive energy
 						tempX = (dx / distance) * repulsiveForce;
 						tempY = (dy / distance) * repulsiveForce;
@@ -137,7 +138,6 @@ package sabelas.systems
 					// TODO there should be minimum attractive energy!
 					
 					// modify the target cloneForce vector using attractiveForce
-					attractiveForce *= 0.1;
 					tempX = dx / distance * attractiveForce;
 					tempY = dy / distance * attractiveForce;
 					targetClone.heroClone.addForce(-tempX, -tempY);
@@ -150,11 +150,25 @@ package sabelas.systems
 				sourceHeroClone = sourceClone.heroClone;
 				if (sourceHeroClone.cloneForceChanged)
 				{
-					sourceClone.motion.forceX += sourceHeroClone.cloneForceX;
-					sourceClone.motion.forceY += sourceHeroClone.cloneForceY;
+					// TODO limit the maximum cloneForce power.
+					// TODO should we do this?
+					var forceX:Number = sourceClone.motion.forceX + sourceHeroClone.cloneForceX;
+					var forceY:Number = sourceClone.motion.forceY + sourceHeroClone.cloneForceY;
+					var cloneForce:Number = (forceX * forceX) + (forceY * forceX);
+					if (cloneForce > MAX_REPULSIVE_ENERGY_SQUARE)
+					{
+						cloneForce = Math.sqrt(cloneForce);
+						
+						trace('clone force is overloaded=' + cloneForce);
+						
+						forceX = (forceX / cloneForce) * MAX_REPULSIVE_ENERGY;
+						forceY = (forceY / cloneForce) * MAX_REPULSIVE_ENERGY;
+					}
+					sourceClone.motion.forceX = forceX;
+					sourceClone.motion.forceY = forceY;
 					
 					//trace('original force for clone x=' + sourceHeroClone.cloneForceX + ', y=' + sourceHeroClone.cloneForceY);
-					//trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
+					trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
 					
 					sourceHeroClone.resetCloneForce();
 				}
@@ -187,7 +201,7 @@ package sabelas.systems
 			{
 				temp = MIN_REPULSIVE_ENERGY;
 			}
-			return temp;
+			return temp * 0.001;
 		}
 		
 		/**
@@ -198,7 +212,7 @@ package sabelas.systems
 		 */
 		private static function calculateForceAttractive(distance:Number):Number
 		{
-			return (distance * distance) / IDEAL_DISTANCE;
+			return (distance * distance) / IDEAL_DISTANCE * 0.1;
 		}
 		
 	}
