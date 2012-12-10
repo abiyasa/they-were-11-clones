@@ -23,7 +23,7 @@ package sabelas.systems
 		private static const IDEAL_DISTANCE_SQUARE:Number = IDEAL_DISTANCE * IDEAL_DISTANCE;
 		
 		/** Maximum repulsive energy */
-		public static const MAX_REPULSIVE_ENERGY:Number = 5000;
+		public static const MAX_REPULSIVE_ENERGY:Number = 5000.0;
 		public static const MAX_REPULSIVE_ENERGY_SQUARE:Number = MAX_REPULSIVE_ENERGY * MAX_REPULSIVE_ENERGY;
 		
 		/** Minimum repulsive energy */
@@ -134,13 +134,18 @@ package sabelas.systems
 					
 					// consider radius
 					distance -= (sourceRadius + targetClone.collision.radius);
-					attractiveForce = calculateForceAttractive(distance);
-					// TODO there should be minimum attractive energy!
-					
-					// modify the target cloneForce vector using attractiveForce
-					tempX = dx / distance * attractiveForce;
-					tempY = dy / distance * attractiveForce;
-					targetClone.heroClone.addForce(-tempX, -tempY);
+					if (distance > 0)
+					{
+						attractiveForce = calculateForceAttractive(distance);
+						tempX = dx / distance * attractiveForce;
+						tempY = dy / distance * attractiveForce;
+						
+						// TODO there should be minimum attractive energy!
+						
+						// modify the target cloneForce vector using attractiveForce
+						targetClone.heroClone.addForce(-tempX, -tempY);
+						
+					}
 				}
 			}
 			
@@ -154,7 +159,7 @@ package sabelas.systems
 					// TODO should we do this?
 					var forceX:Number = sourceClone.motion.forceX + sourceHeroClone.cloneForceX;
 					var forceY:Number = sourceClone.motion.forceY + sourceHeroClone.cloneForceY;
-					var cloneForce:Number = (forceX * forceX) + (forceY * forceX);
+					var cloneForce:Number = (forceX * forceX) + (forceY * forceY);
 					if (cloneForce > MAX_REPULSIVE_ENERGY_SQUARE)
 					{
 						cloneForce = Math.sqrt(cloneForce);
