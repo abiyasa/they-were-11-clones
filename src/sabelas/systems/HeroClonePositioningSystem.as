@@ -19,8 +19,10 @@ package sabelas.systems
 		private var _creator:EntityCreator;
 		private var _clones:NodeList;
 		
-		private static const IDEAL_DISTANCE:Number = 250.0;
+		private static const IDEAL_DISTANCE:Number = 500.0;
 		private static const IDEAL_DISTANCE_SQUARE:Number = IDEAL_DISTANCE * IDEAL_DISTANCE;
+		
+		private static const MINIMUM_DISTANCE:Number = 10.0;
 		
 		/** Maximum repulsive energy */
 		public static const MAX_REPULSIVE_ENERGY:Number = 5000.0;
@@ -86,16 +88,11 @@ package sabelas.systems
 					{
 						// consider radius
 						distance -= (sourceRadius + targetClone.collision.radius);
-						if (distance <= 0)
+						if (distance <= MINIMUM_DISTANCE)
 						{
-							// nodes are colliding, repluse at full power
-							repulsiveForce = MAX_REPULSIVE_ENERGY;
-							distance = 0.01;
+							distance = MINIMUM_DISTANCE;
 						}
-						else  // nodes are not colliding
-						{
-							repulsiveForce = calculateForceReplusive(distance);
-						}
+						repulsiveForce = calculateForceReplusive(distance);
 						
 						// modify the source and the target cloneForce vector, unless it's the leader
 						// TODO there should be minimum repulsive energy
