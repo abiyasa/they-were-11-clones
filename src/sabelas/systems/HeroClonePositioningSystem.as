@@ -54,64 +54,47 @@ package sabelas.systems
 			var sourcePosition:Point, targetPosition:Point;
 			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;
 			var sourceRadius:Number;
-			var leaderEntity:Entity;
 			
-			// get the clone leader
-			sourceClone = _clones.head;
-			if (sourceClone != null)
-			{
-				leaderEntity = sourceClone.cloneMember.cloneLeader;
-			}
-			
-			// handle repulsive force among clones
-			// TODO also calculate repulsive force between clones and the leader
+			// calculate repulsive force among clones
 			var repulsiveForce:Number;
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
 				sourceHeroClone = sourceClone.cloneMember;
-				
-				// calculate repulsive force
 				sourcePosition = sourceClone.position.position;
 				sourceRadius = sourceClone.collision.radius;
+				
 				targetClone = sourceClone.next;
 				while (targetClone != null)
 				{
-					// calculate distance between source and target clones
-					targetPosition = targetClone.position.position;
-					dx = targetPosition.x - sourcePosition.x;
-					dy = targetPosition.y - sourcePosition.y;
-					distance = Math.sqrt((dx * dx) + (dy * dy));
-					
-					// calculate the repulsive force between clones
-					if (distance < IDEAL_DISTANCE)
-					{
-						// consider radius
-						distance -= (sourceRadius + targetClone.collision.radius);
-						if (distance <= MINIMUM_DISTANCE)
-						{
-							distance = MINIMUM_DISTANCE;
-						}
-						repulsiveForce = calculateForceReplusive(distance);
-						
-						// modify the source and the target cloneForce vector
-						// TODO there should be minimum repulsive energy
-						tempX = (dx / distance) * repulsiveForce;
-						tempY = (dy / distance) * repulsiveForce;
-						sourceHeroClone.addForce(-tempX, -tempY);
-						targetClone.cloneMember.addForce(tempX, tempY);
-					}
+					processRepulsiveForceBetweenNodes(sourcePosition, sourceRadius, sourceHeroClone,
+						targetClone.position.position, targetClone.collision.radius, targetClone.cloneMember);
 					
 					// next to compare
 					targetClone = targetClone.next;
 				}
 			}
 			
-			// calculate the attractive forces between the clones and its leader
-			var attractiveForce:Number;
+			// get the clone leader
+			var leaderEntity:Entity;
+			sourceClone = _clones.head;
+			if (sourceClone != null)
+			{
+				leaderEntity = sourceClone.cloneMember.cloneLeader;
+			}
 			if (leaderEntity != null)
 			{
 				sourcePosition = leaderEntity.get(Position).position;
 				sourceRadius = leaderEntity.get(Collision).radius;
+				
+				// also calculate repulsive force between clones and the leader
+				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
+				{
+					processRepulsiveForceBetweenNodes(sourcePosition, sourceRadius, null,
+						targetClone.position.position, targetClone.collision.radius, targetClone.cloneMember);
+				}
+
+				// calculate the attractive forces between the clones and its leader
+				var attractiveForce:Number;
 				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
 				{
 					// calculate distance
@@ -160,8 +143,7 @@ package sabelas.systems
 					sourceClone.motion.forceX = forceX;
 					sourceClone.motion.forceY = forceY;
 					
-					//trace('original force for clone x=' + sourceHeroClone.cloneForceX + ', y=' + sourceHeroClone.cloneForceY);
-					trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
+					//trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
 					
 					sourceHeroClone.resetCloneForce();
 				}
@@ -172,6 +154,50 @@ package sabelas.systems
 		{
 			super.removeFromEngine(engine);
 			_clones = null;
+		}
+		
+		/**
+		 * Internal function to calculate and update repulsive forces between nodes.
+		 * Both nodes (except if the node is the leader)
+		 *
+		 * @param	sourcePosition
+		 * @param	sourceRadius
+		 * @param	sourceClone Might be null (for leader)
+		 * @param	targetPosition
+		 * @param	targetRadius
+		 * @param	targetClone Must not null
+		 */
+		private function processRepulsiveForceBetweenNodes(sourcePosition:Point, sourceRadius:Number,
+			sourceClone:CloneMember, targetPosition:Point, targetRadius:Number,
+			targetClone:CloneMember):void
+		{
+			// calculate distance between source and target clones
+			var dx:Number = targetPosition.x - sourcePosition.x;
+			var dy:Number = targetPosition.y - sourcePosition.y;
+			var distance:Number = Math.sqrt((dx * dx) + (dy * dy));
+			
+			// calculate the repulsive force between clones
+			if (distance < IDEAL_DISTANCE)
+			{
+				// consider radius
+				distance -= (sourceRadius + targetRadius);
+				if (distance <= MINIMUM_DISTANCE)
+				{
+					distance = MINIMUM_DISTANCE;
+				}
+				var repulsiveForce:Number = calculateForceReplusive(distance);
+				
+				// modify the source and the target cloneForce vector
+				// TODO there should be minimum repulsive energy
+				repulsiveForce = repulsiveForce / distance;
+				var tempX:Number = dx * repulsiveForce;
+				var tempY:Number = dy * repulsiveForce;
+				if (sourceClone != null)
+				{
+					sourceClone.addForce(-tempX, -tempY);
+				}
+				targetClone.addForce(tempX, tempY);
+			}
 		}
 		
 		/**
