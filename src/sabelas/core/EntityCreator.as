@@ -155,7 +155,6 @@ package sabelas.core
 				blockyPeople
 					.add(new Position(x, y, 0))
 					.add(new CloneMember(_mainHero))
-					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
