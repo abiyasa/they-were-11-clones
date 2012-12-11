@@ -34,6 +34,9 @@ package sabelas.core
 		// for loading 3D assets
 		private var _assetManager:AssetManager;
 		
+		// our main hero
+		private var _mainHero:Entity;
+		
 		// flag to indicate assets has been loaded
 		private var _assetsLoaded:Boolean;
 		public function get assetsLoaded():Boolean { return _assetsLoaded; }
@@ -46,6 +49,7 @@ package sabelas.core
 		public function EntityCreator(engine:Engine)
 		{
 			_engine = engine;
+			_mainHero = null;
 		}
 		
 		/**
@@ -74,6 +78,7 @@ package sabelas.core
 			{
 				_assetManager.destroy();
 			}
+			_mainHero = null;
 		}
 		
 		public function destroyEntity(entity:Entity):void
@@ -128,23 +133,30 @@ package sabelas.core
 				
 			switch (peopleCode)
 			{
-			case PEOPLE_HERO:
 			case PEOPLE_HERO_LEADER:
-				var isLeader:Boolean = peopleCode == PEOPLE_HERO_LEADER;
+				if (_mainHero != null)
+				{
+					return null;
+				}
+				_mainHero = blockyPeople;
+
 				blockyPeople
-					.add(new HeroClone(isLeader))
+					.add(new HeroClone(true))  // move this into cloneFollower and cloneLeader
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
-					.add(new MouseControl())
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new Display3D(_assetManager.createBlockyPeople({
-						type : isLeader ? 0 : 1
-					})));
-					
-				if (isLeader)
-				{
-					blockyPeople..add(new HeroCloneControl(Keyboard.SPACE));
-				}
+					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
+					.add(new HeroCloneControl(Keyboard.SPACE))
+					.add(new MouseControl());
+				break;
+				
+			case PEOPLE_HERO:
+				blockyPeople
+					.add(new HeroClone(false))  // todo convert to clone follower component
+					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
+					.add(new Motion(0, 0, 200))
+					.add(new Collision(50))
+					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
 			
 			case PEOPLE_ENEMY:
