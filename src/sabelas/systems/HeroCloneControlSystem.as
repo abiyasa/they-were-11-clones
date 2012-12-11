@@ -1,12 +1,13 @@
 package sabelas.systems
 {
 	import ash.core.Engine;
+	import ash.core.Entity;
 	import ash.core.Node;
 	import ash.core.NodeList;
 	import ash.core.System;
 	import ash.tools.ListIteratingSystem;
-	import sabelas.components.HeroClone;
 	import sabelas.components.HeroCloneControl;
+	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.input.KeyPoll;
 	import sabelas.nodes.HeroCloneControlNode;
@@ -66,7 +67,7 @@ package sabelas.systems
 						// key clicked is detected
 						cloneControl.cloneTriggered = false;
 						
-						doClone();
+						doClone(cloneControlNode);
 					}
 				}
 				else if (_keyPoll.isDown(cloneControl.keyAddClone))
@@ -80,31 +81,26 @@ package sabelas.systems
 		/**
 		 * Make a clone
 		 */
-		protected function doClone():void
+		protected function doClone(cloneControlNode:HeroCloneControlNode):void
 		{
 			trace(DEBUG_TAG, 'cloning an item');
 			
-			// loop hero clones find the leader & count total clones
+			// loop clones to count total clones
 			var clones:HeroClonesNode;
-			var leaderNode:HeroClonesNode = null;
 			var numOfClones:int = 0;
 			for (clones = _heroCloneNodes.head; clones; clones = clones.next)
 			{
-				if (clones.heroClone.isLeader)
-				{
-					leaderNode = clones;
-				}
 				numOfClones++;
 			}
 			
-			// create clone from leader
-			if ((leaderNode != null) && (numOfClones < MAX_NUM_OF_CLONES))
+			// create clone from the leader
+			if (numOfClones < MAX_NUM_OF_CLONES)
 			{
 				trace(DEBUG_TAG, 'cloning from the leader. NUm of clones before cloning=' + numOfClones);
 				
 				// TODO create clone behind the leader (use leader's moving direction)
-				_entityCreator.createHero(leaderNode.position.position.x,
-					leaderNode.position.position.y - 300, true);
+				var leaderPosition:Position = cloneControlNode.position;
+				_entityCreator.createHero(leaderPosition.position.x, leaderPosition.position.y - 300, true);
 			}
 			else
 			{

@@ -1,8 +1,8 @@
 package sabelas.nodes
 {
-	import sabelas.components.HeroClone;
 	import sabelas.components.HeroCloneControl;
 	import ash.core.Node;
+	import sabelas.components.Position;
 	
 	/**
 	 * Node for controlling hero clones (adding or removing clones)
@@ -11,7 +11,7 @@ package sabelas.nodes
 	public class HeroCloneControlNode extends Node
 	{
 		public var heroCloneControl:HeroCloneControl;
-		public var heroClone:HeroClone;
+		public var position:Position;
 	}
 
 }

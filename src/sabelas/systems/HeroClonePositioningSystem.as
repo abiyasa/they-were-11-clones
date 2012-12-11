@@ -1,7 +1,10 @@
 package sabelas.systems
 {
+	import ash.core.Entity;
 	import flash.geom.Point;
-	import sabelas.components.HeroClone;
+	import sabelas.components.CloneMember;
+	import sabelas.components.Collision;
+	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.HeroClonesNode;
 	import ash.core.Engine;
@@ -47,29 +50,25 @@ package sabelas.systems
 		{
 			var sourceClone:HeroClonesNode;
 			var targetClone:HeroClonesNode;
-			var sourceHeroClone:HeroClone;
-			var leaderNode:HeroClonesNode;
-			var sourceIsLeader:Boolean;
+			var sourceHeroClone:CloneMember;
 			var sourcePosition:Point, targetPosition:Point;
 			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;
 			var sourceRadius:Number;
+			var leaderEntity:Entity;
 			
-			// handle repulsive force between clones
+			// get the clone leader
+			sourceClone = _clones.head;
+			if (sourceClone != null)
+			{
+				leaderEntity = sourceClone.cloneMember.cloneLeader;
+			}
+			
+			// handle repulsive force among clones
+			// TODO also calculate repulsive force between clones and the leader
 			var repulsiveForce:Number;
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
-				// check if this is a leader
-				if (sourceClone.heroClone.isLeader)
-				{
-					sourceIsLeader = true;
-					leaderNode = sourceClone;
-				}
-				else
-				{
-					sourceIsLeader = false;
-				}
-				
-				sourceHeroClone = sourceClone.heroClone;
+				sourceHeroClone = sourceClone.cloneMember;
 				
 				// calculate repulsive force
 				sourcePosition = sourceClone.position.position;
@@ -94,15 +93,12 @@ package sabelas.systems
 						}
 						repulsiveForce = calculateForceReplusive(distance);
 						
-						// modify the source and the target cloneForce vector, unless it's the leader
+						// modify the source and the target cloneForce vector
 						// TODO there should be minimum repulsive energy
 						tempX = (dx / distance) * repulsiveForce;
 						tempY = (dy / distance) * repulsiveForce;
-						if (!sourceIsLeader)
-						{
-							sourceHeroClone.addForce(-tempX, -tempY);
-						}
-						targetClone.heroClone.addForce(tempX, tempY);
+						sourceHeroClone.addForce(-tempX, -tempY);
+						targetClone.cloneMember.addForce(tempX, tempY);
 					}
 					
 					// next to compare
@@ -112,17 +108,12 @@ package sabelas.systems
 			
 			// calculate the attractive forces between the clones and its leader
 			var attractiveForce:Number;
-			if (leaderNode != null)
+			if (leaderEntity != null)
 			{
-				sourcePosition = leaderNode.position.position;
-				sourceRadius = leaderNode.collision.radius;
+				sourcePosition = leaderEntity.get(Position).position;
+				sourceRadius = leaderEntity.get(Collision).radius;
 				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
 				{
-					if (targetClone == leaderNode)
-					{
-						continue;
-					}
-					
 					// calculate distance
 					targetPosition = targetClone.position.position;
 					dx = targetPosition.x - sourcePosition.x;
@@ -140,7 +131,7 @@ package sabelas.systems
 						// TODO there should be minimum attractive energy!
 						
 						// modify the target cloneForce vector using attractiveForce
-						targetClone.heroClone.addForce(-tempX, -tempY);
+						targetClone.cloneMember.addForce(-tempX, -tempY);
 						
 					}
 				}
@@ -149,7 +140,7 @@ package sabelas.systems
 			// apply cloneForce
 			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
 			{
-				sourceHeroClone = sourceClone.heroClone;
+				sourceHeroClone = sourceClone.cloneMember;
 				if (sourceHeroClone.cloneForceChanged)
 				{
 					// TODO limit the maximum cloneForce power.

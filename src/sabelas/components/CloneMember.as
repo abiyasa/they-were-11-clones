@@ -1,14 +1,14 @@
 package sabelas.components
 {
+	import ash.core.Entity;
+	
 	/**
-	 * Component for marking that an entity belongs to hero clones group
+	 * Component for clone group member and clone is always follow the leader
 	 *
 	 * @author Abiyasa
 	 */
-	public class HeroClone
+	public class CloneMember
 	{
-		public var isLeader:Boolean = false;
-		
 		// Total repulsive & attraction force, calculated by HeroClonePositioningSystem
 		// TODO should separate to a component
 		protected var _cloneForceX:Number;
@@ -50,10 +50,12 @@ package sabelas.components
 			_cloneForceChanged = value;
 		}
 		
+		/** The clone leader which will be followed by the memeber */
+		public var cloneLeader:Entity;
 		
-		public function HeroClone(isLeader:Boolean = false)
+		public function CloneMember(cloneLeader:Entity = null)
 		{
-			this.isLeader = isLeader;
+			this.cloneLeader = cloneLeader;
 			resetCloneForce();
 		}
 		

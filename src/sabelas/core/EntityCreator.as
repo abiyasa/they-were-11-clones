@@ -4,10 +4,11 @@ package sabelas.core
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
+	import sabelas.components.CloneLeader;
+	import sabelas.components.CloneMember;
 	import sabelas.components.Collision;
 	import sabelas.components.Display3D;
 	import sabelas.components.GameState;
-	import sabelas.components.HeroClone;
 	import sabelas.components.HeroCloneControl;
 	import sabelas.components.Motion;
 	import sabelas.components.MotionControl;
@@ -128,8 +129,7 @@ package sabelas.core
 		 */
 		protected function createBlockyPeople(x:int, y:int, peopleCode:int):Entity
 		{
-			var blockyPeople:Entity = new Entity()
-				.add(new Position(x, y, 0));
+			var blockyPeople:Entity = new Entity();
 				
 			switch (peopleCode)
 			{
@@ -141,7 +141,8 @@ package sabelas.core
 				_mainHero = blockyPeople;
 
 				blockyPeople
-					.add(new HeroClone(true))  // move this into cloneFollower and cloneLeader
+					.add(new Position(x, y, 0))
+					.add(new CloneLeader())
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
@@ -152,7 +153,8 @@ package sabelas.core
 				
 			case PEOPLE_HERO:
 				blockyPeople
-					.add(new HeroClone(false))  // todo convert to clone follower component
+					.add(new Position(x, y, 0))
+					.add(new CloneMember(_mainHero))
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
@@ -162,6 +164,7 @@ package sabelas.core
 			case PEOPLE_ENEMY:
 			default:
 				blockyPeople
+					.add(new Position(x, y, 0))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
