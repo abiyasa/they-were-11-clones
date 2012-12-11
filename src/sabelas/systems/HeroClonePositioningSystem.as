@@ -83,7 +83,9 @@ package sabelas.systems
 			}
 			if (leaderEntity != null)
 			{
-				sourcePosition = leaderEntity.get(Position).position;
+				var leaderPostion:Position = leaderEntity.get(Position);
+				var leaderRotation:Number = leaderPostion.rotation;
+				sourcePosition = leaderPostion.position;
 				sourceRadius = leaderEntity.get(Collision).radius;
 				
 				// also calculate repulsive force between clones and the leader
@@ -93,7 +95,7 @@ package sabelas.systems
 						targetClone.position.position, targetClone.collision.radius, targetClone.cloneMember);
 				}
 
-				// calculate the attractive forces between the clones and its leader
+				// calculate the attractive forces between the clones and its leader.
 				var attractiveForce:Number;
 				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
 				{
@@ -115,8 +117,10 @@ package sabelas.systems
 						
 						// modify the target cloneForce vector using attractiveForce
 						targetClone.cloneMember.addForce(-tempX, -tempY);
-						
 					}
+					
+					// also rotates clone the same as leader
+					targetClone.position.rotation = leaderRotation;
 				}
 			}
 			
