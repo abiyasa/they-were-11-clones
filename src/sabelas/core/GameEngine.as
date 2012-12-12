@@ -12,7 +12,7 @@ package sabelas.core
 	import sabelas.systems.HeroClonePositioningSystem;
 	import sabelas.systems.MotionControlSystem;
 	import sabelas.systems.MotionSystem;
-	import sabelas.systems.MouseMotionControlSystem;
+	import sabelas.systems.MouseControlSystem;
 	import sabelas.systems.RenderSystem;
 	import sabelas.systems.RenderSystem3D;
 	import sabelas.systems.SpinningMotionSystem;
@@ -75,7 +75,7 @@ package sabelas.core
 			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new HeroClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new HeroCloneControlSystem(_entityCreator, _keyPoll), SystemPriorities.UPDATE);
-			_engine.addSystem(new MouseMotionControlSystem(_container.stage, stage3DUtils.currentView3D),
+			_engine.addSystem(new MouseControlSystem(_container.stage, stage3DUtils.currentView3D),
 				SystemPriorities.UPDATE);
 			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(), SystemPriorities.MOVE);

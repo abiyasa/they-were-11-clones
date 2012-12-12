@@ -19,14 +19,14 @@ package sabelas.systems
 	 *
 	 * @author Abiyasa
 	 */
-	public class MouseMotionControlSystem extends ListIteratingSystem
+	public class MouseControlSystem extends ListIteratingSystem
 	{
 		private var _container:DisplayObjectContainer;
 		private var _lastPosX:Number;
 		private var _lastPosY:Number;
 		private var _drag3D:Drag3D;
 		
-		public function MouseMotionControlSystem(container:DisplayObjectContainer, view3D:View3D)
+		public function MouseControlSystem(container:DisplayObjectContainer, view3D:View3D)
 		{
 			super(MouseControlNode, updateNode);
 			
