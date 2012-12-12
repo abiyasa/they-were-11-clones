@@ -4,6 +4,7 @@ package sabelas.systems
 	import away3d.tools.utils.Drag3D;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
+	import sabelas.components.Gun;
 	import sabelas.components.Position;
 	import sabelas.components.MouseControl;
 	import sabelas.nodes.MouseControlNode;
@@ -24,6 +25,7 @@ package sabelas.systems
 		private var _container:DisplayObjectContainer;
 		private var _lastPosX:Number;
 		private var _lastPosY:Number;
+		private var _isTriggered:Boolean;
 		private var _drag3D:Drag3D;
 		
 		public function MouseControlSystem(container:DisplayObjectContainer, view3D:View3D)
@@ -35,6 +37,7 @@ package sabelas.systems
 			_drag3D = new Drag3D(view3D, null, Drag3D.PLANE_XZ);
 			_lastPosX = _container.stage.stageWidth / 2;
 			_lastPosY = 0;
+			_isTriggered = false;
 		}
 		
 		override public function removeFromEngine(engine:Engine):void
@@ -52,19 +55,22 @@ package sabelas.systems
 				return;
 			}
 			
-			if (touch.phase == TouchPhase.HOVER)
+			switch (touch.phase)
 			{
+			case TouchPhase.BEGAN:
+				_isTriggered = true;
+				break;
+				
+			case TouchPhase.HOVER:
 				_lastPosX = touch.globalX;
 				_lastPosY = touch.globalY;
-				
-				// TODO unset action to fire
-			}
-			else if (touch.phase == TouchPhase.ENDED)
-			{
+				break;
+			
+			case TouchPhase.ENDED:
 				_lastPosX = touch.globalX;
 				_lastPosY = touch.globalY;
-				
-				// TODO set action to fire
+				_isTriggered = false;
+				break;
 			}
 		}
 		
@@ -78,6 +84,18 @@ package sabelas.systems
 			var positionPoint:Point = position.position;
 			position.rotation = Math.atan2(pos3d.x - positionPoint.x,
 				pos3d.z - positionPoint.y);
+				
+			// handle gun
+			var gun:Gun = node.gun;
+			gun.shooting = _isTriggered;
+			gun.timeSinceLastShot += time;
+			if (_isTriggered && gun.timeSinceLastShot >= gun.minimumShotInterval)
+			{
+				// TODO shoot the bullet
+				//creator.createUserBullet( gun, position );
+				trace('BANG! Don\'t shoot me bro!');
+				gun.timeSinceLastShot = 0;
+			}
 		}
 	}
 

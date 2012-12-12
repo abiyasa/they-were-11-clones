@@ -1,5 +1,6 @@
 package sabelas.nodes
 {
+	import sabelas.components.Gun;
 	import sabelas.components.Position;
 	import sabelas.components.MouseControl;
 	import ash.core.Node;
@@ -14,6 +15,7 @@ package sabelas.nodes
 	{
 		public var position:Position;
 		public var mouseControl:MouseControl;
+		public var gun:Gun;
 	}
 
 }
