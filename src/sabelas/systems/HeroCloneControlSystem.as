@@ -11,7 +11,7 @@ package sabelas.systems
 	import sabelas.core.EntityCreator;
 	import sabelas.input.KeyPoll;
 	import sabelas.nodes.HeroCloneControlNode;
-	import sabelas.nodes.HeroClonesNode;
+	import sabelas.nodes.ClonesNode;
 	
 	/**
 	 * System for controlling hero clone (adding or removing clones)
@@ -26,7 +26,7 @@ package sabelas.systems
 		protected var _keyPoll:KeyPoll;
 		protected var _entityCreator:EntityCreator;
 		protected var _heroCloneControlNodes:NodeList;
-		protected var _heroCloneNodes:NodeList;
+		protected var _cloneNodes:NodeList;
 		
 		public function HeroCloneControlSystem(creator:EntityCreator, keypoll:KeyPoll)
 		{
@@ -40,14 +40,14 @@ package sabelas.systems
 			super.addToEngine(engine);
 			
 			_heroCloneControlNodes = engine.getNodeList(HeroCloneControlNode);
-			_heroCloneNodes = engine.getNodeList(HeroClonesNode);
+			_cloneNodes = engine.getNodeList(ClonesNode);
 		}
 		
 		override public function removeFromEngine(engine:Engine):void
 		{
 			super.removeFromEngine(engine);
 			_heroCloneControlNodes = null;
-			_heroCloneNodes = null;
+			_cloneNodes = null;
 		}
 		
 		override public function update(time:Number):void
@@ -86,9 +86,9 @@ package sabelas.systems
 			trace(DEBUG_TAG, 'cloning an item');
 			
 			// loop clones to count total clones
-			var clones:HeroClonesNode;
+			var clones:ClonesNode;
 			var numOfClones:int = 0;
-			for (clones = _heroCloneNodes.head; clones; clones = clones.next)
+			for (clones = _cloneNodes.head; clones; clones = clones.next)
 			{
 				numOfClones++;
 			}

@@ -6,7 +6,7 @@ package sabelas.systems
 	import sabelas.components.Collision;
 	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
-	import sabelas.nodes.HeroClonesNode;
+	import sabelas.nodes.ClonesNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;
@@ -43,13 +43,13 @@ package sabelas.systems
 		override public function addToEngine(engine:Engine):void
 		{
 			super.addToEngine(engine);
-			_clones = engine.getNodeList(HeroClonesNode);
+			_clones = engine.getNodeList(ClonesNode);
 		}
 		
 		override public function update(time:Number):void
 		{
-			var sourceClone:HeroClonesNode;
-			var targetClone:HeroClonesNode;
+			var sourceClone:ClonesNode;
+			var targetClone:ClonesNode;
 			var sourceHeroClone:CloneMember;
 			var sourcePosition:Point, targetPosition:Point;
 			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;

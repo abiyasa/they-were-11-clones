@@ -7,10 +7,10 @@ package sabelas.nodes
 	import ash.core.Node;
 	
 	/**
-	 * Node for hero clones component
+	 * Node for clones component
 	 * @author Abiyasa
 	 */
-	public class HeroClonesNode extends Node
+	public class ClonesNode extends Node
 	{
 		public var cloneMember:CloneMember;
 		public var collision:Collision;
