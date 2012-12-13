@@ -10,7 +10,6 @@ package sabelas.components
 	{
 		public var position:Point;
 		public var rotation:Number = 0;
-		public var collisionRadius:int = 0;
 		
 		public function Position(x:int, y:int, rotation:Number)
 		{
