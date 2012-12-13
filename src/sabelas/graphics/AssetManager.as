@@ -124,7 +124,6 @@ package sabelas.graphics
 		
 		/**
 		 * Creates 3D blocky people.
-		 * Will dispatch event when done
 		 *
 		 * @param	config
 		 * @return
@@ -153,6 +152,46 @@ package sabelas.graphics
 					
 				case 2:
 					// colorize enemy
+					mesh.material = _blockyTextures[2] as MaterialBase;
+					break;
+				}
+			}
+			return tempResult;
+		}
+
+		/**
+		 * Creates simple 3D bullet
+		 *
+		 * @param	config
+		 * @return
+		 */
+		public function createBullet(config:Object = null):ObjectContainer3D
+		{
+			if (config == null)
+			{
+				config = {};
+			}
+			
+			var tempResult:ObjectContainer3D = new ObjectContainer3D();
+			if (_blockyMesh != null)
+			{
+				var mesh:Mesh = Mesh(_blockyMesh.clone());
+				mesh.scale(0.20);
+				mesh.rotationX = 90;
+				mesh.y = 250;
+				tempResult.addChild(mesh);
+				
+				// colorize
+				var type:int = int(config.type);
+				switch (type )
+				{
+				case 1:
+					// colorize bullet
+					mesh.material = _blockyTextures[1] as MaterialBase;
+					break;
+					
+				case 2:
+					// colorize bullet
 					mesh.material = _blockyTextures[2] as MaterialBase;
 					break;
 				}
