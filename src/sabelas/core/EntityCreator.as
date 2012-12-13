@@ -10,7 +10,7 @@ package sabelas.core
 	import sabelas.components.Display3D;
 	import sabelas.components.GameState;
 	import sabelas.components.Gun;
-	import sabelas.components.HeroCloneControl;
+	import sabelas.components.CloneControl;
 	import sabelas.components.Motion;
 	import sabelas.components.MotionControl;
 	import sabelas.components.MouseControl;
@@ -148,7 +148,7 @@ package sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
-					.add(new HeroCloneControl(Keyboard.SPACE))
+					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
 					.add(new Gun(8, 0, 0.3, 2));
 				break;

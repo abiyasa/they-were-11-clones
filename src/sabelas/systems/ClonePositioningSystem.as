@@ -48,38 +48,38 @@ package sabelas.systems
 		
 		override public function update(time:Number):void
 		{
-			var sourceClone:ClonesNode;
-			var targetClone:ClonesNode;
-			var sourceHeroClone:CloneMember;
+			var sourceCloneNode:ClonesNode;
+			var targetCloneNode:ClonesNode;
+			var sourceClone:CloneMember;
 			var sourcePosition:Point, targetPosition:Point;
 			var distance:Number, dx:Number, dy:Number, tempX:Number, tempY:Number;
 			var sourceRadius:Number;
 			
 			// calculate repulsive force among clones
 			var repulsiveForce:Number;
-			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
+			for (sourceCloneNode = _clones.head; sourceCloneNode; sourceCloneNode = sourceCloneNode.next)
 			{
-				sourceHeroClone = sourceClone.cloneMember;
-				sourcePosition = sourceClone.position.position;
-				sourceRadius = sourceClone.collision.radius;
+				sourceClone = sourceCloneNode.cloneMember;
+				sourcePosition = sourceCloneNode.position.position;
+				sourceRadius = sourceCloneNode.collision.radius;
 				
-				targetClone = sourceClone.next;
-				while (targetClone != null)
+				targetCloneNode = sourceCloneNode.next;
+				while (targetCloneNode != null)
 				{
-					processRepulsiveForceBetweenNodes(sourcePosition, sourceRadius, sourceHeroClone,
-						targetClone.position.position, targetClone.collision.radius, targetClone.cloneMember);
+					processRepulsiveForceBetweenNodes(sourcePosition, sourceRadius, sourceClone,
+						targetCloneNode.position.position, targetCloneNode.collision.radius, targetCloneNode.cloneMember);
 					
 					// next to compare
-					targetClone = targetClone.next;
+					targetCloneNode = targetCloneNode.next;
 				}
 			}
 			
 			// get the clone leader
 			var leaderEntity:Entity;
-			sourceClone = _clones.head;
-			if (sourceClone != null)
+			sourceCloneNode = _clones.head;
+			if (sourceCloneNode != null)
 			{
-				leaderEntity = sourceClone.cloneMember.cloneLeader;
+				leaderEntity = sourceCloneNode.cloneMember.cloneLeader;
 			}
 			if (leaderEntity != null)
 			{
@@ -89,24 +89,24 @@ package sabelas.systems
 				sourceRadius = leaderEntity.get(Collision).radius;
 				
 				// also calculate repulsive force between clones and the leader
-				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
+				for (targetCloneNode = _clones.head; targetCloneNode; targetCloneNode = targetCloneNode.next)
 				{
 					processRepulsiveForceBetweenNodes(sourcePosition, sourceRadius, null,
-						targetClone.position.position, targetClone.collision.radius, targetClone.cloneMember);
+						targetCloneNode.position.position, targetCloneNode.collision.radius, targetCloneNode.cloneMember);
 				}
 
 				// calculate the attractive forces between the clones and its leader.
 				var attractiveForce:Number;
-				for (targetClone = _clones.head; targetClone; targetClone = targetClone.next)
+				for (targetCloneNode = _clones.head; targetCloneNode; targetCloneNode = targetCloneNode.next)
 				{
 					// calculate distance
-					targetPosition = targetClone.position.position;
+					targetPosition = targetCloneNode.position.position;
 					dx = targetPosition.x - sourcePosition.x;
 					dy = targetPosition.y - sourcePosition.y;
 					distance = Math.sqrt((dx * dx) + (dy * dy));
 					
 					// consider radius
-					distance -= (sourceRadius + targetClone.collision.radius);
+					distance -= (sourceRadius + targetCloneNode.collision.radius);
 					if (distance > 0)
 					{
 						attractiveForce = calculateForceAttractive(distance);
@@ -116,24 +116,24 @@ package sabelas.systems
 						// TODO there should be minimum attractive energy!
 						
 						// modify the target cloneForce vector using attractiveForce
-						targetClone.cloneMember.addForce(-tempX, -tempY);
+						targetCloneNode.cloneMember.addForce(-tempX, -tempY);
 					}
 					
 					// also rotates clone the same as leader
-					targetClone.position.rotation = leaderRotation;
+					targetCloneNode.position.rotation = leaderRotation;
 				}
 			}
 			
 			// apply cloneForce
-			for (sourceClone = _clones.head; sourceClone; sourceClone = sourceClone.next)
+			for (sourceCloneNode = _clones.head; sourceCloneNode; sourceCloneNode = sourceCloneNode.next)
 			{
-				sourceHeroClone = sourceClone.cloneMember;
-				if (sourceHeroClone.cloneForceChanged)
+				sourceClone = sourceCloneNode.cloneMember;
+				if (sourceClone.cloneForceChanged)
 				{
 					// TODO limit the maximum cloneForce power.
 					// TODO should we do this?
-					var forceX:Number = sourceClone.motion.forceX + sourceHeroClone.cloneForceX;
-					var forceY:Number = sourceClone.motion.forceY + sourceHeroClone.cloneForceY;
+					var forceX:Number = sourceCloneNode.motion.forceX + sourceClone.cloneForceX;
+					var forceY:Number = sourceCloneNode.motion.forceY + sourceClone.cloneForceY;
 					var cloneForce:Number = (forceX * forceX) + (forceY * forceY);
 					if (cloneForce > MAX_REPULSIVE_ENERGY_SQUARE)
 					{
@@ -144,12 +144,12 @@ package sabelas.systems
 						forceX = (forceX / cloneForce) * MAX_REPULSIVE_ENERGY;
 						forceY = (forceY / cloneForce) * MAX_REPULSIVE_ENERGY;
 					}
-					sourceClone.motion.forceX = forceX;
-					sourceClone.motion.forceY = forceY;
+					sourceCloneNode.motion.forceX = forceX;
+					sourceCloneNode.motion.forceY = forceY;
 					
 					//trace('total force for clone x=' + sourceClone.motion.forceX + ', y=' + sourceClone.motion.forceY);
 					
-					sourceHeroClone.resetCloneForce();
+					sourceClone.resetCloneForce();
 				}
 			}
 		}

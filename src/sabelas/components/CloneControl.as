@@ -5,12 +5,12 @@ package sabelas.components
 	 *
 	 * @author Abiyasa
 	 */
-	public class HeroCloneControl
+	public class CloneControl
 	{
 		public var keyAddClone:uint;
 		public var cloneTriggered:Boolean;
 		
-		public function HeroCloneControl(keyAddClone:uint)
+		public function CloneControl(keyAddClone:uint)
 		{
 			this.keyAddClone = keyAddClone;
 			cloneTriggered = false;
