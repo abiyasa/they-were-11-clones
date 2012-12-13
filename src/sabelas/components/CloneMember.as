@@ -9,7 +9,7 @@ package sabelas.components
 	 */
 	public class CloneMember
 	{
-		// Total repulsive & attraction force, calculated by HeroClonePositioningSystem
+		// Total repulsive & attraction force, calculated by ClonePositioningSystem
 		// TODO should separate to a component
 		protected var _cloneForceX:Number;
 		public function get cloneForceX():Number
@@ -25,7 +25,7 @@ package sabelas.components
 			}
 		}
 		
-		// Total repulsive & attraction force, calculated by HeroClonePositioningSystem
+		// Total repulsive & attraction force, calculated by ClonePositioningSystem
 		protected var _cloneForceY:Number;
 		public function get cloneForceY():Number
 		{

@@ -12,12 +12,12 @@ package sabelas.systems
 	import ash.core.System;
 	
 	/**
-	 * System for managing hero clones. This system will handle the positioning of the clones,
+	 * System for managing clones. This system will handle the positioning of the clones,
 	 * make sure it pushes among clones and sorrounds the clone leader
 	 *
 	 * @author Abiyasa
 	 */
-	public class HeroClonePositioningSystem extends System
+	public class ClonePositioningSystem extends System
 	{
 		private var _creator:EntityCreator;
 		private var _clones:NodeList;
@@ -35,7 +35,7 @@ package sabelas.systems
 		public static const MIN_REPULSIVE_ENERGY:Number = -MAX_REPULSIVE_ENERGY;
 		public static const MIN_REPULSIVE_ENERGY_SQUARE:Number = MAX_REPULSIVE_ENERGY_SQUARE;
 		
-		public function HeroClonePositioningSystem(creator:EntityCreator)
+		public function ClonePositioningSystem(creator:EntityCreator)
 		{
 			_creator = creator;
 		}
