@@ -65,6 +65,12 @@ package sabelas.systems
 				_lastPosX = touch.globalX;
 				_lastPosY = touch.globalY;
 				break;
+				
+			case TouchPhase.MOVED:
+				_lastPosX = touch.globalX;
+				_lastPosY = touch.globalY;
+				_isTriggered = true;
+				break;
 			
 			case TouchPhase.ENDED:
 				_lastPosX = touch.globalX;
