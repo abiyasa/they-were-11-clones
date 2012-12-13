@@ -87,14 +87,17 @@ package sabelas.systems
 				
 			// handle gun
 			var gun:Gun = node.gun;
-			gun.shooting = _isTriggered;
-			gun.timeSinceLastShot += time;
-			if (_isTriggered && gun.timeSinceLastShot >= gun.minimumShotInterval)
+			gun.triggerShoot(_isTriggered, time);
+			if (_isTriggered)
 			{
-				// TODO shoot the bullet
-				//creator.createUserBullet( gun, position );
-				trace('BANG! Don\'t shoot me bro!');
-				gun.timeSinceLastShot = 0;
+				if (gun.isAllowedToShootBullet())
+				{
+					// TODO shoot the bullet
+					//creator.createUserBullet( gun, position );
+					trace('BANG! Don\'t shoot me bro!');
+					
+					gun.resetTime();
+				}
 			}
 		}
 	}

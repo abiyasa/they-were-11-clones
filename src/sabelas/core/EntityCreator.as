@@ -3,6 +3,7 @@ package sabelas.core
 	import away3d.containers.ObjectContainer3D;
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
@@ -150,7 +151,7 @@ package sabelas.core
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
 					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
-					.add(new Gun(8, 0, 0.3, 2));
+					.add(new Gun(new Point(8, 0), 0.3, 2));
 				break;
 				
 			case PEOPLE_HERO:
