@@ -7,6 +7,7 @@ package sabelas.systems
 	import sabelas.components.Gun;
 	import sabelas.components.Position;
 	import sabelas.components.MouseControl;
+	import sabelas.core.EntityCreator;
 	import sabelas.nodes.MouseControlNode;
 	import ash.core.Engine;
 	import ash.tools.ListIteratingSystem;
@@ -27,11 +28,14 @@ package sabelas.systems
 		private var _lastPosY:Number;
 		private var _isTriggered:Boolean;
 		private var _drag3D:Drag3D;
+		protected var _entityCreator:EntityCreator;
 		
-		public function MouseControlSystem(container:DisplayObjectContainer, view3D:View3D)
+		public function MouseControlSystem(container:DisplayObjectContainer, view3D:View3D,
+			creator:EntityCreator)
 		{
 			super(MouseControlNode, updateNode);
 			
+			_entityCreator = creator;
 			_container = container;
 			_container.addEventListener(TouchEvent.TOUCH, onTouch);
 			_drag3D = new Drag3D(view3D, null, Drag3D.PLANE_XZ);
@@ -98,8 +102,8 @@ package sabelas.systems
 			{
 				if (gun.isAllowedToShootBullet())
 				{
-					// TODO shoot the bullet
-					//creator.createUserBullet( gun, position );
+					// shoot the bullet
+					_entityCreator.createBullet(gun, position, EntityCreator.PEOPLE_HERO);
 					trace('BANG! Don\'t shoot me bro!');
 					
 					gun.resetTime();

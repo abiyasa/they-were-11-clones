@@ -5,6 +5,7 @@ package sabelas.core
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	import sabelas.components.Bullet;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
 	import sabelas.components.Collision;
@@ -188,6 +189,29 @@ package sabelas.core
 			createBlockyPeople(x, y, isClone ? PEOPLE_HERO : PEOPLE_HERO_LEADER);
 		}
 		
+		/**
+		 * Create a bullet
+		 *
+		 * @param	gun
+		 * @param	parentPosition
+		 */
+		public function createBullet(gun:Gun, parentPosition:Position, shooter:int):Entity
+		{
+			var parentRotation:Number = parentPosition.rotation;
+			var bulletType:int = (shooter == PEOPLE_ENEMY) ? 2 : 0;
+			
+			var bullet:Entity = new Entity();
+			bullet
+				.add(new Bullet(shooter == PEOPLE_ENEMY, gun.bulletLifetime))
+				.add(new Position(parentPosition.position.x, parentPosition.position.y, parentRotation))
+				.add(new Collision(10))
+				.add(new Motion(parentRotation, 300, 300))
+				.add(new Display3D(_assetManager.createBullet({ type : bulletType })));
+				
+			_engine.addEntity(bullet);
+			
+			return bullet;
+		}
 	}
 	
 }
