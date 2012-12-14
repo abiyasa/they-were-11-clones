@@ -19,6 +19,7 @@ package sabelas.core
 	import sabelas.components.MouseControl;
 	import sabelas.components.Position;
 	import sabelas.components.Display;
+	import sabelas.components.Shootable;
 	import sabelas.components.SpinningMotion;
 	import sabelas.graphics.AssetManager;
 	import sabelas.graphics.BlockyPeople;
@@ -174,6 +175,7 @@ package sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new CollidingObject())
+					.add(new Shootable(Bullet.BULLET_TYPE_HERO))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
 				break;
 			}
