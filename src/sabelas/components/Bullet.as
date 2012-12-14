@@ -6,13 +6,17 @@ package sabelas.components
 	 */
 	public class Bullet
 	{
-		public var lifeRemaining:Number;
-		public var isEnemyBullet:Boolean;
+		public static const BULLET_TYPE_ANY:int = 0;
+		public static const BULLET_TYPE_HERO:int = 10;
+		public static const BULLET_TYPE_ENEMY:int = 10;
 		
-		public function Bullet(isEnemyBullet:Boolean, lifeTime:Number)
+		public var lifeRemaining:Number;
+		public var type:int;
+		
+		public function Bullet(type:int, lifeTime:Number)
 		{
 			lifeRemaining = lifeTime;
-			this.isEnemyBullet = isEnemyBullet;
+			this.type = type;
 		}
 		
 	}

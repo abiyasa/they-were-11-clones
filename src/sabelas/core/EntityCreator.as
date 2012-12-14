@@ -206,7 +206,8 @@ package sabelas.core
 			
 			var bullet:Entity = new Entity();
 			bullet
-				.add(new Bullet(shooter == PEOPLE_ENEMY, gun.bulletLifetime))
+				.add(new Bullet(shooter == PEOPLE_ENEMY ? Bullet.BULLET_TYPE_ENEMY : Bullet.BULLET_TYPE_HERO,
+					gun.bulletLifetime))
 				.add(new Position(parentPosition.position.x, parentPosition.position.y, parentRotation))
 				.add(new Collision(10))
 				.add(new Motion(parentRotation, 800, 800))
