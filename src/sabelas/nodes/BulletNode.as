@@ -4,10 +4,10 @@ package sabelas.nodes
 	import sabelas.components.Bullet;
 	
 	/**
-	 * Node for bullet life time
+	 * Node for processing bullet component
 	 * @author Abiyasa
 	 */
-	public class BulletAgeNode extends Node
+	public class BulletNode extends Node
 	{
 		public var bullet:Bullet;
 	}
