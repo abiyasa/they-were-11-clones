@@ -1,6 +1,8 @@
 package sabelas.systems
 {
-	import ash.tools.ListIteratingSystem;
+	import ash.core.Engine;
+	import ash.core.NodeList;
+	import ash.core.System;
 	import sabelas.components.Bullet;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.BulletNode;
@@ -11,30 +13,52 @@ package sabelas.systems
 	 *
 	 * @author Abiyasa
 	 */
-	public class BulletSystem extends ListIteratingSystem
+	public class BulletSystem extends System
 	{
+		public static const DEBUG_TAG:String = '[BulletSystem]';
+		
 		private var _entityCreator:EntityCreator;
+		private var _bullets:NodeList;
+		private var _shootables:NodeList;
 		
 		public function BulletSystem(creator:EntityCreator)
 		{
-			super(BulletNode, updateNode);
+			super();
 			_entityCreator = creator;
-			
-			// TODO get shootable list
+		}
+
+		override public function addToEngine(engine:Engine):void
+		{
+			super.addToEngine(engine);
+			_bullets = engine.getNodeList(BulletNode);
 		}
 		
-		private function updateNode(node:BulletNode, time:Number):void
+		override public function removeFromEngine(engine:Engine):void
 		{
-			var bullet:Bullet = node.bullet;
-			bullet.lifeRemaining -= time;
-			if (bullet.lifeRemaining <= 0)
+			super.removeFromEngine(engine);
+			_bullets = null;
+			_shootables = null;
+			_entityCreator = null;
+		}
+		
+		override public function update(time:Number):void
+		{
+			var bulletNode:BulletNode;
+			var bullet:Bullet;
+			for (bulletNode = _bullets.head; bulletNode; bulletNode = bulletNode.next)
 			{
-				_entityCreator.destroyEntity(node.entity);
+				bullet = bulletNode.bullet;
+				bullet.lifeRemaining -= time;
+				if (bullet.lifeRemaining <= 0)
+				{
+					_entityCreator.destroyEntity(bulletNode.entity);
+				}
+				else
+				{
+					// TODO check collision with shootable entities
+				}
 			}
-			else
-			{
-				// TODO check collision with shootable entities
-			}
+			
 		}
 	}
 
