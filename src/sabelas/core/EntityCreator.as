@@ -8,6 +8,7 @@ package sabelas.core
 	import sabelas.components.Bullet;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
+	import sabelas.components.CollidingObject;
 	import sabelas.components.Collision;
 	import sabelas.components.Display3D;
 	import sabelas.components.GameState;
@@ -149,10 +150,11 @@ package sabelas.core
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
+					.add(new CollidingObject())
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
 					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
-					.add(new Gun(new Point(8, 0), 0.3, 2));
+					.add(new Gun(new Point(8, 0), 0.3, 5));
 				break;
 				
 			case PEOPLE_HERO:
@@ -161,6 +163,7 @@ package sabelas.core
 					.add(new CloneMember(_mainHero))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
+					.add(new CollidingObject())
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
 			
@@ -170,6 +173,7 @@ package sabelas.core
 					.add(new Position(x, y, 0))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
+					.add(new CollidingObject())
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
 				break;
 			}
@@ -205,7 +209,7 @@ package sabelas.core
 				.add(new Bullet(shooter == PEOPLE_ENEMY, gun.bulletLifetime))
 				.add(new Position(parentPosition.position.x, parentPosition.position.y, parentRotation))
 				.add(new Collision(10))
-				.add(new Motion(parentRotation, 300, 300))
+				.add(new Motion(parentRotation, 800, 800))
 				.add(new Display3D(_assetManager.createBullet({ type : bulletType })));
 				
 			_engine.addEntity(bullet);

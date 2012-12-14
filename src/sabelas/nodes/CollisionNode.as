@@ -1,5 +1,6 @@
 package sabelas.nodes
 {
+	import sabelas.components.CollidingObject;
 	import sabelas.components.Collision;
 	import sabelas.components.Motion;
 	import sabelas.components.Position;
@@ -14,6 +15,7 @@ package sabelas.nodes
 		public var motion:Motion;
 		public var collision:Collision;
 		public var position:Position;
+		public var collidingObject:CollidingObject;
 	}
 
 }
