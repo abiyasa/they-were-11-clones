@@ -154,7 +154,7 @@ package sabelas.core
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
 					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
-					.add(new Gun(new Point(8, 0), 0.3, 5));
+					.add(new Gun(new Point(8, 0), 0.3, 3));
 				break;
 				
 			case PEOPLE_HERO:
@@ -191,6 +191,16 @@ package sabelas.core
 		public function createHero(x:int, y:int, isClone:Boolean = false):void
 		{
 			createBlockyPeople(x, y, isClone ? PEOPLE_HERO : PEOPLE_HERO_LEADER);
+		}
+		
+		/**
+		 * Create enemy
+		 * @param	x position
+		 * @param	y position
+		 */
+		public function createEnemy(x:int, y:int, enemyType:int = 0):void
+		{
+			createBlockyPeople(x, y, PEOPLE_ENEMY);
 		}
 		
 		/**

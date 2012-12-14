@@ -65,12 +65,10 @@ package sabelas.systems
 						// add game characters
 						_entityCreator.createHero(0, -200);
 						
-						// TODO add enemies
-						/*
-						_entityCreator.createBlockyPeople(200, 200, EntityCreator.PEOPLE_ENEMY);
-						_entityCreator.createBlockyPeople(200, 400, EntityCreator.PEOPLE_ENEMY);
-						_entityCreator.createBlockyPeople(200, 600, EntityCreator.PEOPLE_ENEMY);
-						*/
+						// TODO add dummy enemies
+						_entityCreator.createEnemy(200, 200);
+						_entityCreator.createEnemy(200, 400);
+						_entityCreator.createEnemy(200, 600);
 						
 						// TODO entityCreator stops loading animation
 						
