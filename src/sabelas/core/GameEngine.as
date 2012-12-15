@@ -60,11 +60,19 @@ package sabelas.core
 		public function init():void
 		{
 			_engine = new Engine();
-			_entityCreator = new EntityCreator(_engine);
 			
 			_config = new GameConfig();
 			_config.width = _container.stage.stageWidth;
 			_config.height = _container.stage.stageHeight;
+			
+			// set arena
+			var arenaWidth:int = 10000;
+			var arenaHeight:int = 20000;
+			var arenaPosX:int = 0;
+			var arenaPosY:int = 0;
+			_config.setArena(arenaWidth, arenaHeight, arenaPosX, arenaPosY);
+			
+			_entityCreator = new EntityCreator(_engine, _config);
 			
 			// init inputs
 			_keyPoll = new KeyPoll(_container.stage);

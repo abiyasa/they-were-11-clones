@@ -22,6 +22,7 @@ package sabelas.core
 	import sabelas.components.Display;
 	import sabelas.components.Shootable;
 	import sabelas.components.SpinningMotion;
+	import sabelas.configs.GameConfig;
 	import sabelas.graphics.AssetManager;
 	import sabelas.graphics.BlockyPeople;
 	import sabelas.graphics.DummyQuadView;
@@ -38,6 +39,8 @@ package sabelas.core
 	{
 		private var _engine:Engine;
 		
+		private var _config:GameConfig;
+		
 		// for loading 3D assets
 		private var _assetManager:AssetManager;
 		
@@ -53,9 +56,10 @@ package sabelas.core
 		public static const PEOPLE_HERO:int = 20;
 		public static const PEOPLE_HERO_LEADER:int = 21;
 		
-		public function EntityCreator(engine:Engine)
+		public function EntityCreator(engine:Engine, config:GameConfig)
 		{
 			_engine = engine;
+			_config = config;
 			_mainHero = null;
 		}
 		
@@ -235,19 +239,14 @@ package sabelas.core
 		 */
 		public function createArena():Entity
 		{
-			// arena config
-			var arenaWidth:int = 10000;
-			var arenaHeight:int = 20000;
-			var arenaPosX:int = 0;
-			var arenaPosY:int = 0;
-			
 			// create
 			var arena:Entity = new Entity()
-				.add(new Arena(arenaWidth, arenaHeight, arenaPosX, arenaPosY))
-				.add(new Position(arenaPosX, arenaPosY, 0))
+				.add(new Arena(_config.arenaWidth, _config.arenaHeight,
+					_config.arenePosX, _config.arenaPosY))
+				.add(new Position(_config.arenePosX, _config.arenaPosY, 0))
 				.add(new Display3D(_assetManager.createArenaPlane({
-					width: arenaWidth,
-					height: arenaHeight,
+					width: _config.arenaWidth,
+					height: _config.arenaHeight,
 					color: 0xfefefe
 				})));
 				

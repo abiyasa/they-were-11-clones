@@ -61,6 +61,9 @@ package sabelas.systems
 					if (_entityCreator.assetsLoaded)
 					{
 						trace('assets has been loaded');
+
+						// stage
+						_entityCreator.createArena();
 						
 						// add game characters
 						_entityCreator.createHero(0, -200);
@@ -69,9 +72,6 @@ package sabelas.systems
 						_entityCreator.createEnemy(200, 200);
 						_entityCreator.createEnemy(200, 400);
 						_entityCreator.createEnemy(200, 600);
-						
-						// stage
-						_entityCreator.createArena();
 						
 						// TODO entityCreator stops loading animation
 						
