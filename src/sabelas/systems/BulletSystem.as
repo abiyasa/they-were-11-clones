@@ -4,8 +4,10 @@ package sabelas.systems
 	import ash.core.NodeList;
 	import ash.core.System;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import sabelas.components.Bullet;
 	import sabelas.components.Shootable;
+	import sabelas.configs.GameConfig;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.BulletNode;
 	import sabelas.nodes.ShootableNode;
@@ -23,11 +25,13 @@ package sabelas.systems
 		private var _entityCreator:EntityCreator;
 		private var _bullets:NodeList;
 		private var _shootables:NodeList;
+		private var _arenaRect:Rectangle;
 		
-		public function BulletSystem(creator:EntityCreator)
+		public function BulletSystem(creator:EntityCreator, config:GameConfig)
 		{
 			super();
 			_entityCreator = creator;
+			_arenaRect = config.arenaRect;
 		}
 
 		override public function addToEngine(engine:Engine):void
@@ -66,28 +70,37 @@ package sabelas.systems
 					bulletRadius = bulletNode.collision.radius;
 					bulletPosition = bulletNode.position.position;
 					
-					// check collision with shootable entities
-					var shootableNode:ShootableNode;
-					var shootable:Shootable;
-					for (shootableNode = _shootables.head; shootableNode; shootableNode = shootableNode.next)
+					// check if bullet still in area
+					if (!_arenaRect.containsPoint(bulletPosition))
 					{
-						// check bullet type
-						shootable = shootableNode.shootable;
-						if (shootable.bulletType != bulletType)
+						// bullet outside area
+						_entityCreator.destroyEntity(bulletNode.entity);
+					}
+					else
+					{
+						// check collision with shootable entities
+						var shootableNode:ShootableNode;
+						var shootable:Shootable;
+						for (shootableNode = _shootables.head; shootableNode; shootableNode = shootableNode.next)
 						{
-							continue;
-						}
-						
-						// check if collide
-						if (Point.distance(bulletPosition, shootableNode.position.position) <=
-							(bulletRadius + shootableNode.collision.radius))
-						{
-							// bullet hits item
-							_entityCreator.destroyEntity(shootableNode.entity);
-							_entityCreator.destroyEntity(bulletNode.entity);
+							// check bullet type
+							shootable = shootableNode.shootable;
+							if (shootable.bulletType != bulletType)
+							{
+								continue;
+							}
 							
-							// no need to check other shootable
-							break;
+							// check if collide
+							if (Point.distance(bulletPosition, shootableNode.position.position) <=
+								(bulletRadius + shootableNode.collision.radius))
+							{
+								// bullet hits item
+								_entityCreator.destroyEntity(shootableNode.entity);
+								_entityCreator.destroyEntity(bulletNode.entity);
+								
+								// no need to check other shootable
+								break;
+							}
 						}
 					}
 				}
