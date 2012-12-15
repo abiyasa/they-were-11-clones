@@ -5,6 +5,7 @@ package sabelas.core
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
@@ -216,8 +217,7 @@ package sabelas.core
 			var parentRotation:Number = parentPosition.rotation;
 			var bulletType:int = (shooter == PEOPLE_ENEMY) ? 2 : 0;
 			
-			var bullet:Entity = new Entity();
-			bullet
+			var bullet:Entity = new Entity()
 				.add(new Bullet(shooter == PEOPLE_ENEMY ? Bullet.BULLET_TYPE_ENEMY : Bullet.BULLET_TYPE_HERO,
 					gun.bulletLifetime))
 				.add(new Position(parentPosition.position.x, parentPosition.position.y, parentRotation))
@@ -226,8 +226,33 @@ package sabelas.core
 				.add(new Display3D(_assetManager.createBullet({ type : bulletType })));
 				
 			_engine.addEntity(bullet);
-			
 			return bullet;
+		}
+		
+		/**
+		 * Creates basic stage/arena
+		 * @return
+		 */
+		public function createArena():Entity
+		{
+			// arena config
+			var arenaWidth:int = 10000;
+			var arenaHeight:int = 20000;
+			var arenaPosX:int = 0;
+			var arenaPosY:int = 0;
+			
+			// create
+			var arena:Entity = new Entity()
+				.add(new Arena(arenaWidth, arenaHeight, arenaPosX, arenaPosY))
+				.add(new Position(arenaPosX, arenaPosY, 0))
+				.add(new Display3D(_assetManager.createArenaPlane({
+					width: arenaWidth,
+					height: arenaHeight,
+					color: 0xfefefe
+				})));
+				
+			_engine.addEntity(arena);
+			return arena;
 		}
 	}
 	

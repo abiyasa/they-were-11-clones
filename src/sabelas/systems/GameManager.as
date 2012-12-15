@@ -70,6 +70,9 @@ package sabelas.systems
 						_entityCreator.createEnemy(200, 400);
 						_entityCreator.createEnemy(200, 600);
 						
+						// stage
+						_entityCreator.createArena();
+						
 						// TODO entityCreator stops loading animation
 						
 						// start the games
