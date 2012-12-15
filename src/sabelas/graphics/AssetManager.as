@@ -6,8 +6,10 @@ package sabelas.graphics
 	import away3d.events.LoaderEvent;
 	import away3d.loaders.Loader3D;
 	import away3d.loaders.misc.AssetLoaderContext;
+	import away3d.materials.ColorMaterial;
 	import away3d.materials.MaterialBase;
 	import away3d.materials.TextureMaterial;
+	import away3d.primitives.PlaneGeometry;
 	import away3d.textures.BitmapTexture;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -130,10 +132,7 @@ package sabelas.graphics
 		 */
 		public function createBlockyPeople(config:Object = null):ObjectContainer3D
 		{
-			if (config == null)
-			{
-				config = {};
-			}
+			config = (config == null) ? {} : config;
 			
 			var tempResult:ObjectContainer3D = new ObjectContainer3D();
 			if (_blockyMesh != null)
@@ -167,11 +166,8 @@ package sabelas.graphics
 		 */
 		public function createBullet(config:Object = null):ObjectContainer3D
 		{
-			if (config == null)
-			{
-				config = {};
-			}
-			
+			config = (config == null) ? { } : config;
+
 			var tempResult:ObjectContainer3D = new ObjectContainer3D();
 			if (_blockyMesh != null)
 			{
@@ -199,6 +195,33 @@ package sabelas.graphics
 			return tempResult;
 		}
 		
+		/**
+		 * Creates a flat plane for the arena
+		 *
+		 * @param	config
+		 * @return
+		 */
+		public function createArenaPlane(config:Object = null):ObjectContainer3D
+		{
+			config = (config == null) ? { } : config;
+			
+			var tempResult:ObjectContainer3D = new ObjectContainer3D();
+			
+			// create plane
+			var planeWidth:int = config.hasOwnProperty('width') ? config.width : 10000;
+			var planeHeight:int = config.hasOwnProperty('height') ? config.height : 10000;
+			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 4, 4));
+			
+			// create plane material
+			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
+			mesh.material = new ColorMaterial(planeColor);
+			tempResult.addChild(mesh);
+
+			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +
+				' height=' + planeHeight + ' color=' + planeColor);
+			
+			return tempResult;
+		}
 	}
 
 }
