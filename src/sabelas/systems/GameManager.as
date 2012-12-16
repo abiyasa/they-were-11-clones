@@ -73,6 +73,8 @@ package sabelas.systems
 						_entityCreator.createEnemy(200, 400);
 						_entityCreator.createEnemy(200, 600);
 						
+						_entityCreator.createStalkingCamera();
+						
 						// TODO entityCreator stops loading animation
 						
 						// start the games

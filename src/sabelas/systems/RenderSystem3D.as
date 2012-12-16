@@ -1,10 +1,8 @@
 package sabelas.systems
 {
-	import away3d.cameras.Camera3D;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
-	import away3d.core.managers.Stage3DProxy;
 	import flash.geom.Vector3D;
 	import sabelas.components.Display3D;
 	import sabelas.components.Position;
@@ -15,30 +13,19 @@ package sabelas.systems
 
 	public class RenderSystem3D extends System
 	{
-		public var stage3dProxy:Stage3DProxy;
-		
 		private var nodes:NodeList;
 		public var _view3D:View3D;
 		private var _scene:Scene3D;
 		
-		public function RenderSystem3D(view3D:View3D, stage3dproxy:Stage3DProxy)
+		public function RenderSystem3D(view3D:View3D)
 		{
 			_view3D = view3D;
-			this.stage3dProxy = stage3dproxy;
 		}
 		
 		override public function addToEngine(engine:Engine):void
 		{
 			super.addToEngine(engine);
 			_scene = _view3D.scene;
-			
-			// init camera
-			// TODO should be configurable from external parameter
-			var camera:Camera3D = _view3D.camera;
-			camera.z = -1000;
-			camera.y = 1000;
-			camera.x = 0;
-			camera.lookAt(new Vector3D(0, 0, 0));
 			
 			nodes = engine.getNodeList(RenderNode3D);
 			for(var node:RenderNode3D = nodes.head; node; node = node.next)

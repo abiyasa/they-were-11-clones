@@ -17,6 +17,7 @@ package sabelas.core
 	import sabelas.systems.RenderSystem;
 	import sabelas.systems.RenderSystem3D;
 	import sabelas.systems.SpinningMotionSystem;
+	import sabelas.systems.StalkingCameraSystem;
 	import sabelas.systems.SystemPriorities;
 	import sabelas.utils.Stage3DUtils;
 	import ash.core.Entity;
@@ -89,9 +90,9 @@ package sabelas.core
 			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.MOVE);
+			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
 			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
-			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D,
-				stage3DUtils.currentStage3DProxy), SystemPriorities.RENDER);
+			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 		
 			// get the active game state

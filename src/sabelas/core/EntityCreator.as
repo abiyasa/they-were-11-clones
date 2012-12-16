@@ -7,6 +7,7 @@ package sabelas.core
 	import flash.ui.Keyboard;
 	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
+	import sabelas.components.StalkingCamera;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
 	import sabelas.components.CollidingObject;
@@ -252,6 +253,30 @@ package sabelas.core
 				
 			_engine.addEntity(arena);
 			return arena;
+		}
+		
+		/**
+		 * Create camera entity.
+		 * Make sure that hero entity has been created before
+		 *
+		 * @param followHero if true, camera will look at hero's position
+		 * @return
+		 */
+		public function createStalkingCamera():Entity
+		{
+			// make sure main hero is created
+			if (_mainHero == null)
+			{
+				throw new Error('Stalking camera needs main hero to be created first!');
+				return null;
+			}
+			
+			// prepare camera
+			var camera:Entity = new Entity()
+				.add(new StalkingCamera(0, 1000, -1000, _mainHero));
+				
+			_engine.addEntity(camera);
+			return camera;
 		}
 	}
 	
