@@ -9,6 +9,7 @@ package sabelas.core
 	import sabelas.systems.BulletSystem;
 	import sabelas.systems.CollisionSystem;
 	import sabelas.systems.GameManager;
+	import sabelas.systems.ChaserSystem;
 	import sabelas.systems.CloneControlSystem;
 	import sabelas.systems.ClonePositioningSystem;
 	import sabelas.systems.MotionControlSystem;
@@ -87,6 +88,7 @@ package sabelas.core
 			_engine.addSystem(new CloneControlSystem(_entityCreator, _keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new MouseControlSystem(_container.stage, stage3DUtils.currentView3D,
 				_entityCreator), SystemPriorities.UPDATE);
+			_engine.addSystem(new ChaserSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.MOVE);

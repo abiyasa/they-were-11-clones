@@ -7,6 +7,7 @@ package sabelas.core
 	import flash.ui.Keyboard;
 	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
+	import sabelas.components.Chaser;
 	import sabelas.components.StalkingCamera;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
@@ -47,6 +48,7 @@ package sabelas.core
 		
 		// our main hero
 		private var _mainHero:Entity;
+		private var _mainHeroPosition:Position;
 		
 		// flag to indicate assets has been loaded
 		private var _assetsLoaded:Boolean;
@@ -150,9 +152,10 @@ package sabelas.core
 					return null;
 				}
 				_mainHero = blockyPeople;
+				_mainHeroPosition = new Position(x, y, 0);
 
 				blockyPeople
-					.add(new Position(x, y, 0))
+					.add(_mainHeroPosition)
 					.add(new CloneLeader())
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
@@ -178,10 +181,11 @@ package sabelas.core
 			default:
 				blockyPeople
 					.add(new Position(x, y, 0))
-					.add(new Motion(0, 0, 200))
+					.add(new Motion(0, 0, 100))
 					.add(new Collision(50))
 					.add(new CollidingObject())
 					.add(new Shootable(Bullet.BULLET_TYPE_HERO))
+					.add(new Chaser(_mainHeroPosition))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
 				break;
 			}
