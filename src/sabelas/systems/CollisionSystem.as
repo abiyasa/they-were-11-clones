@@ -1,7 +1,9 @@
 package sabelas.systems
 {
 	import flash.geom.Point;
+	import sabelas.components.Motion;
 	import sabelas.core.EntityCreator;
+	import sabelas.components.CollidingObject;
 	import sabelas.nodes.CollisionNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
@@ -33,24 +35,24 @@ package sabelas.systems
 		override public function update(time:Number):void
 		{
 			var sourceRadius:Number;
-			var sourceSpeed:Number;
+			var sourceMotion:Motion;
 			var sourcePosition:Point;
 			var movingObjectTarget:CollisionNode;
 			var movingObjectSource:CollisionNode;
 			for (movingObjectSource = _movingObjects.head; movingObjectSource; movingObjectSource = movingObjectSource.next)
 			{
-				sourceSpeed = movingObjectSource.motion.speed;
-				if ((sourceSpeed < 0.01) && (sourceSpeed > -0.01))
+				// skipping none moving object
+				if (movingObjectSource.collidingObject.type == CollidingObject.TYPE_NON_MOVING_OBJECT)
 				{
-					// skipping none moving object
 					continue;
 				}
 
 				// caculate next position
-				var angle:Number = movingObjectSource.motion.angle;
+				sourceMotion = movingObjectSource.motion;
+				var angle:Number = sourceMotion.angle;
 				sourcePosition = movingObjectSource.position.position.clone();
-				sourcePosition.x += movingObjectSource.motion.calculateDeltaX(time);
-				sourcePosition.y += movingObjectSource.motion.calculateDeltaY(time);
+				sourcePosition.x += sourceMotion.calculateDeltaX(time);
+				sourcePosition.y += sourceMotion.calculateDeltaY(time);
 				
 				// check collision with the rest
 				sourceRadius = movingObjectSource.collision.radius;
@@ -60,8 +62,11 @@ package sabelas.systems
 					if (Point.distance(sourcePosition, movingObjectTarget.position.position) <=
 						(sourceRadius + movingObjectTarget.collision.radius))
 					{
-						// collision happens, prevent moving
+						trace('collision happens');
+						
+						// collision happens, prevent moving on both
 						movingObjectSource.motion.speed = 0;
+						sourceMotion.speed = 0;
 						
 						// stop checking, skip the rest since the source object will stop to move
 						movingObjectTarget = null;

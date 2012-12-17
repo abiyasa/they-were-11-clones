@@ -160,7 +160,7 @@ package sabelas.core
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new CollidingObject())
+					.add(new CollidingObject(CollidingObject.TYPE_MAIN_HERO))
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
 					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
@@ -173,7 +173,7 @@ package sabelas.core
 					.add(new CloneMember(_mainHero))
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
-					.add(new CollidingObject())
+					.add(new CollidingObject(CollidingObject.TYPE_HERO_CLONES))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
 			
@@ -183,7 +183,7 @@ package sabelas.core
 					.add(new Position(x, y, 0))
 					.add(new Motion(0, 0, 100))
 					.add(new Collision(50))
-					.add(new CollidingObject())
+					.add(new CollidingObject(CollidingObject.TYPE_ENEMY))
 					.add(new Shootable(Bullet.BULLET_TYPE_HERO))
 					.add(new Chaser(_mainHeroPosition))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
