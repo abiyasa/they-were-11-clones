@@ -277,7 +277,7 @@ package sabelas.core
 			
 			// prepare camera
 			var camera:Entity = new Entity()
-				.add(new StalkingCamera(0, 1000, -1000, _mainHero));
+				.add(new StalkingCamera(0, 1000, -1000, _mainHeroPosition));
 				
 			_engine.addEntity(camera);
 			return camera;

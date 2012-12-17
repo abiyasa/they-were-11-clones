@@ -11,17 +11,12 @@ package sabelas.components
 	public class StalkingCamera
 	{
 		public var position:Vector3D;
-		public var target:Entity;
+		public var targetPosition:Position;
 		
-		protected var _targetPosition:Position;
-		public function get targetPosition():Position { return _targetPosition; }
-		
-		public function StalkingCamera(posX:Number, posY:Number, posZ:Number, target:Entity)
+		public function StalkingCamera(posX:Number, posY:Number, posZ:Number, targetPosition:Position)
 		{
 			this.position = new Vector3D(posX, posY, posZ);
-			this.target = target;
-			
-			_targetPosition = target.get(Position);
+			this.targetPosition = targetPosition;
 		}
 		
 	}
