@@ -8,6 +8,8 @@ package sabelas.core
 	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
+	import sabelas.components.Enemy;
+	import sabelas.components.Energy;
 	import sabelas.components.StalkingCamera;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
@@ -156,6 +158,7 @@ package sabelas.core
 
 				blockyPeople
 					.add(_mainHeroPosition)
+					.add(new Energy(5))
 					.add(new CloneLeader())
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))
@@ -169,6 +172,7 @@ package sabelas.core
 				
 			case PEOPLE_HERO:
 				blockyPeople
+					.add(new Energy(1))
 					.add(new Position(x, y, 0))
 					.add(new CloneMember(_mainHero))
 					.add(new Motion(0, 0, 200))
@@ -180,6 +184,8 @@ package sabelas.core
 			case PEOPLE_ENEMY:
 			default:
 				blockyPeople
+					.add(new Enemy())
+					.add(new Energy(1))
 					.add(new Position(x, y, 0))
 					.add(new Motion(0, 0, 100))
 					.add(new Collision(50))
