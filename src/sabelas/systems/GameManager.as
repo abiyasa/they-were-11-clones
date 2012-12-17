@@ -68,10 +68,10 @@ package sabelas.systems
 						// add game characters
 						_entityCreator.createHero(0, -200);
 						
-						// TODO add dummy enemies
-						_entityCreator.createEnemy(200, 200);
-						_entityCreator.createEnemy(200, 400);
-						_entityCreator.createEnemy(200, 600);
+						// add enemy spawners
+						_entityCreator.createEnemySpawn(200, 600, 4, 1000);
+						_entityCreator.createEnemySpawn(200, -600, 6, 500);
+						_entityCreator.createEnemySpawn(200, -600, 6, 500);
 						
 						_entityCreator.createStalkingCamera();
 						

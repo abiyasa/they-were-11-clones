@@ -9,6 +9,7 @@ package sabelas.core
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
 	import sabelas.components.Enemy;
+	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Energy;
 	import sabelas.components.StalkingCamera;
 	import sabelas.components.CloneLeader;
@@ -287,6 +288,24 @@ package sabelas.core
 				
 			_engine.addEntity(camera);
 			return camera;
+		}
+		
+		/**
+		 * Creates an enemy generator
+		 * @param	x
+		 * @param	y
+		 * @param	numOfEnemies
+		 * @param	spawnRate
+		 * @return
+		 */
+		public function createEnemySpawn(x:int, y:int, numOfEnemies:int, spawnRate:int):Entity
+		{
+			var spawn:Entity = new Entity()
+				.add(new EnemyGenerator(numOfEnemies, spawnRate))
+				.add(new Position(x, y, 0));
+			
+			_engine.addEntity(spawn);
+			return spawn;
 		}
 	}
 	
