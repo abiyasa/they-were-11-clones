@@ -1,7 +1,10 @@
 package sabelas.systems
 {
+	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;
+	import sabelas.components.EnemyGenerator;
+	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.EnemyGeneratorNode;
 	
@@ -37,14 +40,34 @@ package sabelas.systems
 		
 		override public function update(time:Number):void
 		{
-			// TODO check head
-				// TODO if head is null, generate game over
-			// TODO update head time, check if it's time to generate enemy
-			// TODO if so, generate enemy
-			// TODO reduce spawn num of enemy to generate
-			// TODO if spawn run out enemy, remove the node.entity
-			
-			// Note: no need to iterate the list. Just process the top most list (head)
+			// only check head
+			var enemySpawnNode:EnemyGeneratorNode = _spawns.head;
+			if (enemySpawnNode == null)
+			{
+				// TODO no more spawn, remove this system and generate game over?
+			}
+			else
+			{
+				var enemySpawn:EnemyGenerator = enemySpawnNode.enemyGenerator;
+				enemySpawn.updateTime(time);
+				if (enemySpawn.isSpawnTime())
+				{
+					// spawn enemy
+					var spawnPos:Position = enemySpawnNode.position;
+					_entityCreator.createEnemy(spawnPos.position.x, spawnPos.position.y);
+					
+					enemySpawn.numOfEnemyToGenerate--;
+					if (enemySpawn.numOfEnemyToGenerate <= 0)
+					{
+						// no more enemy to spawn, remove from game
+						_entityCreator.destroyEntity(enemySpawnNode.entity);
+					}
+					else  // still enemy to spawn
+					{
+						enemySpawn.resetTime();
+					}
+				}
+			}
 		}
 	}
 

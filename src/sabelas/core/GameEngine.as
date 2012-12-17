@@ -8,6 +8,7 @@ package sabelas.core
 	import sabelas.input.KeyPoll;
 	import sabelas.systems.BulletSystem;
 	import sabelas.systems.CollisionSystem;
+	import sabelas.systems.EnemyGeneratorSystem;
 	import sabelas.systems.GameManager;
 	import sabelas.systems.ChaserSystem;
 	import sabelas.systems.CloneControlSystem;
@@ -83,6 +84,7 @@ package sabelas.core
 			
 			// add systems
 			_engine.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
+			_engine.addSystem(new EnemyGeneratorSystem(_entityCreator), SystemPriorities.PRE_UPDATE);
 			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new ClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new CloneControlSystem(_entityCreator, _keyPoll), SystemPriorities.UPDATE);
