@@ -16,5 +16,8 @@ package sabelas.components
 		
 		public var energy:int = 4;
 		public var score:int = 0;
+		public var numOfClones:int = 0;
+		public var numOfSpawnedEnemies:int = 0;
+		public var numOfDeadEnemies:int = 0;
 	}
 }

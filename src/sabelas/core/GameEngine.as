@@ -7,6 +7,7 @@ package sabelas.core
 	import sabelas.configs.GameConfig;
 	import sabelas.input.KeyPoll;
 	import sabelas.systems.BulletSystem;
+	import sabelas.systems.CloneCountingSystem;
 	import sabelas.systems.CollisionSystem;
 	import sabelas.systems.EnemyGeneratorSystem;
 	import sabelas.systems.GameManager;
@@ -91,13 +92,14 @@ package sabelas.core
 			_engine.addSystem(new MouseControlSystem(_container.stage, stage3DUtils.currentView3D,
 				_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new ChaserSystem(), SystemPriorities.UPDATE);
+			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.MOVE);
+			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
 			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
-			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();

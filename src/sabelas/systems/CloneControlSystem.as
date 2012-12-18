@@ -86,6 +86,7 @@ package sabelas.systems
 			trace(DEBUG_TAG, 'cloning an item');
 			
 			// loop clones to count total clones
+			// TODO use signal nodeAdded & nodeRemoved
 			var clones:ClonesNode;
 			var numOfClones:int = 0;
 			for (clones = _cloneNodes.head; clones; clones = clones.next)
