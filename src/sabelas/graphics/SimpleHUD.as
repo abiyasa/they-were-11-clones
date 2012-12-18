@@ -43,7 +43,8 @@ package sabelas.graphics
 		
 		private function updateText():void
 		{
-			var displayString:String = "clones: " + _gameState.numOfClones;
+			var displayString:String = "clones=" + _gameState.numOfClones +
+				" E=" + _gameState.energy;
 			_textField.text = displayString;
 		}
 		
