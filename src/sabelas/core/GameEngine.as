@@ -5,6 +5,7 @@ package sabelas.core
 	import sabelas.core.EntityCreator;
 	import sabelas.components.GameState;
 	import sabelas.configs.GameConfig;
+	import sabelas.graphics.SimpleHUD;
 	import sabelas.input.KeyPoll;
 	import sabelas.systems.BulletSystem;
 	import sabelas.systems.CloneCountingSystem;
@@ -46,6 +47,7 @@ package sabelas.core
 		private var _tickProvider:ITickProvider;
 		private var _gameState:GameState;
 		private var _keyPoll:KeyPoll;
+		private var _hud:SimpleHUD;
 		
 		/**
 		 * The shared Stage3D context
@@ -96,13 +98,32 @@ package sabelas.core
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
-			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
+			//_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
 			_gameState = gameStateEntity.get(GameState) as GameState;
+			
+			initHUD();
 		}
+		
+		private function initHUD():void
+		{
+			_hud = new SimpleHUD(_gameState);
+			_container.addChild(_hud);
+			
+			// TODO reposition HUD using _container.stage
+			_hud.x = 60;
+			
+		}
+		
+		private function destroyHUD():void
+		{
+			_container.removeChild(_hud, false);
+			_hud = null;
+		}
+		
 		
 		private function destroy():void
 		{
@@ -120,12 +141,16 @@ package sabelas.core
 			
 			_tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
 			_tickProvider.add(_engine.update);
+			_tickProvider.add(_hud.update);
 			_tickProvider.start();
 		}
 		
 		public function stop():void
 		{
+			destroyHUD();
+			
 			_tickProvider.stop();
+			_tickProvider.remove(_hud.update);
 			_tickProvider.remove(_engine.update);
 
 			destroy();
