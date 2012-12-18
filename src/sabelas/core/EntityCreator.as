@@ -46,6 +46,8 @@ package sabelas.core
 		
 		private var _config:GameConfig;
 		
+		private var _gameState:GameState;
+		
 		// for loading 3D assets
 		private var _assetManager:AssetManager;
 		
@@ -109,8 +111,9 @@ package sabelas.core
 		 */
 		public function createGameState():Entity
 		{
+			_gameState = new GameState();
 			var gameEntity:Entity = new Entity()
-				.add(new GameState());
+				.add(_gameState);
 			_engine.addEntity(gameEntity);
 			
 			return gameEntity;
@@ -159,7 +162,7 @@ package sabelas.core
 
 				blockyPeople
 					.add(_mainHeroPosition)
-					.add(new Energy(5))
+					.add(new Energy(_gameState.energy))
 					.add(new CloneLeader())
 					.add(new MotionControl(Keyboard.W, Keyboard.A, Keyboard.D, Keyboard.S))
 					.add(new Motion(0, 0, 200))

@@ -14,8 +14,7 @@ package sabelas.components
 		
 		public var state:int = STATE_INIT;
 		
-		public var lives:int = 3;
-		public var level:int = 0;
+		public var energy:int = 4;
 		public var score:int = 0;
 	}
 }
