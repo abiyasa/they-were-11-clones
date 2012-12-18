@@ -43,8 +43,7 @@ package sabelas.systems
 				case GameState.STATE_INIT:
 					trace('GameState.STATE_INIT');
 					
-					// create dummy HUD item on the top middle
-					_entityCreator.createDummyQuad(30, _config.width / 2, 30);
+					// TODO create dummy HUD item on the top middle
 					
 					// TODO entityCreator adds loading animation
 					

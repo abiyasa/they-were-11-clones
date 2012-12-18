@@ -26,7 +26,6 @@ package sabelas.core
 	import sabelas.components.Position;
 	import sabelas.components.Display;
 	import sabelas.components.Shootable;
-	import sabelas.components.SpinningMotion;
 	import sabelas.configs.GameConfig;
 	import sabelas.graphics.AssetManager;
 	import sabelas.graphics.BlockyPeople;
@@ -117,25 +116,6 @@ package sabelas.core
 			_engine.addEntity(gameEntity);
 			
 			return gameEntity;
-		}
-		
-		/**
-		 * Creates a dummy quad to test if the game system works
-		 *
-		 * @param	size Quad size
-		 * @param	x Quad position
-		 * @param	y Quad position
-		 * @return
-		 */
-		public function createDummyQuad(size:int, x:int, y:int):Entity
-		{
-			var dummyQuad:Entity = new Entity()
-				.add(new Position(x, y, 0))
-				.add(new SpinningMotion(Math.PI * 0.5))
-				.add(new Display(new DummyQuadView(size)));
-			_engine.addEntity(dummyQuad);
-			
-			return dummyQuad;
 		}
 		
 		/**

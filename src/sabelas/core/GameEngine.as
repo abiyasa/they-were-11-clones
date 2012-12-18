@@ -19,7 +19,6 @@ package sabelas.core
 	import sabelas.systems.MouseControlSystem;
 	import sabelas.systems.RenderSystem;
 	import sabelas.systems.RenderSystem3D;
-	import sabelas.systems.SpinningMotionSystem;
 	import sabelas.systems.StalkingCameraSystem;
 	import sabelas.systems.SystemPriorities;
 	import sabelas.utils.Stage3DUtils;
@@ -45,7 +44,7 @@ package sabelas.core
 		private var _config:GameConfig;
 		private var _entityCreator:EntityCreator;
 		private var _tickProvider:ITickProvider;
-		private var _engineState:GameState;
+		private var _gameState:GameState;
 		private var _keyPoll:KeyPoll;
 		
 		/**
@@ -95,7 +94,6 @@ package sabelas.core
 			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
-			_engine.addSystem(new SpinningMotionSystem(), SystemPriorities.MOVE);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
 			_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
@@ -103,7 +101,7 @@ package sabelas.core
 		
 			// get the active game state
 			var gameStateEntity:Entity = _entityCreator.createGameState();
-			_engineState = gameStateEntity.get(GameState) as GameState;
+			_gameState = gameStateEntity.get(GameState) as GameState;
 		}
 		
 		private function destroy():void
