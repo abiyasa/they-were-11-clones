@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created manually with a glass of wine on a late Tuesday evening -->
+<TextureAtlas imagePath="menuAtlas.png">
+    <SubTexture name="button_about" x="200" y="380" width="81" height="31" />
+    <SubTexture name="button_start" x="5" y="380" width="176" height="62"/>
+    <SubTexture name="title" x="0" y="0" width="512" height="373"/>
+    <SubTexture name="button_back" x="5" y="450" width="41" height="41" />
+    <SubTexture name="button_about_small" x="55" y="450" width="41" height="41" />
+    <SubTexture name="button_pause" x="104" y="450" width="41" height="41" />
+    <SubTexture name="button_resume" x="160" y="450" width="41" height="41" />
+</TextureAtlas>
