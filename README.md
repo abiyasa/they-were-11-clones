@@ -5,7 +5,10 @@
 * A 3D twin-stick shooter game on your browser using Adobe Flash!
 * Clone yourself up to 11 clones!
 
-## Screenshots & Demo
+## Demo
+Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/)
+
+## Screenshots
 Soon my friend, soon!
 
 ## Technology used
