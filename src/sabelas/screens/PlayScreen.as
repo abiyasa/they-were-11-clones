@@ -4,6 +4,7 @@ package sabelas.screens
 	import flash.ui.Keyboard;
 	import sabelas.configs.ScreenConfig;
 	import sabelas.core.GameEngine;
+	import sabelas.events.GameOverEvent;
 	import sabelas.screens.ScreenWithButtonBase;
 	import starling.display.Button;
 	import starling.display.Quad;
@@ -51,11 +52,22 @@ package sabelas.screens
 			// init game engine
 			_gameEngine = new GameEngine(this);
 			_gameEngine.init();
+			_gameEngine.addEventListener(GameOverEvent.GAME_OVER, onGameOver);
 			
 			_gameEngine.start();
 			
 			// add keyboard shortcut
 			this.stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyboard);
+		}
+		
+		/**
+		 * Handle game over
+		 * @param	event
+		 */
+		private function onGameOver(event:GameOverEvent):void
+		{
+			// TODO show game over menu
+			triggerButton('quit');
 		}
 		
 		override protected function destroy(e:Event):void
@@ -65,6 +77,7 @@ package sabelas.screens
 			this.stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyboard);
 			
 			// destroy game
+			_gameEngine.removeEventListener(GameOverEvent.GAME_OVER, onGameOver);
 			_gameEngine.stop();
 			_gameEngine = null;
 			

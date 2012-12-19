@@ -128,10 +128,12 @@ package sabelas.systems
 				if (_heroes != null)
 				{
 					// update hero energy
-					_gameState.energy = _hero.energy.value;
-					
-					// TODO check if the hero energy is 0
-					// TODO change status to game over!
+					var heroEnergy:int = _hero.energy.value;
+					_gameState.energy = heroEnergy;
+					if (heroEnergy <= 0)
+					{
+						_gameState.state = GameState.STATE_GAME_OVER;
+					}
 				}
 				break;
 			}

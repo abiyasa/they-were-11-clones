@@ -1,10 +1,10 @@
 package sabelas.core
 {
 	import away3d.core.managers.Stage3DProxy;
-	import flash.events.EventDispatcher;
 	import sabelas.core.EntityCreator;
 	import sabelas.components.GameState;
 	import sabelas.configs.GameConfig;
+	import sabelas.events.GameOverEvent;
 	import sabelas.graphics.SimpleHUD;
 	import sabelas.input.KeyPoll;
 	import sabelas.systems.BulletSystem;
@@ -29,6 +29,7 @@ package sabelas.core
 	import ash.integration.starling.StarlingFrameTickProvider;
 	import ash.tick.ITickProvider;
 	import starling.core.Starling;
+	import starling.events.EventDispatcher;
 	import starling.display.DisplayObjectContainer;
 	
 	/**
@@ -144,7 +145,7 @@ package sabelas.core
 			
 			_tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
 			_tickProvider.add(_engine.update);
-			_tickProvider.add(_hud.update);
+			_tickProvider.add(tick);
 			_tickProvider.start();
 		}
 		
@@ -157,6 +158,24 @@ package sabelas.core
 			destroyHUD();
 			
 			destroy();
+		}
+		
+		/**
+		 * Check game state & update HUD
+		 */
+		protected function tick(time:Number):void
+		{
+			// check game state
+			switch (_gameState.state)
+			{
+			case GameState.STATE_GAME_OVER:
+				dispatchEvent(new GameOverEvent(GameOverEvent.GAME_OVER));
+				break;
+				
+			default:
+				_hud.update(time);
+				break;
+			}
 		}
 	}
 
