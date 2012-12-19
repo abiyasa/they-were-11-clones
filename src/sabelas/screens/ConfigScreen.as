@@ -2,7 +2,7 @@ package sabelas.screens
 {
 	import flash.geom.Rectangle;
 	import sabelas.configs.ScreenConfig;
-	import sabelas.screens.ScreenWithDummyButtonBase;
+	import sabelas.screens.ScreenWithButtonBase;
 	import starling.display.Button;
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -13,7 +13,7 @@ package sabelas.screens
 	 *
 	 * @author Abiyasa
 	 */
-	public class ConfigScreen extends ScreenWithDummyButtonBase
+	public class ConfigScreen extends ScreenWithButtonBase
 	{
 		public static const DEBUG_TAG:String = 'ConfigScreen';
 		
@@ -26,11 +26,19 @@ package sabelas.screens
 		{
 			super();
 			
-			createDummyButtons([
-				{ label: 'back to menu', name: 'back', screenEvent: ScreenConfig.SCREEN_MAIN_MENU }
+			createButtons([
+				{
+					name: 'back',
+					textureName: 'button_back',
+					x: 640 - 5 - 41,
+					y: 5,
+					screenEvent: ScreenConfig.SCREEN_MAIN_MENU
+				}
+				
 			]);
 			
-			_title = new TextField(200, 100, 'Config Screen', 'Tahoma, Geneva, sans-serif', 14, 0xcccccc, true);
+			_title = new TextField(400, 400, 'They were 11 Clones', 'Tahoma, Geneva, sans-serif', 18, 0x534741, true);
+			_title.text = 'They were 11 Clones\nby Abiyasa (Papatong Mobi)\n2012'
 			_title.hAlign = 'center';
 			_title.vAlign = 'top';
 			_title.touchable = false;
@@ -43,12 +51,8 @@ package sabelas.screens
 			
 			trace(DEBUG_TAG, 'init()');
 			
-			// re-position buttons
-			ScreenUtils.layoutButtons(_dummyButtons, new Rectangle(0, 0,
-				this.stage.stageWidth, this.stage.stageHeight), 5, 5, 'top', 'right');
-				
 			// repositions label
-			_title.y = 5;
+			_title.y = 200;
 			_title.x = (stage.stageWidth - _title.width) / 2;
 		}
 	}
