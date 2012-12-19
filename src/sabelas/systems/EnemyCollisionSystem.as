@@ -98,13 +98,7 @@ package sabelas.systems
 							enemyIsExist = false;
 						}
 						
-						// reduce clone energy
-						cloneNode.energy.value--;
-						if (cloneNode.energy.value <= 0)
-						{
-							// clone is dead
-							_entityCreator.destroyEntity(cloneNode.entity);
-						}
+						handleCloneGetHit(cloneNode);
 					}
 				}
 				
@@ -122,13 +116,47 @@ package sabelas.systems
 						}
 						
 						// reduce main hero energy
-						_hero.energy.value--;
-						trace('hero energy=' + _hero.energy.value);
+						if (_hero.energy.value > 0)
+						{
+							_hero.energy.value--;
+						}
+						else
+						{
+							// then reduce the clones!
+							cloneNode = _clones.head;
+							if (cloneNode != null)
+							{
+								handleCloneGetHit(cloneNode);
+							}
+						}
 					}
 					
 				}
 			}
 			
+		}
+		
+		/**
+		 * Handles clone get hit.
+		 * When clone's energy is empty, remove the clone
+		 * @param	cloneNode
+		 * @return true if clone is dead or will be removed. Otherwise, clone only
+		 * got its energy reduced
+		 */
+		private function handleCloneGetHit(cloneNode:ClonesNode):Boolean
+		{
+			// reduce clone energy
+			var cloneIsDead:Boolean = false;
+			
+			cloneNode.energy.value--;
+			if (cloneNode.energy.value <= 0)
+			{
+				// clone is dead
+				_entityCreator.destroyEntity(cloneNode.entity);
+				cloneIsDead = true;
+			}
+			
+			return cloneIsDead;
 		}
 
 	}
