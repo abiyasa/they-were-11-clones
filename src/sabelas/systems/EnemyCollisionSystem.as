@@ -116,7 +116,7 @@ package sabelas.systems
 						}
 						
 						// reduce main hero energy
-						if (_hero.energy.value > 0)
+						if (_hero.energy.value > 1)
 						{
 							_hero.energy.value--;
 						}
@@ -127,6 +127,11 @@ package sabelas.systems
 							if (cloneNode != null)
 							{
 								handleCloneGetHit(cloneNode);
+							}
+							else  // no more clone left
+							{
+								// this will trigger game over
+								_hero.energy.value--;
 							}
 						}
 					}
