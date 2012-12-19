@@ -150,12 +150,12 @@ package sabelas.core
 		
 		public function stop():void
 		{
-			destroyHUD();
-			
 			_tickProvider.stop();
 			_tickProvider.remove(_hud.update);
 			_tickProvider.remove(_engine.update);
 
+			destroyHUD();
+			
 			destroy();
 		}
 	}
