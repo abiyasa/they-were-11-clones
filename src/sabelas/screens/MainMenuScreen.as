@@ -6,6 +6,7 @@ package sabelas.screens
 	import sabelas.configs.ScreenConfig;
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
@@ -40,32 +41,32 @@ package sabelas.screens
 
 			// bg image
 			_bgScreen = new Sprite();
-			var bgImage:Image = new Image(_textureAtlas.getTexture('bg'));
+			var bgImage:Quad = new Quad(640, 480);
 			_bgScreen.addChild(bgImage);
 			
 			// logo
 			var logo:Image = new Image(_textureAtlas.getTexture('title'));
 			logo.readjustSize();
-			logo.x = 125;
-			logo.y = 106;
+			logo.x = (640 - 512) / 2;
+			logo.y = 10;
 			_bgScreen.addChild(logo);
 			
-			_bgScreen.flatten();
+			//_bgScreen.flatten();
 			this.addChild(_bgScreen);
 			
 			this.createButtons(_textureAtlas, [
 				{
 					name: 'start',
 					textureName: 'button_start',
-					x: 175,
-					y: 310,
+					x: (640 - 171 - 5) / 2,
+					y: 10 + 373 + 5,
 					screenEvent: ScreenConfig.SCREEN_PLAY_GAME
 				},
 				{
 					name: 'config',
-					textureName: 'button_about',
-					x: 329,
-					y: 310,
+					textureName: 'button_about_small',
+					x: 640 - 41 - 5,
+					y: 480 - 41 - 5,
 					screenEvent: ScreenConfig.SCREEN_CONFIG
 				}
 			]);
