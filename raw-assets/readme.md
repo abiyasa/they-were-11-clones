@@ -20,3 +20,6 @@ Away3D 4 cannot load MQO, therefore it has to be converted to OBJ. These are the
 	*  Material Library: **false**
 	*  Freeze Patches: **true**
 *  Return code: **Unix(LF)**
+
+## Texture Atlas
+All buttons & logos are packed into 1 spritesheet using Paint.NET (see pdn file)
