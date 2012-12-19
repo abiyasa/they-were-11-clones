@@ -1,5 +1,6 @@
 package sabelas.nodes
 {
+	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
 	import sabelas.components.Collision;
 	import sabelas.components.Energy;
@@ -8,12 +9,12 @@ package sabelas.nodes
 	import ash.core.Node;
 	
 	/**
-	 * Node for a clone component
+	 * Node for clones component
 	 * @author Abiyasa
 	 */
-	public class ClonesNode extends Node
+	public class CloneLeaderNode extends Node
 	{
-		public var cloneMember:CloneMember;
+		public var cloneLeader:CloneLeader;
 		public var collision:Collision;
 		public var position:Position;
 		public var motion:Motion;
