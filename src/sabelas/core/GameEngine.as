@@ -94,7 +94,8 @@ package sabelas.core
 				_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new ChaserSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
-			_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
+			//Note: turning off temporary
+			//_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
