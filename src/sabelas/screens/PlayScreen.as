@@ -30,12 +30,12 @@ package sabelas.screens
 		{
 			super();
 			
-			createDummyButtons([
+			this.createButtons([
 				{
 					name: 'quit',
-					label: 'quit',
-					x: 600,
-					y: 10,
+					textureName: 'button_pause',
+					x: 640 - 5 - 41,
+					y: 5,
 					screenEvent: ScreenConfig.SCREEN_MAIN_MENU
 				}
 			]);

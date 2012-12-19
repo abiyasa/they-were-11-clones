@@ -4,11 +4,12 @@ package sabelas.screens
 	import sabelas.events.ShowScreenEvent;
 	import starling.display.Button;
 	import starling.events.Event;
+	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
 	/**
 	 * Screens with buttons.
-	 * Handle button click and dummy button creations
+	 * Handle button click and button creations
 	 *
 	 * @author Abiyasa
 	 */
@@ -16,14 +17,36 @@ package sabelas.screens
 	{
 		public static const DEBUG_TAG:String = 'ScreenWithButtonBase';
 		
+		[Embed(source="../../../assets/menuAtlas.png")]
+		private static const AtlasTexture:Class;
+
+		[Embed(source="../../../assets/menuAtlas.xml", mimeType="application/octet-stream")]
+		private static const AtlasXML:Class;
+		
+		/** shared button texture atlas */
+		protected var _textureAtlas:TextureAtlas;
+		
 		protected var _buttons:Array = [];
 		
 		/** Mapping between button name and event name */
 		protected var _buttonEventMap:Dictionary = new Dictionary();
 		
+		public function ScreenWithButtonBase()
+		{
+			super();
+			
+			// allocate texture atlas
+			var atlasTexture:Texture = Texture.fromBitmap(new AtlasTexture());
+			_textureAtlas = new TextureAtlas(atlasTexture, XML(new AtlasXML()));
+		}
+		
 		override protected function destroy(e:Event):void
 		{
 			_buttonEventMap = null;
+			
+			_textureAtlas.dispose();
+			_textureAtlas = null;
+			
 			super.destroy(e);
 		}
 		
@@ -34,8 +57,10 @@ package sabelas.screens
 		 * @param	buttonConfigs Array of button config. Each config is an
 		 * Object literal with name, texture name, and screenEvent
 		 */
-		protected function createButtons(textureAtlas:TextureAtlas, buttonConfigs:Array):void
+		protected function createButtons(buttonConfigs:Array, textureAtlas:TextureAtlas = null):void
 		{
+			textureAtlas = (textureAtlas == null) ? _textureAtlas : textureAtlas;
+			
 			// add dummy buttons
 			var theButton:Button;
 			for each (var buttonData:Object in buttonConfigs)

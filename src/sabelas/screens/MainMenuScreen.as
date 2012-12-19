@@ -10,8 +10,6 @@ package sabelas.screens
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
-	import starling.textures.Texture;
-	import starling.textures.TextureAtlas;
 	
 	/**
 	 * The main menu screen/View/Scene
@@ -21,24 +19,12 @@ package sabelas.screens
 	{
 		public static const DEBUG_TAG:String = 'MainMenuScreen';
 		
-		[Embed(source="../../../assets/menuAtlas.png")]
-		private static const AtlasTexture:Class;
-
-		[Embed(source="../../../assets/menuAtlas.xml", mimeType="application/octet-stream")]
-		private static const AtlasXML:Class;
-		
-		private var _textureAtlas:TextureAtlas;
-		
 		private var _bgScreen:Sprite;
 		
 		public function MainMenuScreen()
 		{
 			super();
 			
-			// init texture atlas
-			var atlasTexture:Texture = Texture.fromBitmap(new AtlasTexture());
-			_textureAtlas = new TextureAtlas(atlasTexture, XML(new AtlasXML()));
-
 			// bg image
 			_bgScreen = new Sprite();
 			var bgImage:Quad = new Quad(640, 480);
@@ -54,7 +40,7 @@ package sabelas.screens
 			//_bgScreen.flatten();
 			this.addChild(_bgScreen);
 			
-			this.createButtons(_textureAtlas, [
+			this.createButtons([
 				{
 					name: 'start',
 					textureName: 'button_start',
