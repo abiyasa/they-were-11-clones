@@ -90,12 +90,12 @@ package sabelas.core
 			_engine.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
 			_engine.addSystem(new EnemyGeneratorSystem(_entityCreator), SystemPriorities.PRE_UPDATE);
 			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
+			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new ClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new CloneControlSystem(_entityCreator, _keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new MouseControlSystem(_container.stage, stage3DUtils.currentView3D,
 				_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new ChaserSystem(), SystemPriorities.UPDATE);
-			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
 			//Note: turning off temporary
 			//_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
