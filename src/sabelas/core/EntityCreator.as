@@ -277,6 +277,67 @@ package sabelas.core
 			return camera;
 		}
 		
+		public static const SPAWN_RADIUS:int = 400;
+		
+		/**
+		 * WIll generate several enemy spawn areas based on wave level
+		 */
+		public function generateEnemyWaves():void
+		{
+			var arenaWidth:int = _config.arenaWidth;
+			var arenaHeight:int = _config.arenaHeight;
+			
+			var waveLevel:int = _gameState.waveLevel;
+			var numOfSpawns:int = 3 + (2 * waveLevel);
+			
+			// add enemy spawners
+			while (numOfSpawns >= 0)
+			{
+				numOfSpawns--;
+				
+				// generate random area
+				// TODO something is worng on the random place
+				var randX:int = Math.random() * arenaWidth;
+				if (randX < SPAWN_RADIUS)
+				{
+					randX = SPAWN_RADIUS + 10;
+				}
+				else if ((randX + SPAWN_RADIUS) > arenaWidth)
+				{
+					randX = arenaWidth - SPAWN_RADIUS - 10;
+				}
+				var randY:int = Math.random() * arenaHeight;
+				if (randY < SPAWN_RADIUS)
+				{
+					randY = SPAWN_RADIUS + 10;
+				}
+				else if ((randY + SPAWN_RADIUS) > arenaHeight)
+				{
+					randY = arenaHeight - SPAWN_RADIUS - 10;
+				}
+				
+				// TODO generate random num of enemies
+				var enemyStock:int = 4;
+				
+				// TODO generate random spawn rate, the higher level, the faster
+				var spawnRate:Number = 1.0;
+				
+				// TODO generate random spawn rate num, the higher level, the larger
+				var spawnNumber:int = 1;
+				
+				trace('generating enemy spawn at ' + randX + ',' + randY);
+				createEnemySpawn(randX, randY, enemyStock, spawnRate, 0.0, 1);
+			}
+			/*
+				createEnemySpawn(200, 600, 4, 1.0, 0.0, 1);
+				createEnemySpawn(200, -600, 6, 1.0, 0.0, 1);
+				createEnemySpawn(200, -600, 6, 1.0, 0.0, 1);
+			*/
+				
+			// increase level, so it will be harder next time
+			_gameState.waveLevel++;
+		}
+		
 		/**
 		 * Creates an enemy generator
 		 * @param	x
@@ -285,14 +346,14 @@ package sabelas.core
 		 * @param	spawnRate
 		 * @return
 		 */
-		public function createEnemySpawn(x:int, y:int, numOfEnemies:int, spawnRate:int):Entity
+		protected function createEnemySpawn(x:int, y:int, numOfEnemies:int, spawnRate:Number, spawnDelay:Number, spawnNum:int):Entity
 		{
 			var spawn:Entity = new Entity()
-				.add(new EnemyGenerator(numOfEnemies, spawnRate))
+				.add(new EnemyGenerator(numOfEnemies, spawnRate, 400, spawnDelay, spawnNum))
 				.add(new Position(x, y, 0))
 				.add(new Display3D(_assetManager.createSpawnPlane({
-					width: 400,
-					height: 400,
+					width: SPAWN_RADIUS,
+					height: SPAWN_RADIUS,
 					color: 0xcccccc
 				})));
 			

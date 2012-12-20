@@ -44,7 +44,10 @@ package sabelas.systems
 			var enemySpawnNode:EnemyGeneratorNode = _spawns.head;
 			if (enemySpawnNode == null)
 			{
-				// TODO no more spawn, remove this system and generate game over?
+				// TODO need delay?
+				
+				// no more spawn, generate more waves
+				_entityCreator.generateEnemyWaves();
 			}
 			else
 			{
@@ -52,12 +55,14 @@ package sabelas.systems
 				enemySpawn.updateTime(time);
 				if (enemySpawn.isSpawnTime())
 				{
+					// TODO handle spawn number
+					// TODO generate random pos inside the spawn radius
 					// spawn enemy
 					var spawnPos:Position = enemySpawnNode.position;
 					_entityCreator.createEnemy(spawnPos.position.x, spawnPos.position.y);
 					
-					enemySpawn.numOfEnemyToGenerate--;
-					if (enemySpawn.numOfEnemyToGenerate <= 0)
+					enemySpawn.enemyStock--;
+					if (enemySpawn.enemyStock <= 0)
 					{
 						// no more enemy to spawn, remove from game
 						_entityCreator.destroyEntity(enemySpawnNode.entity);

@@ -19,5 +19,7 @@ package sabelas.components
 		public var numOfClones:int = 0;
 		public var numOfSpawnedEnemies:int = 0;
 		public var numOfShootEnemies:int = 0;
+		
+		public var waveLevel:int = 0;
 	}
 }
