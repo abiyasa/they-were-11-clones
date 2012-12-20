@@ -85,7 +85,7 @@ package sabelas.graphics
 			// create texture for spawning arena
 			var cropCircle:Sprite = new Sprite();
 			var g:Graphics = cropCircle.graphics;
-			g.beginFill(0xcccccc, 0.1);
+			g.beginFill(0xcccccc, 0.6);
 			/*
 			var m:Matrix = new Matrix();
 			m.createGradientBox(128, 128, 0, 0, 0);

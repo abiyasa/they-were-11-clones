@@ -278,7 +278,7 @@ package sabelas.core
 			return camera;
 		}
 		
-		public static const SPAWN_RADIUS:int = 400;
+		public static const SPAWN_RADIUS:int = 600;
 		
 		/**
 		 * WIll generate several enemy spawn areas based on wave level
@@ -313,11 +313,6 @@ package sabelas.core
 				trace('generating enemy spawn at ' + randX + ',' + randY);
 				createEnemySpawn(randX, randY, enemyStock, spawnRate, 0.0, 1);
 			}
-			/*
-				createEnemySpawn(200, 600, 4, 1.0, 0.0, 1);
-				createEnemySpawn(200, -600, 6, 1.0, 0.0, 1);
-				createEnemySpawn(200, -600, 6, 1.0, 0.0, 1);
-			*/
 				
 			// increase level, so it will be harder next time
 			_gameState.waveLevel++;
