@@ -149,7 +149,7 @@ package sabelas.systems
 								(bulletRadius + shootableNode.collision.radius))
 							{
 								// bullet hits item
-								// TODO reduce energy
+								// TODO reduce energy instead of sudden death
 								_entityCreator.destroyEntity(shootableNode.entity);
 								_entityCreator.destroyEntity(bulletNode.entity);
 								
@@ -161,6 +161,7 @@ package sabelas.systems
 									// add score!
 									_numOfShootEnemies++;
 									_gameState.numOfShootEnemies = _numOfShootEnemies;
+									_gameState.score++;
 									
 									// check bonus based on shoot enemies
 									_bonusTracker--;
