@@ -60,6 +60,10 @@ package sabelas.systems
 				
 				object3D.x = position.position.x;
 				object3D.z = position.position.y;
+				if (position.hasHeight)
+				{
+					object3D.y = position.height;
+				}
 				object3D.rotationY = position.rotation * 180 / Math.PI;
 			}
 		}

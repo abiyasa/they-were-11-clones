@@ -234,11 +234,15 @@ package sabelas.core
 		 */
 		public function createArena():Entity
 		{
+			// special position
+			var arenaPosition:Position = new Position(_config.arenePosX, _config.arenaPosY, 0);
+			arenaPosition.height = -1;
+			
 			// create
 			var arena:Entity = new Entity()
 				.add(new Arena(_config.arenaWidth, _config.arenaHeight,
 					_config.arenePosX, _config.arenaPosY))
-				.add(new Position(_config.arenePosX, _config.arenaPosY, 0))
+				.add(arenaPosition)
 				.add(new Display3D(_assetManager.createArenaPlane({
 					width: _config.arenaWidth,
 					height: _config.arenaHeight,
@@ -285,7 +289,12 @@ package sabelas.core
 		{
 			var spawn:Entity = new Entity()
 				.add(new EnemyGenerator(numOfEnemies, spawnRate))
-				.add(new Position(x, y, 0));
+				.add(new Position(x, y, 0))
+				.add(new Display3D(_assetManager.createArenaPlane({
+					width: 200,
+					height: 200,
+					color: 0xcccccc
+				})));
 			
 			_engine.addEntity(spawn);
 			return spawn;
