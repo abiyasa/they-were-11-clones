@@ -4,6 +4,7 @@ package sabelas.core
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
@@ -284,8 +285,7 @@ package sabelas.core
 		 */
 		public function generateEnemyWaves():void
 		{
-			var arenaWidth:int = _config.arenaWidth;
-			var arenaHeight:int = _config.arenaHeight;
+			var arenaRect:Rectangle = _config.arenaRect;
 			
 			var waveLevel:int = _gameState.waveLevel;
 			var numOfSpawns:int = 3 + (2 * waveLevel);
@@ -296,25 +296,10 @@ package sabelas.core
 				numOfSpawns--;
 				
 				// generate random area
-				// TODO something is worng on the random place
-				var randX:int = Math.random() * arenaWidth;
-				if (randX < SPAWN_RADIUS)
-				{
-					randX = SPAWN_RADIUS + 10;
-				}
-				else if ((randX + SPAWN_RADIUS) > arenaWidth)
-				{
-					randX = arenaWidth - SPAWN_RADIUS - 10;
-				}
-				var randY:int = Math.random() * arenaHeight;
-				if (randY < SPAWN_RADIUS)
-				{
-					randY = SPAWN_RADIUS + 10;
-				}
-				else if ((randY + SPAWN_RADIUS) > arenaHeight)
-				{
-					randY = arenaHeight - SPAWN_RADIUS - 10;
-				}
+				var randX:int = arenaRect.left + (Math.random() *
+					(arenaRect.width - SPAWN_RADIUS - 10));
+				var randY:int = arenaRect.top + (Math.random() *
+					(arenaRect.height - SPAWN_RADIUS - 10));
 				
 				// TODO generate random num of enemies
 				var enemyStock:int = 4;
