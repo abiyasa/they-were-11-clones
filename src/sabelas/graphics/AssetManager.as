@@ -244,7 +244,9 @@ package sabelas.graphics
 			// create plane
 			var planeWidth:int = config.hasOwnProperty('width') ? config.width : 10000;
 			var planeHeight:int = config.hasOwnProperty('height') ? config.height : 10000;
-			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 4, 4));
+			var planeGeometry:PlaneGeometry = new PlaneGeometry(planeWidth, planeHeight, 4, 4);
+			planeGeometry.scaleUV(10, 10);  // tiling
+			var mesh:Mesh = new Mesh(planeGeometry);
 			
 			mesh.material = _arenaTexture;
 			tempResult.addChild(mesh);
