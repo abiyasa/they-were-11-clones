@@ -37,7 +37,7 @@ package sabelas.systems
 			
 			// update the view's camera based on camera node
 			_camera.position = cameraPosition;
-			_targetPosition.setTo(targetPosition.x, targetPosition.y, 0)
+			_targetPosition.setTo(targetPosition.x, 0, targetPosition.y)
 			_camera.lookAt(_targetPosition);
 		}
 		
