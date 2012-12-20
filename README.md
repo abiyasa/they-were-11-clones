@@ -8,6 +8,12 @@
 ## Demo
 Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/)
 
+## How to play
+* Shoot as many enemies as possible & gain energy bonus
+* Use energy bonus to add a clone of yourself (up to 11 clones at a time!!)
+* Deposit your clone at the deposit point to gain score
+* Repeat
+
 ## Screenshots
 Soon my friend, soon!
 
