@@ -13,9 +13,12 @@ package sabelas.graphics
 	import away3d.textures.BitmapTexture;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	
 	/**
 	 * Factory and manager 3D assets.
@@ -39,6 +42,9 @@ package sabelas.graphics
 		
 		private var _assetLoader:Loader3D;
 		
+		private var _arenaTexture:TextureMaterial;
+		private var _spawnArenaTexture:TextureMaterial;
+		
 		[Embed(source="../../../assets/arena_texture.png")]
 		private static const ArenaTexture:Class;
 		
@@ -54,11 +60,15 @@ package sabelas.graphics
 		 */
 		public function init(options:Object = null):void
 		{
-			// create bitmap texture
-			var textureBitmapData:BitmapData = Bitmap(new BlockyTexture()).bitmapData;
+			// create texture for the whole arena
+			var textureBitmapData:BitmapData = Bitmap(new ArenaTexture()).bitmapData;
 			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
+			_arenaTexture = new TextureMaterial(bitmapTexture, true, true, false);
 			
-			// create textures
+			// create bitmap textures for block characters
+			textureBitmapData = Bitmap(new BlockyTexture()).bitmapData;
+			bitmapTexture = new BitmapTexture(textureBitmapData);
+			
 			_blockyTextures = [];
 			var tempTexture:TextureMaterial;
 			tempTexture = new TextureMaterial(bitmapTexture);
@@ -71,6 +81,23 @@ package sabelas.graphics
 			tempTexture = new TextureMaterial(bitmapTexture);
 			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
 			_blockyTextures[2] = tempTexture;
+			
+			// create texture for spawning arena
+			var cropCircle:Sprite = new Sprite();
+			var g:Graphics = cropCircle.graphics;
+			g.beginFill(0xcccccc, 0.1);
+			/*
+			var m:Matrix = new Matrix();
+			m.createGradientBox(128, 128, 0, 0, 0);
+			g.beginGradientFill("radial", [0xCCCCCC, 0xFFFFFF], [ 0.6, 0.0 ], [ 0, 255 ], m);
+			*/
+			g.drawCircle(64, 64, 60);
+			g.endFill();
+			textureBitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
+			textureBitmapData.draw(cropCircle);
+			bitmapTexture = new BitmapTexture(textureBitmapData);
+			_spawnArenaTexture = new TextureMaterial(bitmapTexture);
+			_spawnArenaTexture.alphaBlending = true;
 			
 			loadMesh();
 		}
@@ -89,6 +116,10 @@ package sabelas.graphics
 				temp = _blockyTextures.pop() as MaterialBase;
 				temp.dispose();
 			}
+			
+			// destroy other
+			_arenaTexture.dispose();
+			_arenaTexture = null;
 		}
 		
 		/**
@@ -215,17 +246,8 @@ package sabelas.graphics
 			var planeHeight:int = config.hasOwnProperty('height') ? config.height : 10000;
 			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 4, 4));
 			
-			// create bitmap texture
-			var textureBitmapData:BitmapData = Bitmap(new ArenaTexture()).bitmapData;
-			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
-			var tempTexture:TextureMaterial = new TextureMaterial(bitmapTexture, true, true, false);
-			
-			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
-			mesh.material = tempTexture;
+			mesh.material = _arenaTexture;
 			tempResult.addChild(mesh);
-
-			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +
-				' height=' + planeHeight + ' color=' + planeColor);
 			
 			return tempResult;
 		}
@@ -249,7 +271,7 @@ package sabelas.graphics
 			
 			// create plane material
 			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
-			mesh.material = new ColorMaterial(planeColor);
+			mesh.material = _spawnArenaTexture;
 			tempResult.addChild(mesh);
 			
 			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +

@@ -291,8 +291,8 @@ package sabelas.core
 				.add(new EnemyGenerator(numOfEnemies, spawnRate))
 				.add(new Position(x, y, 0))
 				.add(new Display3D(_assetManager.createSpawnPlane({
-					width: 200,
-					height: 200,
+					width: 400,
+					height: 400,
 					color: 0xcccccc
 				})));
 			
