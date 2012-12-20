@@ -290,7 +290,7 @@ package sabelas.core
 			var spawn:Entity = new Entity()
 				.add(new EnemyGenerator(numOfEnemies, spawnRate))
 				.add(new Position(x, y, 0))
-				.add(new Display3D(_assetManager.createArenaPlane({
+				.add(new Display3D(_assetManager.createSpawnPlane({
 					width: 200,
 					height: 200,
 					color: 0xcccccc

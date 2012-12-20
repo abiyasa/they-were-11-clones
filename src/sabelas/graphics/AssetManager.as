@@ -229,6 +229,34 @@ package sabelas.graphics
 			
 			return tempResult;
 		}
+		
+		/**
+		 * Creates a flat plane for the spawning arena
+		 *
+		 * @param	config
+		 * @return
+		 */
+		public function createSpawnPlane(config:Object = null):ObjectContainer3D
+		{
+			config = (config == null) ? { } : config;
+			
+			var tempResult:ObjectContainer3D = new ObjectContainer3D();
+			
+			// create plane
+			var planeWidth:int = config.hasOwnProperty('width') ? config.width : 200;
+			var planeHeight:int = config.hasOwnProperty('height') ? config.height : 200;
+			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 1, 1));
+			
+			// create plane material
+			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
+			mesh.material = new ColorMaterial(planeColor);
+			tempResult.addChild(mesh);
+			
+			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +
+				' height=' + planeHeight + ' color=' + planeColor);
+			
+			return tempResult;
+		}
 	}
 
 }
