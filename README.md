@@ -6,7 +6,7 @@
 * Clone yourself up to 11 clones!
 
 ## Demo
-Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/)
+Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/) (requires Flash PLayer 11.3)
 
 ## How to play
 * Shoot as many enemies as possible & gain energy bonus
@@ -15,7 +15,7 @@ Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/
 * Repeat
 
 ## Screenshots
-Soon my friend, soon!
+![Screen shot wip 01](http://abiyasa.com/lab/away3d/they-were-11-clones/screen01.png)
 
 ## Technology used
 * [Adobe Flash Stage3D](http://gaming.adobe.com/)
