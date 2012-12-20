@@ -20,5 +20,6 @@ Soon my friend, soon!
 ## Technology used
 * [Adobe Flash Stage3D](http://gaming.adobe.com/)
 * [Starling](http://starling-framework.org)
-* [Away3d 4.0](http://away3d.com/)
+* [Away3D 4.0](http://away3d.com/)
 * [Ash Framework](github.com/richardlord/Ash/)
+* [FlashDevelop](http://flashdevelop.org) for IDE

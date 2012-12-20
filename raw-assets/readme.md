@@ -23,3 +23,6 @@ Away3D 4 cannot load MQO, therefore it has to be converted to OBJ. These are the
 
 ## Texture Atlas
 All buttons & logos are packed into 1 spritesheet using Paint.NET (see pdn file)
+
+## Additional images
+* 'Old Mathematics' pattern from http://subtlepatterns.com, made by [Josh Green](http://emailcoder.net/)

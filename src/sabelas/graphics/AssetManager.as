@@ -39,6 +39,9 @@ package sabelas.graphics
 		
 		private var _assetLoader:Loader3D;
 		
+		[Embed(source="../../../assets/arena_texture.png")]
+		private static const ArenaTexture:Class;
+		
 		public function AssetManager()
 		{
 			super();
@@ -212,9 +215,13 @@ package sabelas.graphics
 			var planeHeight:int = config.hasOwnProperty('height') ? config.height : 10000;
 			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 4, 4));
 			
-			// create plane material
+			// create bitmap texture
+			var textureBitmapData:BitmapData = Bitmap(new ArenaTexture()).bitmapData;
+			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
+			var tempTexture:TextureMaterial = new TextureMaterial(bitmapTexture, true, true, false);
+			
 			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
-			mesh.material = new ColorMaterial(planeColor);
+			mesh.material = tempTexture;
 			tempResult.addChild(mesh);
 
 			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +
