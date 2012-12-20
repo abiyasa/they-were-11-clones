@@ -8,16 +8,32 @@ package sabelas.components
 	 */
 	public class EnemyGenerator
 	{
-		public var numOfEnemyToGenerate:int;
-		public var spawnRate:int;
+		public var enemyStock:int;
+		public var spawnRate:Number;
 		protected var _lastSpawnTime:Number;
-		// TODO var for initial delay before first spawn
-		// TODO num of emeies when spawn at a time
+		public var spawnRadius:int;
+		public var spawnDelay:Number;
+		public var spawnNumber:int;
 		
-		public function EnemyGenerator(numOfEnemyToGenerate:int, spawnRate:int)
+		/**
+		 * Constructor
+		 *
+		 * @param	enemyStock NUmber of enemy stock on this generator.
+		 * Empty stock, means generator will be removed
+		 * @param	spawnRate How often we spawn? in seconds
+		 * @param	radius spawn radius
+		 * @param	delay delay before spawn the first enemy, in seconds
+		 * @param	spawnNumber the num of enemies spawn
+		 */
+		public function EnemyGenerator(enemyStock:int, spawnRate:Number, radius:int,
+			delay:Number = 0, spawnNumber:int = 1)
 		{
-			this.numOfEnemyToGenerate = numOfEnemyToGenerate;
+			this.enemyStock = enemyStock;
 			this.spawnRate = spawnRate;
+			this.spawnRadius = radius;
+			this.spawnDelay = delay;
+			this.spawnNumber = spawnNumber;
+			
 			_lastSpawnTime = 0;
 		}
 		
