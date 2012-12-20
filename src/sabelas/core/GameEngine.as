@@ -74,7 +74,7 @@ package sabelas.core
 			
 			// set arena
 			var arenaWidth:int = 10000;
-			var arenaHeight:int = 20000;
+			var arenaHeight:int = 10000;
 			var arenaPosX:int = 0;
 			var arenaPosY:int = 0;
 			_config.setArena(arenaWidth, arenaHeight, arenaPosX, arenaPosY);
