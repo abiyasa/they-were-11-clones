@@ -81,6 +81,9 @@ package sabelas.systems
 				{
 					// no more enemy to spawn, remove from game
 					_entityCreator.destroyEntity(spawnNode.entity);
+					
+					// no more spawn
+					break;
 				}
 				else  // still enemy to spawn
 				{

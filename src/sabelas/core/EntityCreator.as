@@ -302,11 +302,19 @@ package sabelas.core
 				var randY:int = arenaRect.top + ARENA_SPAWN_PADDING +
 					(Math.random() * (arenaRect.height - SPAWN_RADIUS - ARENA_SPAWN_PADDING - ARENA_SPAWN_PADDING));
 				
-				// TODO generate random num of enemies
-				var enemyStock:int = 4;
+				// enemy stock increase along with the level
+				var enemyStock:int = 4 + (waveLevel / 3);
+				if (spawnNumber > 20)
+				{
+					spawnNumber = 20;
+				}
 				
-				// TODO generate random spawn rate, the higher level, the faster
-				var spawnRate:Number = 1.0;
+				// generate spawn rate, the higher level, the faster
+				var spawnRate:Number = 1.0 - (0.15 * waveLevel);
+				if (spawnRate < 0.2)
+				{
+					spawnRate = 0.2;
+				}
 				
 				// generate random spawn rate num, the higher level, the larger
 				var spawnNumber:int = 1 + (waveLevel / 3);
