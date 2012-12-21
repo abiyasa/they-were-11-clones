@@ -279,6 +279,7 @@ package sabelas.core
 		}
 		
 		public static const SPAWN_RADIUS:int = 600;
+		public static const ARENA_SPAWN_PADDING:int = 200;
 		
 		/**
 		 * WIll generate several enemy spawn areas based on wave level
@@ -296,10 +297,10 @@ package sabelas.core
 				numOfSpawns--;
 				
 				// generate random area
-				var randX:int = arenaRect.left + (Math.random() *
-					(arenaRect.width - SPAWN_RADIUS - 10));
-				var randY:int = arenaRect.top + (Math.random() *
-					(arenaRect.height - SPAWN_RADIUS - 10));
+				var randX:int = arenaRect.left + ARENA_SPAWN_PADDING +
+					(Math.random() * (arenaRect.width - SPAWN_RADIUS - ARENA_SPAWN_PADDING - ARENA_SPAWN_PADDING));
+				var randY:int = arenaRect.top + ARENA_SPAWN_PADDING +
+					(Math.random() * (arenaRect.height - SPAWN_RADIUS - ARENA_SPAWN_PADDING - ARENA_SPAWN_PADDING));
 				
 				// TODO generate random num of enemies
 				var enemyStock:int = 4;
