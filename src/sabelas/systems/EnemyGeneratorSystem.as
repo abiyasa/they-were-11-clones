@@ -3,6 +3,7 @@ package sabelas.systems
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;
+	import flash.geom.Point;
 	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
@@ -44,7 +45,7 @@ package sabelas.systems
 			var enemySpawnNode:EnemyGeneratorNode = _spawns.head;
 			if (enemySpawnNode == null)
 			{
-				// TODO need delay?
+				// TODO need delay before next wave
 				
 				// no more spawn, generate more waves
 				_entityCreator.generateEnemyWaves();
@@ -55,24 +56,52 @@ package sabelas.systems
 				enemySpawn.updateTime(time);
 				if (enemySpawn.isSpawnTime())
 				{
-					// TODO handle spawn number
-					// TODO generate random pos inside the spawn radius
-					// spawn enemy
-					var spawnPos:Position = enemySpawnNode.position;
-					_entityCreator.createEnemy(spawnPos.position.x, spawnPos.position.y);
-					
-					enemySpawn.enemyStock--;
-					if (enemySpawn.enemyStock <= 0)
-					{
-						// no more enemy to spawn, remove from game
-						_entityCreator.destroyEntity(enemySpawnNode.entity);
-					}
-					else  // still enemy to spawn
-					{
-						enemySpawn.resetTime();
-					}
+					spawnEnemy(enemySpawnNode);
 				}
 			}
+		}
+		
+		/**
+		 * Spawn enemies based on the node
+		 */
+		private function spawnEnemy(spawnNode:EnemyGeneratorNode):void
+		{
+			var enemySpawn:EnemyGenerator = spawnNode.enemyGenerator;
+			var numOfSpawns:int = enemySpawn.spawnNumber;
+			for (var i:int = 0; i < numOfSpawns; i++)
+			{
+				// spawn enemy randomly inside the spawn radius
+				var spawnPos:Point = spawnNode.position.position.clone();
+				generateRandomSpawnPosition(spawnPos.x, spawnPos.y,
+					spawnNode.enemyGenerator.spawnRadius, spawnPos);
+				_entityCreator.createEnemy(spawnPos.x, spawnPos.y);
+				
+				enemySpawn.enemyStock--;
+				if (enemySpawn.enemyStock <= 0)
+				{
+					// no more enemy to spawn, remove from game
+					_entityCreator.destroyEntity(spawnNode.entity);
+				}
+				else  // still enemy to spawn
+				{
+					enemySpawn.resetTime();
+				}
+			}
+		}
+		
+		/**
+		 * Generates random spawn position inside the given radius
+		 *
+		 * @param	centerX radius center
+		 * @param	centerY radius center
+		 * @param	radius spawn radius, generated point should be inside the radius
+		 * @param	output allocated point where the result will be assigned to
+		 */
+		private function generateRandomSpawnPosition(centerX:int, centerY:int,
+			radius:int, output:Point):void
+		{
+			output.x = centerX + (radius - (Math.random() * radius * 2));
+			output.y = centerY + (radius - (Math.random() * radius * 2));
 		}
 	}
 
