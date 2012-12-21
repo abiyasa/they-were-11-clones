@@ -308,11 +308,15 @@ package sabelas.core
 				// TODO generate random spawn rate, the higher level, the faster
 				var spawnRate:Number = 1.0;
 				
-				// TODO generate random spawn rate num, the higher level, the larger
-				var spawnNumber:int = 1;
+				// generate random spawn rate num, the higher level, the larger
+				var spawnNumber:int = 1 + (waveLevel / 3);
+				if (spawnNumber > 5)
+				{
+					spawnNumber = 5;
+				}
 				
 				trace('generating enemy spawn at ' + randX + ',' + randY);
-				createEnemySpawn(randX, randY, enemyStock, spawnRate, 0.0, 1);
+				createEnemySpawn(randX, randY, enemyStock, spawnRate, 0.0, spawnNumber);
 			}
 				
 			// increase level, so it will be harder next time
