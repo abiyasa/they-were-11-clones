@@ -6,18 +6,18 @@ package sabelas.systems
 	import ash.core.NodeList;
 	import ash.core.System;
 	import ash.tools.ListIteratingSystem;
-	import sabelas.components.CloneControl;
 	import sabelas.components.GameState;
 	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.input.KeyPoll;
-	import sabelas.nodes.CloneControlNode;
 	import sabelas.nodes.CloneLeaderNode;
 	import sabelas.nodes.GameStateNode;
 	
 	
 	/**
-	 * System for controlling clone (adding or removing clones)
+	 * System for controlling clone (adding or removing clones).
+	 * Clone added automatically when energy is enough
+	 *
 	 * @author Abiyasa
 	 */
 	public class CloneControlSystem extends System
@@ -28,7 +28,6 @@ package sabelas.systems
 		
 		protected var _keyPoll:KeyPoll;
 		protected var _entityCreator:EntityCreator;
-		protected var _cloneControlNodes:NodeList;
 		protected var _gameStateNodes:NodeList;
 		private var _gameState:GameState;
 		private var _heroes:NodeList;
@@ -44,8 +43,6 @@ package sabelas.systems
 		override public function addToEngine(engine:Engine):void
 		{
 			super.addToEngine(engine);
-			
-			_cloneControlNodes = engine.getNodeList(CloneControlNode);
 			
 			_gameStateNodes = engine.getNodeList(GameStateNode);
 			_gameStateNodes.nodeAdded.add(onGameStateAdded);
@@ -80,8 +77,6 @@ package sabelas.systems
 		{
 			super.removeFromEngine(engine);
 			
-			_cloneControlNodes = null;
-			
 			_gameStateNodes.nodeAdded.remove(onGameStateAdded);
 			_gameStateNodes.nodeRemoved.remove(onGameStateRemoved);
 			_gameStateNodes = null;
@@ -93,51 +88,23 @@ package sabelas.systems
 		
 		override public function update(time:Number):void
 		{
-			super.update(time);
-		
-			var cloneControlNode:CloneControlNode;
-			var cloneControl:CloneControl;
-			for (cloneControlNode = _cloneControlNodes.head; cloneControlNode; cloneControlNode = cloneControlNode.next)
+			if (_hero == null)
 			{
-				// detect click button
-				cloneControl = cloneControlNode.cloneControl;
-				if (cloneControl.cloneTriggered)
-				{
-					if (_keyPoll.isUp(cloneControl.keyAddClone))
-					{
-						// key clicked is detected
-						cloneControl.cloneTriggered = false;
-						
-						doClone(cloneControlNode);
-					}
-				}
-				else if (_keyPoll.isDown(cloneControl.keyAddClone))
-				{
-					// not yet trigger, wait for key release
-					cloneControl.cloneTriggered = true;
-				}
+				return;
 			}
-		}
-		
-		/**
-		 * Make a clone
-		 */
-		protected function doClone(cloneControlNode:CloneControlNode):void
-		{
-			trace(DEBUG_TAG, 'cloning an item');
+			
+			super.update(time);
 			
 			// create clone from the leader
 			if ((_hero.energy.value > 1) && (_gameState.numOfClones < MAX_NUM_OF_CLONES))
 			{
+				trace(DEBUG_TAG, 'cloning an item');
+				
 				// TODO create clone behind the leader (use leader's moving direction)
-				var leaderPosition:Position = cloneControlNode.position;
+				var leaderPosition:Position = _hero.position;
 				_entityCreator.createHero(leaderPosition.position.x, leaderPosition.position.y - 300, true);
 				
 				_hero.energy.value--;
-			}
-			else
-			{
-				trace(DEBUG_TAG, 'CANNOT clone anymore, too much clones=' + _gameState.numOfClones);
 			}
 		}
 	}

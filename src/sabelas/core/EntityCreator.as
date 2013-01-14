@@ -9,6 +9,7 @@ package sabelas.core
 	import sabelas.components.Arena;
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
+	import sabelas.components.CloneDeposit;
 	import sabelas.components.Enemy;
 	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Energy;
@@ -20,7 +21,6 @@ package sabelas.core
 	import sabelas.components.Display3D;
 	import sabelas.components.GameState;
 	import sabelas.components.Gun;
-	import sabelas.components.CloneControl;
 	import sabelas.components.Motion;
 	import sabelas.components.MotionControl;
 	import sabelas.components.MouseControl;
@@ -150,7 +150,6 @@ package sabelas.core
 					.add(new Collision(50))
 					.add(new CollidingObject(CollidingObject.TYPE_MAIN_HERO))
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
-					.add(new CloneControl(Keyboard.SPACE))
 					.add(new MouseControl())
 					.add(new Gun(new Point(8, 0), 0.3, 3));
 				break;
@@ -352,6 +351,28 @@ package sabelas.core
 			
 			_engine.addEntity(spawn);
 			return spawn;
+		}
+		
+		/**
+		 * Creates a clone deposit
+		 * @param	x position
+		 * @param	y position
+		 * @param	clonesRequired NUmber of clones required to deposit
+		 * @return
+		 */
+		public function createCloneDeposit(x:int, y:int, clonesRequired:int):Entity
+		{
+			var deposit:Entity = new Entity()
+				.add(new CloneDeposit(clonesRequired))
+				.add(new Position(x, y, 0))
+				.add(new Display3D(_assetManager.createArenaPlane({
+					width: SPAWN_RADIUS,
+					height: SPAWN_RADIUS,
+					color: 0x009eef
+				})));
+			
+			_engine.addEntity(deposit);
+			return deposit;
 		}
 	}
 	

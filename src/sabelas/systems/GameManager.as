@@ -113,6 +113,8 @@ package sabelas.systems
 					
 					_entityCreator.generateEnemyWaves();
 					
+					_entityCreator.createCloneDeposit( -200, -200, 10);
+					
 					// TODO entityCreator stops loading animation
 					
 					// start the games

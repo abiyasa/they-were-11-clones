@@ -7,6 +7,7 @@ package sabelas
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.display3D.Context3DCompareMode;
 	import flash.events.Event;
 	import sabelas.utils.Stage3DUtils;
 	import starling.core.Starling;
@@ -62,6 +63,7 @@ package sabelas
 			_starling.antiAliasing = antiAlias;
 			_starling.showStats = true;
 			_starling.start();
+			_stage3dProxy.context3D.setDepthTest(false, Context3DCompareMode.ALWAYS);
 
 			// create view3D
 			_view3D = new View3D();
