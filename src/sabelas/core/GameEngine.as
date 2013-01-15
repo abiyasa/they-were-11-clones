@@ -15,6 +15,7 @@ package sabelas.core
 	import sabelas.systems.GameManager;
 	import sabelas.systems.ChaserSystem;
 	import sabelas.systems.CloneControlSystem;
+	import sabelas.systems.CloneDepositSystem;
 	import sabelas.systems.ClonePositioningSystem;
 	import sabelas.systems.MotionControlSystem;
 	import sabelas.systems.MotionSystem;
@@ -102,6 +103,7 @@ package sabelas.core
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new EnemyCollisionSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
+			_engine.addSystem(new CloneDepositSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
 			//_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
 		
