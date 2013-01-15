@@ -245,8 +245,7 @@ package sabelas.core
 				.add(arenaPosition)
 				.add(new Display3D(_assetManager.createArenaPlane({
 					width: _config.arenaWidth,
-					height: _config.arenaHeight,
-					color: 0xfefefe
+					height: _config.arenaHeight
 				})));
 				
 			_engine.addEntity(arena);

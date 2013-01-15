@@ -248,7 +248,16 @@ package sabelas.graphics
 			planeGeometry.scaleUV(10, 10);  // tiling
 			var mesh:Mesh = new Mesh(planeGeometry);
 			
-			mesh.material = _arenaTexture;
+			// handle material
+			if (config.hasOwnProperty('color'))
+			{
+				var planeColor:uint = config.color;
+				mesh.material = new ColorMaterial(planeColor);
+			}
+			else // no color, assume using arena texture
+			{
+				mesh.material = _arenaTexture;
+			}
 			tempResult.addChild(mesh);
 			
 			return tempResult;
