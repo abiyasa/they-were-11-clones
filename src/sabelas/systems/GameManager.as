@@ -113,7 +113,7 @@ package sabelas.systems
 					
 					_entityCreator.generateEnemyWaves();
 					
-					_entityCreator.createCloneDeposit( -200, -200, 10);
+					_entityCreator.createCloneDeposit(-1000, 400, 10);
 					
 					// TODO entityCreator stops loading animation
 					
