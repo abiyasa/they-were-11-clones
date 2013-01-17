@@ -7,6 +7,7 @@ package sabelas.systems
 	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.CloneDepositNode;
+	import sabelas.nodes.ClonesNode;
 	
 	/**
 	 * System which process each clone deposit.
@@ -19,6 +20,7 @@ package sabelas.systems
 	{
 		private var _entityCreator:EntityCreator;
 		private var _deposits:NodeList;
+		private var _clones:NodeList;
 		
 		public function CloneDepositSystem(creator:EntityCreator)
 		{
@@ -30,6 +32,7 @@ package sabelas.systems
 		{
 			super.addToEngine(engine);
 			_deposits = engine.getNodeList(CloneDepositNode);
+			_clones = engine.getNodeList(ClonesNode);
 		}
 		
 		override public function removeFromEngine(engine:Engine):void
@@ -41,8 +44,8 @@ package sabelas.systems
 		override public function update(time:Number):void
 		{
 			// only check head
-			var enemySpawnNode:CloneDepositNode = _deposits.head;
-			if (enemySpawnNode == null)
+			var cloneDeposit:CloneDepositNode = _deposits.head;
+			if (cloneDeposit == null)
 			{
 				// TODO need delay before next deposit generation
 				
@@ -52,7 +55,33 @@ package sabelas.systems
 			}
 			else
 			{
-				// TODO loop through the clones, check if they are inside the arena
+				var depositRadius:Number = cloneDeposit.collision.radius;
+				var depositPos:Point = cloneDeposit.position.position;
+				
+				// loop through the clones, check if they are inside the arena
+				for (var cloneNode:ClonesNode = _clones.head; cloneNode; cloneNode = cloneNode.next)
+				{
+					if (Point.distance(depositPos, cloneNode.position.position) <=
+						(depositRadius + cloneNode.collision.radius))
+					{
+						trace('a clone is inside deposit arena!');
+					
+						// TODO remove clone's component clone
+						// TODO add component for leviation to clone
+						_entityCreator.destroyEntity(cloneNode.entity);
+						
+						// TODO add score to game status
+						
+						// deposit clone
+						cloneDeposit.cloneDeposit.clonesRequired--;
+						if (cloneDeposit.cloneDeposit.clonesRequired <= 0)
+						{
+							// remove deposit place
+							_entityCreator.destroyEntity(cloneDeposit.entity);
+							break;
+						}
+					}
+				}
 			}
 		}
 		
