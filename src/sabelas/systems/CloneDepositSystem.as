@@ -4,10 +4,12 @@ package sabelas.systems
 	import ash.core.NodeList;
 	import ash.core.System;
 	import flash.geom.Point;
+	import sabelas.components.GameState;
 	import sabelas.components.Position;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.CloneDepositNode;
 	import sabelas.nodes.ClonesNode;
+	import sabelas.nodes.GameStateNode;
 	
 	/**
 	 * System which process each clone deposit.
@@ -21,6 +23,8 @@ package sabelas.systems
 		private var _entityCreator:EntityCreator;
 		private var _deposits:NodeList;
 		private var _clones:NodeList;
+		protected var _gameStateNodes:NodeList;
+		private var _gameState:GameState;
 		
 		public function CloneDepositSystem(creator:EntityCreator)
 		{
@@ -33,12 +37,30 @@ package sabelas.systems
 			super.addToEngine(engine);
 			_deposits = engine.getNodeList(CloneDepositNode);
 			_clones = engine.getNodeList(ClonesNode);
+			_gameStateNodes = engine.getNodeList(GameStateNode);
+			_gameStateNodes.nodeAdded.add(onGameStateAdded);
+			_gameStateNodes.nodeRemoved.add(onGameStateRemoved);
 		}
 		
 		override public function removeFromEngine(engine:Engine):void
 		{
-			super.removeFromEngine(engine);
+			_gameStateNodes.nodeAdded.remove(onGameStateAdded);
+			_gameStateNodes.nodeRemoved.remove(onGameStateRemoved);
+			_gameStateNodes = null;
+			
 			_deposits = null;
+			
+			super.removeFromEngine(engine);
+		}
+		
+		private function onGameStateAdded(node:GameStateNode):void
+		{
+			_gameState = node.gameState;
+		}
+		
+		private function onGameStateRemoved(node:GameStateNode):void
+		{
+			_gameState = null;
 		}
 		
 		override public function update(time:Number):void
@@ -70,12 +92,16 @@ package sabelas.systems
 						// TODO add component for leviation to clone
 						_entityCreator.destroyEntity(cloneNode.entity);
 						
-						// TODO add score to game status
+						// scoring
+						_gameState.score += 10;
 						
 						// deposit clone
 						cloneDeposit.cloneDeposit.clonesRequired--;
 						if (cloneDeposit.cloneDeposit.clonesRequired <= 0)
 						{
+							// scoring
+							_gameState.score += 100;
+
 							// remove deposit place
 							_entityCreator.destroyEntity(cloneDeposit.entity);
 							break;
