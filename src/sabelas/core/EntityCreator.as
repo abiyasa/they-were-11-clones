@@ -343,8 +343,8 @@ package sabelas.core
 				.add(new EnemyGenerator(numOfEnemies, spawnRate, 400, spawnDelay, spawnNum))
 				.add(new Position(x, y, 0))
 				.add(new Display3D(_assetManager.createSpawnPlane({
-					width: SPAWN_RADIUS,
-					height: SPAWN_RADIUS,
+					width: SPAWN_RADIUS * 2,
+					height: SPAWN_RADIUS * 2,
 					color: 0xcccccc
 				})));
 			
@@ -364,9 +364,10 @@ package sabelas.core
 			var deposit:Entity = new Entity()
 				.add(new CloneDeposit(clonesRequired))
 				.add(new Position(x, y, 0))
+				.add(new Collision(SPAWN_RADIUS))
 				.add(new Display3D(_assetManager.createArenaPlane({
-					width: SPAWN_RADIUS,
-					height: SPAWN_RADIUS,
+					width: SPAWN_RADIUS * 2,
+					height: SPAWN_RADIUS * 2,
 					color: 0x009eef
 				})));
 			
