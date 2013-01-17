@@ -44,8 +44,8 @@ package sabelas.graphics
 		private function updateText():void
 		{
 			var displayString:String = "clones=" + _gameState.numOfClones +
-				" Energy=" + _gameState.energy +
-				" Score=" + _gameState.score;
+				" Score=" + _gameState.score +
+				" Energy=" + _gameState.energy;
 			_textField.text = displayString;
 		}
 		
