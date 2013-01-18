@@ -112,8 +112,7 @@ package sabelas.systems
 					_entityCreator.createStalkingCamera();
 					
 					_entityCreator.generateEnemyWaves();
-					
-					_entityCreator.createCloneDeposit(-1000, 400, 10);
+					_entityCreator.generateCloneDepositPoints();
 					
 					// TODO entityCreator stops loading animation
 					

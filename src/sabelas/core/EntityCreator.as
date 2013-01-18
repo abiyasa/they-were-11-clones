@@ -278,6 +278,8 @@ package sabelas.core
 		
 		public static const SPAWN_RADIUS:int = 600;
 		public static const ARENA_SPAWN_PADDING:int = 200;
+		public static const DEPOSIT_RADIUS:int = 600;
+		public static const ARENA_DEPOSIT_PADDING:int = 200;
 		
 		/**
 		 * WIll generate several enemy spawn areas based on wave level
@@ -353,6 +355,43 @@ package sabelas.core
 		}
 		
 		/**
+		 * WIll generate several clone deposit points based on wave level
+		 */
+		public function generateCloneDepositPoints():void
+		{
+			var arenaRect:Rectangle = _config.arenaRect;
+			
+			var depositLevel:int = _gameState.depositLevel;
+			var numOfDeposits:int = 4;
+			
+			// add enemy spawners
+			while (numOfDeposits >= 0)
+			{
+				numOfDeposits--;
+				
+				// generate random area
+				var randX:int = arenaRect.left + ARENA_DEPOSIT_PADDING +
+					(Math.random() * (arenaRect.width - DEPOSIT_RADIUS - ARENA_DEPOSIT_PADDING - ARENA_DEPOSIT_PADDING));
+				var randY:int = arenaRect.top + ARENA_DEPOSIT_PADDING +
+					(Math.random() * (arenaRect.height - DEPOSIT_RADIUS - ARENA_DEPOSIT_PADDING - ARENA_DEPOSIT_PADDING));
+				
+				// TODO make sure that the deposit arena is far away from the hero's spawn!
+				
+				// TODO deposit requirement increase along with the level
+				//var depositReq:int = 4 + depositLevel;
+				var depositReq:int = 11;
+				if (depositReq > 11)
+				{
+					depositReq = 11;
+				}
+				createCloneDeposit(randX, randY, depositReq);
+			}
+				
+			// increase level, so it will be harder next time
+			_gameState.depositLevel++;
+		}
+		
+		/**
 		 * Creates a clone deposit
 		 * @param	x position
 		 * @param	y position
@@ -364,10 +403,10 @@ package sabelas.core
 			var deposit:Entity = new Entity()
 				.add(new CloneDeposit(clonesRequired))
 				.add(new Position(x, y, 0))
-				.add(new Collision(SPAWN_RADIUS))
+				.add(new Collision(DEPOSIT_RADIUS))
 				.add(new Display3D(_assetManager.createArenaPlane({
-					width: SPAWN_RADIUS * 2,
-					height: SPAWN_RADIUS * 2,
+					width: DEPOSIT_RADIUS * 2,
+					height: DEPOSIT_RADIUS * 2,
 					color: 0x009eef
 				})));
 			

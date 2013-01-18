@@ -73,9 +73,12 @@ package sabelas.systems
 				
 				// TODO no more deposit, generate more deposit arena,
 				//OR generate win condition
-				//_entityCreator.createCloneDeposit();
+				_entityCreator.generateCloneDepositPoints();
+				return;
 			}
-			else
+			
+			// loop through the clone deposits
+			while (cloneDeposit != null)
 			{
 				var depositRadius:Number = cloneDeposit.collision.radius;
 				var depositPos:Point = cloneDeposit.position.position;
@@ -108,6 +111,9 @@ package sabelas.systems
 						}
 					}
 				}
+				
+				// next clone deposit
+				cloneDeposit = cloneDeposit.next;
 			}
 		}
 		

@@ -21,5 +21,6 @@ package sabelas.components
 		public var numOfShootEnemies:int = 0;
 		
 		public var waveLevel:int = 0;
+		public var depositLevel:int = 0;
 	}
 }
