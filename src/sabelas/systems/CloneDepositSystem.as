@@ -71,8 +71,8 @@ package sabelas.systems
 			{
 				// TODO need delay before next deposit generation
 				
-				// TODO no more deposit, generate more deposit arena,
-				//OR generate win condition
+				// no more deposit, generate more deposit arena,
+				//TODO OR generate win condition
 				_entityCreator.generateCloneDepositPoints();
 				return;
 			}

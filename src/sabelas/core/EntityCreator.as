@@ -378,8 +378,7 @@ package sabelas.core
 				// TODO make sure that the deposit arena is far away from the hero's spawn!
 				
 				// TODO deposit requirement increase along with the level
-				//var depositReq:int = 4 + depositLevel;
-				var depositReq:int = 11;
+				var depositReq:int = 4 + depositLevel;
 				if (depositReq > 11)
 				{
 					depositReq = 11;
