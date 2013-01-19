@@ -32,13 +32,20 @@ package sabelas.graphics
 		
 		[Embed(source="../../../assets/blocky_texture.png")]
 		private static const BlockyTexture:Class;
+		
+		[Embed(source="../../../assets/bullet-textures.png")]
+		private static const BulletTexture:Class;
 
 		[Embed(source="../../../assets/blocky.obj", mimeType="application/octet-stream")]
 		private static const BlockyMesh:Class;
+
+		[Embed(source="../../../assets/bullet01.obj", mimeType="application/octet-stream")]
+		private static const BlockyBullet:Class;
 		
 		private var _blockyTextures:Array = [];
 		
 		private var _blockyMesh:Mesh;
+		private var _bulletMesh:Mesh;
 		
 		private var _assetLoader:Loader3D;
 		
@@ -71,22 +78,7 @@ package sabelas.graphics
 			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
 			_arenaTexture = new TextureMaterial(bitmapTexture, true, true, false);
 			
-			// create bitmap textures for block characters
-			textureBitmapData = Bitmap(new BlockyTexture()).bitmapData;
-			bitmapTexture = new BitmapTexture(textureBitmapData);
-			
-			_blockyTextures = [];
-			var tempTexture:TextureMaterial;
-			tempTexture = new TextureMaterial(bitmapTexture);
-			_blockyTextures[0] = tempTexture;
-			
-			tempTexture = new TextureMaterial(bitmapTexture);
-			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
-			_blockyTextures[1] = tempTexture;
-			
-			tempTexture = new TextureMaterial(bitmapTexture);
-			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
-			_blockyTextures[2] = tempTexture;
+			prepareTexture();
 			
 			// create texture for spawning arena
 			var cropCircle:Sprite = new Sprite();
@@ -106,7 +98,10 @@ package sabelas.graphics
 			_spawnArenaTexture.alphaBlending = true;
 			
 			// prepare list of Meshes
-			_meshesToLoad = [ BlockyMesh ];
+			_meshesToLoad = [
+				{ name: 'blocky', data: BlockyMesh },
+				{ name: 'bullet', data: BlockyBullet }
+			];
 			
 			loadMesh();
 		}
@@ -117,6 +112,12 @@ package sabelas.graphics
 			{
 				_blockyMesh.dispose();
 				_blockyMesh = null;
+			}
+			
+			if (_bulletMesh != null)
+			{
+				_bulletMesh.dispose();
+				_bulletMesh = null;
 			}
 			
 			var temp:MaterialBase;
@@ -132,23 +133,57 @@ package sabelas.graphics
 		}
 		
 		/**
+		 * Prepare textures
+		 */
+		protected function prepareTexture():void
+		{
+			// create bitmap textures for block characters
+			var bitmapTexture:BitmapTexture;
+			var tempTexture:TextureMaterial;
+			
+			_blockyTextures = [];
+			
+			// main hero
+			bitmapTexture = new BitmapTexture(Bitmap(new BlockyTexture()).bitmapData);
+			tempTexture = new TextureMaterial(bitmapTexture);
+			_blockyTextures[0] = tempTexture;
+			
+			// hero's clone
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
+			_blockyTextures[1] = tempTexture;
+			
+			// enemy texture
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
+			_blockyTextures[2] = tempTexture;
+			
+			// bullet
+			bitmapTexture = new BitmapTexture(Bitmap(new BulletTexture()).bitmapData);
+			tempTexture = new TextureMaterial(bitmapTexture);
+			//tempTexture.alphaBlending = true;
+			_blockyTextures[3] = tempTexture;
+		}
+		
+		/**
 		 * Load mesh asynchronously & store it
 		 */
 		protected function loadMesh():void
 		{
 			// check the mesh to load
-			var meshToLoad:Class = _meshesToLoad.shift() as Class;
-			if (meshToLoad == null)
+			if (_meshesToLoad.length == 0)
 			{
 				// no more to load
 				dispatchEvent(new Event(Event.COMPLETE));
 			}
 			else
 			{
+				var meshData:Object = _meshesToLoad[0] as Object;
+				
 				// load
 				_assetLoader = new Loader3D();
 				_assetLoader.addEventListener(LoaderEvent.RESOURCE_COMPLETE, onMeshLoaded, false, 0, true);
-				_assetLoader.loadData(meshToLoad, new AssetLoaderContext(false));
+				_assetLoader.loadData(meshData.data as Class, new AssetLoaderContext(false));
 			}
 		}
 		
@@ -167,13 +202,27 @@ package sabelas.graphics
 			if (numOfMeshes > 0)
 			{
 				mesh = Mesh(loadedGroup.getChildAt(0));
-				mesh.material = _blockyTextures[0] as MaterialBase;
 			}
 			else
 			{
 				// TODO error on loading mesh
 			}
-			_blockyMesh = mesh;
+			
+			// store the loaded mesh
+			var meshData:Object = (_meshesToLoad.length > 0) ?
+				_meshesToLoad.shift() as Object : null;
+			switch (meshData.name as String)
+			{
+			case 'blocky':
+				_blockyMesh = mesh;
+				mesh.material = _blockyTextures[0] as MaterialBase;
+				break;
+				
+			case 'bullet':
+				_bulletMesh = mesh;
+				mesh.material = _blockyTextures[3] as MaterialBase;
+				break;
+			}
 			
 			// process next mesh
 			loadMesh();
@@ -226,9 +275,9 @@ package sabelas.graphics
 			var tempResult:ObjectContainer3D = new ObjectContainer3D();
 			if (_blockyMesh != null)
 			{
-				var mesh:Mesh = Mesh(_blockyMesh.clone());
-				mesh.scale(0.20);
-				mesh.rotationX = 90;
+				var mesh:Mesh = Mesh(_bulletMesh.clone());
+				mesh.scale(2);
+				mesh.rotationY = 90;
 				mesh.y = 250;
 				tempResult.addChild(mesh);
 				
