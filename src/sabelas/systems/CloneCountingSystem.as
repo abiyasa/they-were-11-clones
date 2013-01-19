@@ -2,7 +2,6 @@ package sabelas.systems
 {
 	import ash.core.Entity;
 	import flash.geom.Point;
-	import sabelas.components.CloneMember;
 	import sabelas.components.Collision;
 	import sabelas.components.GameState;
 	import sabelas.components.Position;

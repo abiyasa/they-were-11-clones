@@ -1,6 +1,5 @@
 package sabelas.nodes
 {
-	import sabelas.components.CloneMember;
 	import sabelas.components.Collision;
 	import sabelas.components.Enemy;
 	import sabelas.components.Energy;
