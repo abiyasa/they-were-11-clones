@@ -55,6 +55,12 @@ package sabelas.graphics
 		}
 		
 		/**
+		 * List of meshes to be loaded
+		 * @see	#loadMesh()
+		 */
+		private var _meshesToLoad:Array;
+		
+		/**
 		 * Inits the textures and other assets.
 		 * Will dispatch event Event.COMPLETE when done
 		 */
@@ -99,6 +105,9 @@ package sabelas.graphics
 			_spawnArenaTexture = new TextureMaterial(bitmapTexture);
 			_spawnArenaTexture.alphaBlending = true;
 			
+			// prepare list of Meshes
+			_meshesToLoad = [ BlockyMesh ];
+			
 			loadMesh();
 		}
 		
@@ -127,9 +136,20 @@ package sabelas.graphics
 		 */
 		protected function loadMesh():void
 		{
-			_assetLoader = new Loader3D();
-			_assetLoader.addEventListener(LoaderEvent.RESOURCE_COMPLETE, onMeshLoaded, false, 0, true);
-			_assetLoader.loadData(BlockyMesh, new AssetLoaderContext(false));
+			// check the mesh to load
+			var meshToLoad:Class = _meshesToLoad.shift() as Class;
+			if (meshToLoad == null)
+			{
+				// no more to load
+				dispatchEvent(new Event(Event.COMPLETE));
+			}
+			else
+			{
+				// load
+				_assetLoader = new Loader3D();
+				_assetLoader.addEventListener(LoaderEvent.RESOURCE_COMPLETE, onMeshLoaded, false, 0, true);
+				_assetLoader.loadData(meshToLoad, new AssetLoaderContext(false));
+			}
 		}
 		
 		/**
@@ -155,7 +175,8 @@ package sabelas.graphics
 			}
 			_blockyMesh = mesh;
 			
-			dispatchEvent(new Event(Event.COMPLETE));
+			// process next mesh
+			loadMesh();
 		}
 		
 		/**
