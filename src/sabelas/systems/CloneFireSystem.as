@@ -4,8 +4,7 @@ package sabelas.systems
 	import flash.geom.Point;
 	import sabelas.components.CloneMember;
 	import sabelas.components.Gun;
-	import sabelas.components.Position;
-	import sabelas.nodes.ClonesNode;
+	import sabelas.nodes.CloneWithGunNode;
 	import ash.core.Engine;
 	import ash.core.NodeList;
 	import ash.core.System;
@@ -17,7 +16,7 @@ package sabelas.systems
 	 */
 	public class CloneFireSystem extends System
 	{
-		private var _clones:NodeList;
+		private var _clonesWithGun:NodeList;
 		private var _leaderGun:Gun = null;
 		
 		public function CloneFireSystem()
@@ -27,9 +26,9 @@ package sabelas.systems
 		override public function addToEngine(engine:Engine):void
 		{
 			super.addToEngine(engine);
-			_clones = engine.getNodeList(ClonesNode);
-			_clones.nodeAdded.add(onCloneAdded);
-			_clones.nodeRemoved.add(onCloneRemoved);
+			_clonesWithGun = engine.getNodeList(CloneWithGunNode);
+			_clonesWithGun.nodeAdded.add(onCloneAdded);
+			_clonesWithGun.nodeRemoved.add(onCloneRemoved);
 		}
 		
 		/**
@@ -43,14 +42,13 @@ package sabelas.systems
 			if (_leaderGun == null)
 			{
 				var leaderEntity:Entity;
-				var cloneNode:ClonesNode = _clones.head;
+				var cloneNode:CloneWithGunNode = _clonesWithGun.head;
 				if (cloneNode != null)
 				{
 					leaderEntity = cloneNode.cloneMember.cloneLeader;
 					
 					// get the gun
 					_leaderGun = leaderEntity.get(Gun);
-					trace('got the clone leader');
 				}
 			}
 		}
@@ -63,7 +61,7 @@ package sabelas.systems
 		protected function onCloneRemoved(node:*):void
 		{
 			// reset the gun of clone leader if no more clone
-			if (_clones.head == null)
+			if (_clonesWithGun.head == null)
 			{
 				_leaderGun = null
 			}
@@ -77,33 +75,21 @@ package sabelas.systems
 			}
 			
 			// check if the leader shoots!
-			if (_leaderGun.isAllowedToShootBullet())
-			{
-				trace('clone shoots');
+			var isLeaderShoots:Boolean = _leaderGun.isAllowedToShootBullet();
 				
-				// make clone shoots
-				var clonePosition:Position;
-				var cloneGun:Gun;
-				for (var cloneNode:ClonesNode = _clones.head; cloneNode; cloneNode = cloneNode.next)
-				{
-					// TODO trigger clone's gun to shoot
-					/*
-					cloneGun = cloneNode.entity.get(Gun);
-					if (cloneGun != null)
-					{
-						cloneGun.triggerShoot(true, time);
-					}
-					*/
-				}
+			// update clone with gun
+			for (var cloneNode:CloneWithGunNode = _clonesWithGun.head; cloneNode; cloneNode = cloneNode.next)
+			{
+				cloneNode.gun.triggerShoot(isLeaderShoots, time);
 			}
 		}
 
 		override public function removeFromEngine(engine:Engine):void
 		{
 			super.removeFromEngine(engine);
-			_clones.nodeAdded.remove(onCloneAdded);
-			_clones.nodeRemoved.remove(onCloneRemoved);
-			_clones = null;
+			_clonesWithGun.nodeAdded.remove(onCloneAdded);
+			_clonesWithGun.nodeRemoved.remove(onCloneRemoved);
+			_clonesWithGun = null;
 		}
 		
 	}
