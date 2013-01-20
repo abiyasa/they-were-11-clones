@@ -162,6 +162,7 @@ package sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new CollidingObject(CollidingObject.TYPE_HERO_CLONES))
+					.add(new Gun(new Point(8, 0), 0.3, 3))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
 			
