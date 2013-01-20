@@ -30,27 +30,26 @@ package sabelas.components
 		 */
 		public function triggerShoot(triggered:Boolean, time:Number):void
 		{
-			var triggerValueChanged:Boolean = (_shootTriggered != triggered);
-			_shootTriggered = triggered;
-			if (triggered)
+			// check if trigger status has changed
+			if ((_shootTriggered != triggered))
 			{
-				if (triggerValueChanged)
+				_shootTriggered = triggered;
+				
+				if (triggered)
 				{
 					// immediately can shoot
 					_timeSinceLastShot = _minimumShotInterval;
 				}
-				else  // is already in trigger
+				else
 				{
-					// have gap between shoot
-					_timeSinceLastShot += time;
-				}
-			}
-			else
-			{
-				if (triggerValueChanged)
-				{
+					// release trigger will reset time
 					resetTime();
 				}
+			}
+			else if (triggered) // no changes in value
+			{
+				// have gap between shoot
+				_timeSinceLastShot += time;
 			}
 		}
 		

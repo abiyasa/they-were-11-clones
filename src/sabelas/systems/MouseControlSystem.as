@@ -96,8 +96,7 @@ package sabelas.systems
 				pos3d.z - positionPoint.y);
 				
 			// handle gun
-			var gun:Gun = node.gun;
-			gun.triggerShoot(_isTriggered, time);
+			node.gun.triggerShoot(_isTriggered, time);
 		}
 	}
 
