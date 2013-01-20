@@ -98,17 +98,6 @@ package sabelas.systems
 			// handle gun
 			var gun:Gun = node.gun;
 			gun.triggerShoot(_isTriggered, time);
-			if (_isTriggered)
-			{
-				if (gun.isAllowedToShootBullet())
-				{
-					// shoot the bullet
-					_entityCreator.createBullet(gun, position, EntityCreator.PEOPLE_HERO);
-					trace('BANG! Don\'t shoot me bro!');
-					
-					gun.resetTime();
-				}
-			}
 		}
 	}
 

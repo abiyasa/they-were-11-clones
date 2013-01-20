@@ -17,6 +17,7 @@ package sabelas.core
 	import sabelas.systems.CloneControlSystem;
 	import sabelas.systems.CloneDepositSystem;
 	import sabelas.systems.ClonePositioningSystem;
+	import sabelas.systems.GunFireSystem;
 	import sabelas.systems.MotionControlSystem;
 	import sabelas.systems.MotionSystem;
 	import sabelas.systems.MouseControlSystem;
@@ -97,6 +98,7 @@ package sabelas.core
 			_engine.addSystem(new MouseControlSystem(_container.stage, stage3DUtils.currentView3D,
 				_entityCreator), SystemPriorities.UPDATE);
 			_engine.addSystem(new ChaserSystem(), SystemPriorities.UPDATE);
+			_engine.addSystem(new GunFireSystem(_entityCreator), SystemPriorities.UPDATE);
 			//Note: turning off temporary
 			//_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
