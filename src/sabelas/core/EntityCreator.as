@@ -13,6 +13,7 @@ package sabelas.core
 	import sabelas.components.Enemy;
 	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Energy;
+	import sabelas.components.MapPoint;
 	import sabelas.components.StalkingCamera;
 	import sabelas.components.CloneLeader;
 	import sabelas.components.CloneMember;
@@ -404,6 +405,7 @@ package sabelas.core
 				.add(new CloneDeposit(clonesRequired))
 				.add(new Position(x, y, 0))
 				.add(new Collision(DEPOSIT_RADIUS))
+				.add(new MapPoint(MapPoint.TYPE_CLONE_DEPOSIT))
 				.add(new Display3D(_assetManager.createArenaPlane({
 					width: DEPOSIT_RADIUS * 2,
 					height: DEPOSIT_RADIUS * 2,
