@@ -166,10 +166,10 @@ package sabelas.core
 					.add(new CollidingObject(CollidingObject.TYPE_HERO_CLONES))
 					.add(new Gun(new Point(8, 0), 0.3, 3))
 					.add(new Tween3D({
-						'propertyName': 'scale',
-						'fromValue': 0.5,
+						'type': Tween3D.TYPE_SCALE,
+						'fromValue': 0.25,
 						'toValue': 1.0,
-						'duration': 1.0
+						'duration': 0.5
 					}))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
