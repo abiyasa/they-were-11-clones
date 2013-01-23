@@ -61,8 +61,10 @@ package sabelas
 			// init starling
 			_starling = new Starling(StarlingRootApplication, stage, _stage3dProxy.viewPort, _stage3dProxy.stage3D);
 			_starling.antiAliasing = antiAlias;
-			_starling.showStats = true;
+			_starling.showStatsAt("left", "bottom");
 			_starling.start();
+			
+			// TODO: this does not solve the transparency problem
 			_stage3dProxy.context3D.setDepthTest(false, Context3DCompareMode.ALWAYS);
 
 			// create view3D
