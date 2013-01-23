@@ -28,6 +28,7 @@ package sabelas.core
 	import sabelas.components.Position;
 	import sabelas.components.Display;
 	import sabelas.components.Shootable;
+	import sabelas.components.Tween3D;
 	import sabelas.configs.GameConfig;
 	import sabelas.graphics.AssetManager;
 	import sabelas.graphics.BlockyPeople;
@@ -164,6 +165,12 @@ package sabelas.core
 					.add(new Collision(50))
 					.add(new CollidingObject(CollidingObject.TYPE_HERO_CLONES))
 					.add(new Gun(new Point(8, 0), 0.3, 3))
+					.add(new Tween3D({
+						'propertyName': 'scale',
+						'fromValue': 0.5,
+						'toValue': 1.0,
+						'duration': 1.0
+					}))
 					.add(new Display3D(_assetManager.createBlockyPeople({ type : 1 })));
 				break;
 			

@@ -27,6 +27,7 @@ package sabelas.core
 	import sabelas.systems.RenderSystem3D;
 	import sabelas.systems.StalkingCameraSystem;
 	import sabelas.systems.SystemPriorities;
+	import sabelas.systems.Tween3DSystem;
 	import sabelas.utils.Stage3DUtils;
 	import ash.core.Entity;
 	import ash.core.Engine;
@@ -110,6 +111,8 @@ package sabelas.core
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new EnemyCollisionSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new CloneDepositSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
+			
+			_engine.addSystem(new Tween3DSystem(), SystemPriorities.RENDER);
 			//_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
 			
