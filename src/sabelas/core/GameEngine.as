@@ -19,6 +19,7 @@ package sabelas.core
 	import sabelas.systems.CloneDepositSystem;
 	import sabelas.systems.ClonePositioningSystem;
 	import sabelas.systems.GunFireSystem;
+	import sabelas.systems.MapDisplaySystem;
 	import sabelas.systems.MotionControlSystem;
 	import sabelas.systems.MotionSystem;
 	import sabelas.systems.MouseControlSystem;
@@ -82,6 +83,7 @@ package sabelas.core
 			var arenaPosY:int = 0;
 			_config.setArena(arenaWidth, arenaHeight, arenaPosX, arenaPosY);
 			
+			// get the active game state
 			_entityCreator = new EntityCreator(_engine, _config);
 			
 			// init inputs
@@ -110,12 +112,13 @@ package sabelas.core
 			_engine.addSystem(new CloneDepositSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
 			//_engine.addSystem(new RenderSystem(_container), SystemPriorities.RENDER);
 			_engine.addSystem(new RenderSystem3D(stage3DUtils.currentView3D), SystemPriorities.RENDER);
-		
-			// get the active game state
+			
 			var gameStateEntity:Entity = _entityCreator.createGameState();
 			_gameState = gameStateEntity.get(GameState) as GameState;
 			
 			initHUD();
+			
+			_engine.addSystem(new MapDisplaySystem(_hud.mapDisplay), SystemPriorities.RENDER);
 		}
 		
 		private function initHUD():void
@@ -123,8 +126,8 @@ package sabelas.core
 			_hud = new SimpleHUD(_gameState);
 			_container.addChild(_hud);
 			
-			// TODO reposition HUD using _container.stage
-			_hud.x = 60;
+			// TODO reposition & re-scale HUD using _container.stage
+			_hud.x = 0;
 			
 		}
 		
