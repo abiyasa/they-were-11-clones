@@ -14,7 +14,7 @@ package sabelas.components
 		private var _type:int;
 		
 		/**
-		 * Tweening type
+		 * Tweening type, define which parameter to tween
 		 */
 		public function get type():int { return _type; }
 		
@@ -31,11 +31,33 @@ package sabelas.components
 		 */
 		public function get duration():Number { return _duration; }
 		
+		// store 1 / _duration, changing division into multiplication
+		private var _duration_1:Number;
+		
 		/**
 		 * To track the tweeing progress, in seconds!
 		 */
-		public var lastUpdateTime:Number;
+		private var _lastUpdateTime:Number;
 		
+		private var _progressPercentage:Number;
+		
+		/**
+		 * The tween progress in percentage, based on
+		 * the duration & last updated time
+		 *
+		 * 1.0 means tween is completed
+		 */
+		public function get progressPercentage():Number { return _progressPercentage; }
+		
+		
+		/**
+		 *
+		 * @param	config An object with following properties:
+		 * - type
+		 * - fromValue
+		 * - toValue
+		 * - duration
+		 */
 		public function Tween3D(config:Object)
 		{
 			_type = config.hasOwnProperty('type') ? config['type'] : TYPE_SCALE;
@@ -49,7 +71,20 @@ package sabelas.components
 				_duration = 0.25;
 			}
 			
-			lastUpdateTime = 0.0;
+			_duration_1 = 1 / _duration;
+			_lastUpdateTime = 0.0;
+			_progressPercentage = 0.0;
+		}
+		
+		/**
+		 * Update the Tween time, for tracking the Tween progress
+		 *
+		 * @param	deltaTime in seconds
+		 */
+		public function updateTime(deltaTime:Number):void
+		{
+			_lastUpdateTime += deltaTime;
+			_progressPercentage = _lastUpdateTime * _duration_1;
 		}
 	}
 }

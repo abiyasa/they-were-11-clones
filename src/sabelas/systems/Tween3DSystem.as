@@ -46,8 +46,8 @@ package sabelas.systems
 				// Note: right now, it's only scaling
 				
 				// calculate tween
-				var completion:Number = tween3D.lastUpdateTime / tween3D.duration;
-				if (completion >= 1.0)
+				var percentage:Number = tween3D.progressPercentage;
+				if (percentage >= 1.0)
 				{
 					// if keyframe is larger than duration, noted completed!
 					tweenCompleted = true;
@@ -55,15 +55,14 @@ package sabelas.systems
 				else
 				{
 					// do the tween
-					var scale:Number = tween3D.fromValue + (completion * (tween3D.toValue - tween3D.fromValue));
+					var scale:Number = tween3D.fromValue + (percentage * (tween3D.toValue - tween3D.fromValue));
 					object3D.scaleX = scale;
 					object3D.scaleX = scale;
 					object3D.scaleZ = scale;
 					
 					//trace('tweening', 'from=' + tween3D.fromValue + 'to=' + tween3D.toValue, 'scale=' + scale, 'time=' + tween3D.lastUpdateTime);
 					
-					// update time
-					tween3D.lastUpdateTime += time;
+					tween3D.updateTime(time);
 				}
 					
 				// if completed, remove component from entity
