@@ -11,6 +11,7 @@ package sabelas.core
 	import sabelas.systems.CloneCountingSystem;
 	import sabelas.systems.CloneFireSystem;
 	import sabelas.systems.CollisionSystem;
+	import sabelas.systems.DelayedEntityRemovalSystem;
 	import sabelas.systems.EnemyCollisionSystem;
 	import sabelas.systems.EnemyGeneratorSystem;
 	import sabelas.systems.GameManager;
@@ -95,6 +96,7 @@ package sabelas.core
 			// add systems
 			_engine.addSystem(new GameManager(_entityCreator, _config), SystemPriorities.PRE_UPDATE);
 			_engine.addSystem(new EnemyGeneratorSystem(_entityCreator), SystemPriorities.PRE_UPDATE);
+			_engine.addSystem(new DelayedEntityRemovalSystem(_entityCreator), SystemPriorities.PRE_UPDATE);
 			_engine.addSystem(new MotionControlSystem(_keyPoll), SystemPriorities.UPDATE);
 			_engine.addSystem(new CloneCountingSystem(), SystemPriorities.UPDATE);
 			_engine.addSystem(new ClonePositioningSystem(_entityCreator), SystemPriorities.UPDATE);

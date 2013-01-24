@@ -1,11 +1,14 @@
 package sabelas.systems
 {
 	import ash.core.Engine;
+	import ash.core.Entity;
 	import ash.core.NodeList;
 	import ash.core.System;
 	import flash.geom.Point;
+	import sabelas.components.DelayedEntityRemoval;
 	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Position;
+	import sabelas.components.Tween3D;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.EnemyGeneratorNode;
 	
@@ -79,8 +82,16 @@ package sabelas.systems
 				enemySpawn.enemyStock--;
 				if (enemySpawn.enemyStock <= 0)
 				{
-					// no more enemy to spawn, remove from game
-					_entityCreator.destroyEntity(spawnNode.entity);
+					// no more enemy to spawn, remove from game using delayed removal
+					var theEntity:Entity = spawnNode.entity;
+					theEntity.remove(EnemyGenerator);
+					theEntity.add(new DelayedEntityRemoval(1.2));
+					theEntity.add(new Tween3D({
+						'type': Tween3D.TYPE_SCALE,
+						'fromValue': 1.0,
+						'toValue': 0.25,
+						'duration': 1.0
+					}));
 					
 					// no more spawn
 					break;

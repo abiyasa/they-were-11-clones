@@ -1,6 +1,8 @@
 package sabelas.systems
 {
 	import ash.tools.ListIteratingSystem;
+	import sabelas.components.DelayedEntityRemoval;
+	import sabelas.core.EntityCreator;
 	import sabelas.nodes.DelayedEntityRemovalNode;
 	
 	/**
@@ -10,18 +12,27 @@ package sabelas.systems
 	 */
 	public class DelayedEntityRemovalSystem extends ListIteratingSystem
 	{
-		// TODO add entity creator
+		private var _creator:EntityCreator;
 		
-		public function DelayedEntityRemovalSystem()
+		public function DelayedEntityRemovalSystem(creator:EntityCreator)
 		{
 			super(DelayedEntityRemovalNode, updateNode);
+			_creator = creator;
 		}
 		
 		private function updateNode(node:DelayedEntityRemovalNode, time:Number):void
 		{
-			// TODO check if it's about time to remove
-			
-			// TODO if not, update time
+			// check if it's about time to remove
+			var delayedEntityRemoval:DelayedEntityRemoval = node.delayedEntityRemoval;
+			if (delayedEntityRemoval.canRemove())
+			{
+				// remove the enityt from the game
+				_creator.destroyEntity(node.entity);
+			}
+			else  // not yet removed
+			{
+				delayedEntityRemoval.updateTime(time);
+			}
 		}
 
 	}
