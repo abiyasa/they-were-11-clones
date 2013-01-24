@@ -15,6 +15,8 @@ package sabelas.components
 		public var spawnDelay:Number;
 		public var spawnNumber:int;
 		
+		private var _delaying:Boolean;
+		
 		/**
 		 * Constructor
 		 *
@@ -35,17 +37,23 @@ package sabelas.components
 			this.spawnNumber = spawnNumber;
 			
 			_lastSpawnTime = 0;
+			_delaying = true;
 		}
 		
 		public function updateTime(time:Number):Number
 		{
 			_lastSpawnTime += time;
+			
+			if (_delaying)
+			{
+				_delaying = _lastSpawnTime < spawnDelay;
+			}
 			return _lastSpawnTime;
 		}
 		
 		public function isSpawnTime():Boolean
 		{
-			return (_lastSpawnTime >= this.spawnRate);
+			return (_lastSpawnTime >= this.spawnRate) && (!_delaying);
 		}
 		
 		public function resetTime():void
