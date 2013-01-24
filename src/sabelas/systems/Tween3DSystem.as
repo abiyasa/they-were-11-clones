@@ -34,48 +34,38 @@ package sabelas.systems
 			var node:Tween3DNode;
 			var tween3D:Tween3D;
 			var object3D:ObjectContainer3D;
-			var tweenCompleted:Boolean;
 			var propertyName:String;
+			var tweenValue:Number;
 			for(node = nodes.head; node; node = node.next)
 			{
-				tweenCompleted = false;
 				tween3D = node.tween3D;
-				object3D = node.display3D.object3D;
-				
-				// TODO check what property to tween
-				// Note: right now, it's only scaling
 				
 				// calculate tween
 				var percentage:Number = tween3D.progressPercentage;
 				if (percentage >= 1.0)
 				{
-					// if keyframe is larger than duration, noted completed!
-					tweenCompleted = true;
-				}
-				else
-				{
-					// do the tween
-					var scale:Number = tween3D.fromValue + (percentage * (tween3D.toValue - tween3D.fromValue));
-					object3D.scaleX = scale;
-					object3D.scaleX = scale;
-					object3D.scaleZ = scale;
+					// tween is completed!
+					tweenValue = tween3D.toValue;
 					
-					//trace('tweening', 'from=' + tween3D.fromValue + 'to=' + tween3D.toValue, 'scale=' + scale, 'time=' + tween3D.lastUpdateTime);
-					
-					tween3D.updateTime(time);
-				}
-					
-				// if completed, remove component from entity
-				if (tweenCompleted)
-				{
-					scale = tween3D.toValue;
-					
-					object3D.scaleX = scale;
-					object3D.scaleX = scale;
-					object3D.scaleZ = scale;
-					
+					// stop tweening
 					node.entity.remove(Tween3D);
 				}
+				else  // still tweening
+				{
+					tweenValue = tween3D.calculateTween();
+					tween3D.updateTime(time);
+				}
+
+				// TODO check what property to tween
+				// Note: right now, it's only scaling
+				
+				// apply tween value to the object
+				object3D = node.display3D.object3D;
+				object3D.scaleX = tweenValue;
+				object3D.scaleX = tweenValue;
+				object3D.scaleZ = tweenValue;
+					
+				//trace('tweening', 'from=' + tween3D.fromValue + 'to=' + tween3D.toValue, 'scale=' + scale, 'time=' + tween3D.lastUpdateTime);
 			}
 		}
 	}

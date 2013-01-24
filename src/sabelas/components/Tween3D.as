@@ -49,6 +49,8 @@ package sabelas.components
 		 */
 		public function get progressPercentage():Number { return _progressPercentage; }
 		
+		// distance between toValue & fromValue
+		private var _distance:Number;
 		
 		/**
 		 *
@@ -71,6 +73,7 @@ package sabelas.components
 				_duration = 0.25;
 			}
 			
+			_distance = _toValue - _fromValue;
 			_duration_1 = 1 / _duration;
 			_lastUpdateTime = 0.0;
 			_progressPercentage = 0.0;
@@ -85,6 +88,16 @@ package sabelas.components
 		{
 			_lastUpdateTime += deltaTime;
 			_progressPercentage = _lastUpdateTime * _duration_1;
+		}
+		
+		/**
+		 * Calculate the Tween value based on the current last update time &
+		 * progress
+		 * @return
+		 */
+		public function calculateTween():Number
+		{
+			return _fromValue + (_progressPercentage * _distance);
 		}
 	}
 }
