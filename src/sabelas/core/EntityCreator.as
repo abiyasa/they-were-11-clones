@@ -333,7 +333,7 @@ package sabelas.core
 				}
 				
 				trace('generating enemy spawn at ' + randX + ',' + randY);
-				createEnemySpawn(randX, randY, enemyStock, spawnRate, 0.0, spawnNumber);
+				createEnemySpawn(randX, randY, enemyStock, spawnRate, 2.0, spawnNumber);
 			}
 				
 			// increase level, so it will be harder next time
@@ -353,6 +353,12 @@ package sabelas.core
 			var spawn:Entity = new Entity()
 				.add(new EnemyGenerator(numOfEnemies, spawnRate, 400, spawnDelay, spawnNum))
 				.add(new Position(x, y, 0))
+				.add(new Tween3D({
+					'type': Tween3D.TYPE_SCALE,
+					'fromValue': 0.25,
+					'toValue': 1.0,
+					'duration': spawnDelay
+				}))
 				.add(new Display3D(_assetManager.createSpawnPlane({
 					width: SPAWN_RADIUS * 2,
 					height: SPAWN_RADIUS * 2,
