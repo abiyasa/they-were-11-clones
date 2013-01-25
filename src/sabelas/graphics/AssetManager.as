@@ -19,6 +19,7 @@ package sabelas.graphics
 	import flash.events.EventDispatcher;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
+	import flash.utils.Dictionary;
 	
 	/**
 	 * Factory and manager 3D assets.
@@ -42,7 +43,8 @@ package sabelas.graphics
 		[Embed(source="../../../assets/bullet01.obj", mimeType="application/octet-stream")]
 		private static const BlockyBullet:Class;
 		
-		private var _blockyTextures:Array = [];
+		/** Dictionary of textures */
+		private var _texturesDictionary:Dictionary = new Dictionary();
 		
 		private var _blockyMesh:Mesh;
 		private var _bulletMesh:Mesh;
@@ -60,6 +62,12 @@ package sabelas.graphics
 		public static const ASSET_ENEMY:int = 30;
 		public static const ASSET_BULLET_HERO:int = 40;
 		public static const ASSET_BULLET_ENEMY:int = 50;
+		
+		// keys to access texture dictionay
+		public static const TEXTURE_HERO:String = 'hero';
+		public static const TEXTURE_CLONE:String = 'clone';
+		public static const TEXTURE_ENEMY:String = 'enemy';
+		public static const TEXTURE_BULLET:String = 'bullet01';
 		
 		public function AssetManager()
 		{
@@ -126,16 +134,19 @@ package sabelas.graphics
 				_bulletMesh = null;
 			}
 			
-			var temp:MaterialBase;
-			while (_blockyTextures.length > 0)
-			{
-				temp = _blockyTextures.pop() as MaterialBase;
-				temp.dispose();
-			}
+			disposeTextures();
 			
 			// destroy other
 			_arenaTexture.dispose();
 			_arenaTexture = null;
+		}
+		
+		protected function disposeTextures():void
+		{
+			for each (var temp:MaterialBase in _texturesDictionary)
+			{
+				temp.dispose();
+			}
 		}
 		
 		/**
@@ -147,28 +158,28 @@ package sabelas.graphics
 			var bitmapTexture:BitmapTexture;
 			var tempTexture:TextureMaterial;
 			
-			_blockyTextures = [];
+			disposeTextures();
 			
 			// main hero
 			bitmapTexture = new BitmapTexture(Bitmap(new BlockyTexture()).bitmapData);
 			tempTexture = new TextureMaterial(bitmapTexture);
-			_blockyTextures[0] = tempTexture;
+			_texturesDictionary[TEXTURE_HERO] = tempTexture;
 			
 			// hero's clone
 			tempTexture = new TextureMaterial(bitmapTexture);
 			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
-			_blockyTextures[1] = tempTexture;
+			_texturesDictionary[TEXTURE_CLONE] = tempTexture;
 			
 			// enemy texture
 			tempTexture = new TextureMaterial(bitmapTexture);
 			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
-			_blockyTextures[2] = tempTexture;
+			_texturesDictionary[TEXTURE_ENEMY] = tempTexture;
 			
 			// bullet
 			bitmapTexture = new BitmapTexture(Bitmap(new BulletTexture()).bitmapData);
 			tempTexture = new TextureMaterial(bitmapTexture);
 			//tempTexture.alphaBlending = true;
-			_blockyTextures[3] = tempTexture;
+			_texturesDictionary[TEXTURE_BULLET] = tempTexture;
 		}
 		
 		/**
@@ -221,12 +232,10 @@ package sabelas.graphics
 			{
 			case 'blocky':
 				_blockyMesh = mesh;
-				mesh.material = _blockyTextures[0] as MaterialBase;
 				break;
 				
 			case 'bullet':
 				_bulletMesh = mesh;
-				mesh.material = _blockyTextures[3] as MaterialBase;
 				break;
 			}
 			
@@ -255,16 +264,15 @@ package sabelas.graphics
 				switch (type )
 				{
 				case ASSET_HERO:
+					mesh.material = _texturesDictionary[TEXTURE_HERO] as MaterialBase;
 					break;
 					
 				case ASSET_CLONE:
-					// colorize enemy
-					mesh.material = _blockyTextures[1] as MaterialBase;
+					mesh.material = _texturesDictionary[TEXTURE_CLONE] as MaterialBase;
 					break;
 					
 				case ASSET_ENEMY:
-					// colorize enemy
-					mesh.material = _blockyTextures[2] as MaterialBase;
+					mesh.material = _texturesDictionary[TEXTURE_ENEMY] as MaterialBase;
 					break;
 				}
 			}
@@ -296,7 +304,7 @@ package sabelas.graphics
 				{
 				case ASSET_BULLET_HERO:
 				default:
-					mesh.material = _blockyTextures[3] as MaterialBase;
+					mesh.material = _texturesDictionary[TEXTURE_BULLET] as MaterialBase;
 					break;
 				}
 			}
