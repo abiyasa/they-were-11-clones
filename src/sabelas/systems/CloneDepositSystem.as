@@ -1,11 +1,13 @@
 package sabelas.systems
 {
 	import ash.core.Engine;
+	import ash.core.Entity;
 	import ash.core.NodeList;
 	import ash.core.System;
 	import flash.geom.Point;
 	import sabelas.components.GameState;
 	import sabelas.components.Position;
+	import sabelas.components.StateMachine;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.CloneDepositNode;
 	import sabelas.nodes.ClonesNode;
@@ -91,9 +93,17 @@ package sabelas.systems
 					{
 						trace('a clone is inside deposit arena!');
 					
-						// TODO remove clone's component clone
-						// TODO add component for leviation to clone
-						_entityCreator.destroyEntity(cloneNode.entity);
+						var cloneEntity:Entity = cloneNode.entity;
+						var stateMachine:StateMachine = cloneEntity.get(StateMachine);
+						if (stateMachine != null)
+						{
+							stateMachine.stateMachine.changeState('deposit');
+						}
+						else
+						{
+							trace('Error! cannot get the stateMachine! Just move the entity anyway');
+							_entityCreator.destroyEntity(cloneEntity);
+						}
 						
 						// scoring
 						_gameState.score += 10;
