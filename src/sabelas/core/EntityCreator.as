@@ -162,10 +162,9 @@ package sabelas.core
 				
 			case PEOPLE_HERO:
 				blockyPeople
-					.add(new Position(x, y, 0))
-					.add(new Motion(0, 0, 200))
 					.add(new StateMachine(stateMachine))
-					.add(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_CLONE } )));
+					.add(new Position(x, y, 0))
+					.add(new Motion(0, 0, 200));
 					
 				stateMachine.createState('start')
 					.add(Energy).withInstance(new Energy(1))
@@ -173,6 +172,7 @@ package sabelas.core
 					.add(Collision).withInstance(new Collision(50))
 					.add(CollidingObject).withInstance(new CollidingObject(CollidingObject.TYPE_HERO_CLONES))
 					.add(Gun).withInstance(new Gun(new Point(8, 0), 0.3, 3))
+					.add(Display3D).withInstance(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_CLONE } )))
 					.add(Tween3D).withInstance(new Tween3D({
 						'type': Tween3D.TYPE_SCALE,
 						'fromValue': 0.25,
@@ -183,6 +183,7 @@ package sabelas.core
 				// TODO add ascension FX?
 				stateMachine.createState('deposit')
 					.add(DelayedEntityRemoval).withInstance(new DelayedEntityRemoval(1.0))
+					.add(Display3D).withInstance(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_CLONE_DEPOSIT } )))
 					.add(Tween3D).withInstance(new Tween3D({
 						'type': Tween3D.TYPE_SCALE,
 						'fromValue': 1.0,

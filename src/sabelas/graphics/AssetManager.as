@@ -59,6 +59,7 @@ package sabelas.graphics
 		
 		public static const ASSET_HERO:int = 10;
 		public static const ASSET_CLONE:int = 20;
+		public static const ASSET_CLONE_DEPOSIT:int = 21;
 		public static const ASSET_ENEMY:int = 30;
 		public static const ASSET_BULLET_HERO:int = 40;
 		public static const ASSET_BULLET_ENEMY:int = 50;
@@ -66,6 +67,7 @@ package sabelas.graphics
 		// keys to access texture dictionay
 		public static const TEXTURE_HERO:String = 'hero';
 		public static const TEXTURE_CLONE:String = 'clone';
+		public static const TEXTURE_CLONE_DEPOSIT:String = 'clone_fly';
 		public static const TEXTURE_ENEMY:String = 'enemy';
 		public static const TEXTURE_BULLET:String = 'bullet01';
 		
@@ -170,6 +172,12 @@ package sabelas.graphics
 			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
 			_texturesDictionary[TEXTURE_CLONE] = tempTexture;
 			
+			// clone with FX: deposit
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.colorTransform = new ColorTransform(0.5, 0.5, 0.5, 1, 0x80, 0x80, 0x80, 0);
+			tempTexture.alpha = 0.6;
+			_texturesDictionary[TEXTURE_CLONE_DEPOSIT] = tempTexture;
+			
 			// enemy texture
 			tempTexture = new TextureMaterial(bitmapTexture);
 			tempTexture.colorTransform = new ColorTransform(0, 1, 1, 1, 255, 0, 0, 0);
@@ -269,6 +277,10 @@ package sabelas.graphics
 					
 				case ASSET_CLONE:
 					mesh.material = _texturesDictionary[TEXTURE_CLONE] as MaterialBase;
+					break;
+					
+				case ASSET_CLONE_DEPOSIT:
+					mesh.material = _texturesDictionary[TEXTURE_CLONE_DEPOSIT] as MaterialBase;
 					break;
 					
 				case ASSET_ENEMY:
