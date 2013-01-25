@@ -62,7 +62,7 @@ package sabelas.systems
 				// apply tween value to the object
 				object3D = node.display3D.object3D;
 				object3D.scaleX = tweenValue;
-				object3D.scaleX = tweenValue;
+				object3D.scaleY = tweenValue;
 				object3D.scaleZ = tweenValue;
 					
 				//trace('tweening', 'from=' + tween3D.fromValue + 'to=' + tween3D.toValue, 'scale=' + scale, 'time=' + tween3D.lastUpdateTime);
