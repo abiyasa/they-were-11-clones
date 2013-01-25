@@ -1,5 +1,6 @@
 package sabelas.core
 {
+	import ash.fsm.EntityStateMachine;
 	import away3d.containers.ObjectContainer3D;
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
@@ -10,6 +11,7 @@ package sabelas.core
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
 	import sabelas.components.CloneDeposit;
+	import sabelas.components.DelayedEntityRemoval;
 	import sabelas.components.Enemy;
 	import sabelas.components.EnemyGenerator;
 	import sabelas.components.Energy;
@@ -28,6 +30,7 @@ package sabelas.core
 	import sabelas.components.Position;
 	import sabelas.components.Display;
 	import sabelas.components.Shootable;
+	import sabelas.components.StateMachine;
 	import sabelas.components.Tween3D;
 	import sabelas.configs.GameConfig;
 	import sabelas.graphics.AssetManager;
@@ -350,21 +353,38 @@ package sabelas.core
 		 */
 		protected function createEnemySpawn(x:int, y:int, numOfEnemies:int, spawnRate:Number, spawnDelay:Number, spawnNum:int):Entity
 		{
-			var spawn:Entity = new Entity()
-				.add(new EnemyGenerator(numOfEnemies, spawnRate, 400, spawnDelay, spawnNum))
+			var spawn:Entity = new Entity();
+			var stateMachine:EntityStateMachine = new EntityStateMachine(spawn);
+			spawn
+				.add(new StateMachine(stateMachine))
 				.add(new Position(x, y, 0))
-				.add(new Tween3D({
-					'type': Tween3D.TYPE_SCALE,
-					'fromValue': 0.25,
-					'toValue': 1.0,
-					'duration': spawnDelay
-				}))
 				.add(new Display3D(_assetManager.createSpawnPlane({
 					width: SPAWN_RADIUS * 2,
 					height: SPAWN_RADIUS * 2,
 					color: 0xcccccc
 				})));
 			
+			// state when start
+			stateMachine.createState('start')
+				.add(EnemyGenerator).withInstance(new EnemyGenerator(numOfEnemies, spawnRate, 400, spawnDelay, spawnNum))
+				.add(Tween3D).withInstance(new Tween3D({
+					'type': Tween3D.TYPE_SCALE,
+					'fromValue': 0.25,
+					'toValue': 1.0,
+					'duration': spawnDelay
+				}))
+				
+			// state when done
+			stateMachine.createState('done')
+				.add(DelayedEntityRemoval).withInstance(new DelayedEntityRemoval(1.2))
+				.add(Tween3D).withInstance(new Tween3D({
+					'type': Tween3D.TYPE_SCALE,
+					'fromValue': 1.0,
+					'toValue': 0.25,
+					'duration': 1.0
+				}));
+			
+			stateMachine.changeState('start');
 			_engine.addEntity(spawn);
 			return spawn;
 		}
