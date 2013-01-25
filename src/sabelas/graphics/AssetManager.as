@@ -55,6 +55,12 @@ package sabelas.graphics
 		[Embed(source="../../../assets/arena_texture.png")]
 		private static const ArenaTexture:Class;
 		
+		public static const ASSET_HERO:int = 10;
+		public static const ASSET_CLONE:int = 20;
+		public static const ASSET_ENEMY:int = 30;
+		public static const ASSET_BULLET_HERO:int = 40;
+		public static const ASSET_BULLET_ENEMY:int = 50;
+		
 		public function AssetManager()
 		{
 			super();
@@ -248,12 +254,15 @@ package sabelas.graphics
 				var type:int = int(config.type);
 				switch (type )
 				{
-				case 1:
+				case ASSET_HERO:
+					break;
+					
+				case ASSET_CLONE:
 					// colorize enemy
 					mesh.material = _blockyTextures[1] as MaterialBase;
 					break;
 					
-				case 2:
+				case ASSET_ENEMY:
 					// colorize enemy
 					mesh.material = _blockyTextures[2] as MaterialBase;
 					break;
@@ -285,14 +294,9 @@ package sabelas.graphics
 				var type:int = int(config.type);
 				switch (type )
 				{
-				case 1:
-					// colorize bullet
-					mesh.material = _blockyTextures[1] as MaterialBase;
-					break;
-					
-				case 2:
-					// colorize bullet
-					mesh.material = _blockyTextures[2] as MaterialBase;
+				case ASSET_BULLET_HERO:
+				default:
+					mesh.material = _blockyTextures[3] as MaterialBase;
 					break;
 				}
 			}

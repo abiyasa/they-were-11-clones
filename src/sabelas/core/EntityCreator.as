@@ -155,7 +155,7 @@ package sabelas.core
 					.add(new Motion(0, 0, 200))
 					.add(new Collision(50))
 					.add(new CollidingObject(CollidingObject.TYPE_MAIN_HERO))
-					.add(new Display3D(_assetManager.createBlockyPeople( { type : 0 } )))
+					.add(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_HERO } )))
 					.add(new MouseControl())
 					.add(new Gun(new Point(8, 0), 0.3, 3));
 				break;
@@ -165,7 +165,7 @@ package sabelas.core
 					.add(new Position(x, y, 0))
 					.add(new Motion(0, 0, 200))
 					.add(new StateMachine(stateMachine))
-					.add(new Display3D(_assetManager.createBlockyPeople( { type : 1 } )));
+					.add(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_CLONE } )));
 					
 				stateMachine.createState('start')
 					.add(Energy).withInstance(new Energy(1))
@@ -204,7 +204,7 @@ package sabelas.core
 					.add(new CollidingObject(CollidingObject.TYPE_ENEMY))
 					.add(new Shootable(Bullet.BULLET_TYPE_HERO))
 					.add(new Chaser(_mainHeroPosition))
-					.add(new Display3D(_assetManager.createBlockyPeople({ type : 2 })));
+					.add(new Display3D(_assetManager.createBlockyPeople({ type : AssetManager.ASSET_ENEMY })));
 				break;
 			}
 			
@@ -242,7 +242,7 @@ package sabelas.core
 		public function createBullet(gun:Gun, parentPosition:Position, shooter:int):Entity
 		{
 			var parentRotation:Number = parentPosition.rotation;
-			var bulletType:int = (shooter == PEOPLE_ENEMY) ? 2 : 0;
+			var bulletAssetType:int = (shooter == PEOPLE_ENEMY) ? AssetManager.ASSET_BULLET_ENEMY : AssetManager.ASSET_BULLET_HERO;
 			
 			var bullet:Entity = new Entity()
 				.add(new Bullet(shooter == PEOPLE_ENEMY ? Bullet.BULLET_TYPE_ENEMY : Bullet.BULLET_TYPE_HERO,
@@ -250,7 +250,7 @@ package sabelas.core
 				.add(new Position(parentPosition.position.x, parentPosition.position.y, parentRotation))
 				.add(new Collision(10))
 				.add(new Motion(parentRotation, 800, 800))
-				.add(new Display3D(_assetManager.createBullet({ type : bulletType })));
+				.add(new Display3D(_assetManager.createBullet({ type : bulletAssetType })));
 				
 			_engine.addEntity(bullet);
 			return bullet;
