@@ -92,8 +92,8 @@ package sabelas.systems
 					}
 					else
 					{
-						trace('Error! cannot get the stateMachine!');
-						// TODO
+						trace('Error! cannot get the stateMachine! Just move the entity anyway');
+						_entityCreator.destroyEntity(theEntity);
 					}
 					
 					// no more spawn
