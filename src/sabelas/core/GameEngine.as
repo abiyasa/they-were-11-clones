@@ -7,6 +7,7 @@ package sabelas.core
 	import sabelas.events.GameOverEvent;
 	import sabelas.graphics.SimpleHUD;
 	import sabelas.input.KeyPoll;
+	import sabelas.systems.AscensionSystem;
 	import sabelas.systems.BulletSystem;
 	import sabelas.systems.CloneCountingSystem;
 	import sabelas.systems.CloneFireSystem;
@@ -110,6 +111,7 @@ package sabelas.core
 			//_engine.addSystem(new CollisionSystem(_entityCreator), SystemPriorities.MOVE);
 			_engine.addSystem(new MotionSystem(_config.arenaRect), SystemPriorities.MOVE);
 			_engine.addSystem(new StalkingCameraSystem(stage3DUtils.currentView3D.camera), SystemPriorities.MOVE);
+			_engine.addSystem(new AscensionSystem(), SystemPriorities.MOVE);
 			_engine.addSystem(new BulletSystem(_entityCreator, _config), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new EnemyCollisionSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);
 			_engine.addSystem(new CloneDepositSystem(_entityCreator), SystemPriorities.RESOLVE_COLLISIONS);

@@ -8,6 +8,7 @@ package sabelas.core
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	import sabelas.components.Arena;
+	import sabelas.components.Ascension;
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
 	import sabelas.components.CloneDeposit;
@@ -180,14 +181,15 @@ package sabelas.core
 						'duration': 0.5
 					}));
 					
-				// TODO add ascension FX?
+				// add ascension FX
 				stateMachine.createState('deposit')
 					.add(DelayedEntityRemoval).withInstance(new DelayedEntityRemoval(1.0))
 					.add(Display3D).withInstance(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_CLONE_DEPOSIT } )))
+					.add(Ascension).withInstance(new Ascension(10, 1))
 					.add(Tween3D).withInstance(new Tween3D({
 						'type': Tween3D.TYPE_SCALE,
 						'fromValue': 1.0,
-						'toValue': 0.25,
+						'toValue': 0.7,
 						'duration': 1.0
 					}));
 				
