@@ -104,7 +104,7 @@ package sabelas.systems
 				var leaderPosition:Position = _hero.position;
 				_entityCreator.createHero(leaderPosition.position.x, leaderPosition.position.y - 300, true);
 				
-				_hero.energy.value--;
+				_hero.energy.decreaseEnergy();
 			}
 		}
 	}

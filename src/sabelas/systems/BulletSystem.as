@@ -170,7 +170,7 @@ package sabelas.systems
 										_bonusTracker = ENEMIES_FOR_BONUS;
 										
 										// add energy to hero
-										_hero.energy.value++;
+										_hero.energy.increaseEnergy();
 									}
 								}
 								break;
