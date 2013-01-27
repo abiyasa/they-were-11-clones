@@ -3,6 +3,7 @@ package sabelas.systems
 	import ash.core.Entity;
 	import flash.geom.Point;
 	import sabelas.core.EntityCreator;
+	import sabelas.components.DamageProof;
 	import sabelas.nodes.ClonesNode;
 	import sabelas.nodes.EnemyNode;
 	import sabelas.nodes.CloneLeaderNode;
@@ -23,6 +24,7 @@ package sabelas.systems
 		private var _heroes:NodeList;
 		private var _enemies:NodeList;
 		private var _hero:CloneLeaderNode;
+		private var _heroEntity:Entity;
 		
 		public function EnemyCollisionSystem(creator:EntityCreator)
 		{
@@ -54,11 +56,13 @@ package sabelas.systems
 		{
 			// only handle 1 hero at the time
 			_hero = node;
+			_heroEntity = _hero.entity;
 		}
 		
 		private function onHeroRemoved(node:CloneLeaderNode):void
 		{
 			_hero = null;
+			_heroEntity = null;
 		}
 
 		override public function update(time:Number):void
@@ -66,10 +70,12 @@ package sabelas.systems
 			// get hero data
 			var heroPosition:Point;
 			var heroRadius:Number;
+			var heroIsDamageProof:Boolean = false;
 			if (_hero != null)
 			{
 				heroPosition = _hero.position.position;
 				heroRadius = _hero.collision.radius;
+				heroIsDamageProof = _heroEntity.has(DamageProof);
 			}
 			
 			// handle collision enemy with clone or main hero
@@ -90,15 +96,19 @@ package sabelas.systems
 						(enemyRadius + cloneNode.collision.radius))
 					{
 						// reduce enemy energy
-						enemyNode.energy.value--;
-						if (enemyNode.energy.value <= 0)
+						enemyNode.energy.decreaseEnergy();
+						if (enemyNode.energy.isEmpty())
 						{
 							// enemy is dead
 							_entityCreator.destroyEntity(enemyNode.entity);
 							enemyIsExist = false;
 						}
 						
-						handleCloneGetHit(cloneNode);
+						// handle clone damage
+						if (!heroIsDamageProof)
+						{
+							handleCloneGetHit(cloneNode);
+						}
 					}
 				}
 				
@@ -108,30 +118,33 @@ package sabelas.systems
 					if (Point.distance(enemyPosition, heroPosition) <= (enemyRadius + heroRadius))
 					{
 						// reduce enemy energy
-						enemyNode.energy.value--;
-						if (enemyNode.energy.value <= 0)
+						enemyNode.energy.decreaseEnergy();
+						if (enemyNode.energy.isEmpty())
 						{
 							// enemy is dead
 							_entityCreator.destroyEntity(enemyNode.entity);
 						}
 						
 						// reduce main hero energy
-						if (_hero.energy.value > 1)
+						if (!heroIsDamageProof)
 						{
-							_hero.energy.value--;
-						}
-						else
-						{
-							// then reduce the clones!
-							cloneNode = _clones.head;
-							if (cloneNode != null)
+							if (_hero.energy.value > 1)
 							{
-								handleCloneGetHit(cloneNode);
+								_hero.energy.decreaseEnergy();
 							}
-							else  // no more clone left
+							else
 							{
-								// this will trigger game over
-								_hero.energy.value--;
+								// then reduce the clones!
+								cloneNode = _clones.head;
+								if (cloneNode != null)
+								{
+									handleCloneGetHit(cloneNode);
+								}
+								else  // no more clone left
+								{
+									// this will trigger game over
+									_hero.energy.decreaseEnergy();
+								}
 							}
 						}
 					}
@@ -153,8 +166,8 @@ package sabelas.systems
 			// reduce clone energy
 			var cloneIsDead:Boolean = false;
 			
-			cloneNode.energy.value--;
-			if (cloneNode.energy.value <= 0)
+			cloneNode.energy.decreaseEnergy();
+			if (cloneNode.energy.isEmpty())
 			{
 				// clone is dead
 				_entityCreator.destroyEntity(cloneNode.entity);

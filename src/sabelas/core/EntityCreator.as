@@ -12,6 +12,7 @@ package sabelas.core
 	import sabelas.components.Bullet;
 	import sabelas.components.Chaser;
 	import sabelas.components.CloneDeposit;
+	import sabelas.components.DamageProof;
 	import sabelas.components.DelayedEntityRemoval;
 	import sabelas.components.Enemy;
 	import sabelas.components.EnemyGenerator;
@@ -149,6 +150,7 @@ package sabelas.core
 				_mainHeroPosition = new Position(x, y, 0);
 
 				blockyPeople
+					.add(new StateMachine(stateMachine))
 					.add(_mainHeroPosition)
 					.add(new Energy(_gameState.energy))
 					.add(new CloneLeader())
@@ -159,6 +161,9 @@ package sabelas.core
 					.add(new Display3D(_assetManager.createBlockyPeople( { type : AssetManager.ASSET_HERO } )))
 					.add(new MouseControl())
 					.add(new Gun(new Point(8, 0), 0.3, 3));
+					
+				stateMachine.createState('damageProof')
+					.add(DamageProof).withInstance(new DamageProof(5.0, 8));
 				break;
 				
 			case PEOPLE_HERO:

@@ -10,6 +10,7 @@ package sabelas.systems
 	import sabelas.components.StateMachine;
 	import sabelas.core.EntityCreator;
 	import sabelas.nodes.CloneDepositNode;
+	import sabelas.nodes.CloneLeaderNode;
 	import sabelas.nodes.ClonesNode;
 	import sabelas.nodes.GameStateNode;
 	
@@ -27,6 +28,8 @@ package sabelas.systems
 		private var _clones:NodeList;
 		protected var _gameStateNodes:NodeList;
 		private var _gameState:GameState;
+		private var _heroes:NodeList;
+		private var _hero:CloneLeaderNode;
 		
 		public function CloneDepositSystem(creator:EntityCreator)
 		{
@@ -37,15 +40,27 @@ package sabelas.systems
 		override public function addToEngine(engine:Engine):void
 		{
 			super.addToEngine(engine);
+			
 			_deposits = engine.getNodeList(CloneDepositNode);
+			
 			_clones = engine.getNodeList(ClonesNode);
+			
 			_gameStateNodes = engine.getNodeList(GameStateNode);
 			_gameStateNodes.nodeAdded.add(onGameStateAdded);
 			_gameStateNodes.nodeRemoved.add(onGameStateRemoved);
+			
+			_heroes = engine.getNodeList(CloneLeaderNode);
+			_heroes.nodeAdded.add(onHeroAdded);
+			_heroes.nodeRemoved.add(onHeroRemoved);
 		}
 		
 		override public function removeFromEngine(engine:Engine):void
 		{
+			_heroes.nodeAdded.remove(onHeroAdded);
+			_heroes.nodeRemoved.remove(onHeroRemoved);
+			_heroes = null;
+			_hero = null;
+			
 			_gameStateNodes.nodeAdded.remove(onGameStateAdded);
 			_gameStateNodes.nodeRemoved.remove(onGameStateRemoved);
 			_gameStateNodes = null;
@@ -63,6 +78,16 @@ package sabelas.systems
 		private function onGameStateRemoved(node:GameStateNode):void
 		{
 			_gameState = null;
+		}
+
+		private function onHeroAdded(node:CloneLeaderNode):void
+		{
+			_hero = node;
+		}
+		
+		private function onHeroRemoved(node:CloneLeaderNode):void
+		{
+			_hero = null;
 		}
 		
 		override public function update(time:Number):void
@@ -117,6 +142,16 @@ package sabelas.systems
 
 							// remove deposit place
 							_entityCreator.destroyEntity(cloneDeposit.entity);
+							
+							// trigger damageProof to the hero
+							if (_hero != null)
+							{
+								var heroStateMachine:StateMachine = _hero.entity.get(StateMachine);
+								if (heroStateMachine != null)
+								{
+									heroStateMachine.stateMachine.changeState('damageProof');
+								}
+							}
 							break;
 						}
 					}
