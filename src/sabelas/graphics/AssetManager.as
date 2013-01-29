@@ -19,6 +19,8 @@ package sabelas.graphics
 	import flash.events.EventDispatcher;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
 	
 	/**
@@ -51,9 +53,6 @@ package sabelas.graphics
 		
 		private var _assetLoader:Loader3D;
 		
-		private var _arenaTexture:TextureMaterial;
-		private var _spawnArenaTexture:TextureMaterial;
-		
 		[Embed(source="../../../assets/arena_texture.png")]
 		private static const ArenaTexture:Class;
 		
@@ -70,6 +69,20 @@ package sabelas.graphics
 		public static const TEXTURE_CLONE_DEPOSIT:String = 'clone_fly';
 		public static const TEXTURE_ENEMY:String = 'enemy';
 		public static const TEXTURE_BULLET:String = 'bullet01';
+		public static const TEXTURE_ARENA:String = 'stage_arena';
+		public static const TEXTURE_SPAWN_ARENA:String = 'spawn_arena';
+		public static const TEXTURE_DEPOSIT_ARENA_01:String = 'deposit_arena_01';
+		public static const TEXTURE_DEPOSIT_ARENA_02:String = 'deposit_arena_02';
+		public static const TEXTURE_DEPOSIT_ARENA_03:String = 'deposit_arena_03';
+		public static const TEXTURE_DEPOSIT_ARENA_04:String = 'deposit_arena_04';
+		public static const TEXTURE_DEPOSIT_ARENA_05:String = 'deposit_arena_05';
+		public static const TEXTURE_DEPOSIT_ARENA_06:String = 'deposit_arena_06';
+		public static const TEXTURE_DEPOSIT_ARENA_07:String = 'deposit_arena_07';
+		public static const TEXTURE_DEPOSIT_ARENA_08:String = 'deposit_arena_08';
+		public static const TEXTURE_DEPOSIT_ARENA_09:String = 'deposit_arena_09';
+		public static const TEXTURE_DEPOSIT_ARENA_10:String = 'deposit_arena_10';
+		public static const TEXTURE_DEPOSIT_ARENA_11:String = 'deposit_arena_11';
+		
 		
 		public function AssetManager()
 		{
@@ -89,29 +102,7 @@ package sabelas.graphics
 		 */
 		public function init(options:Object = null):void
 		{
-			// create texture for the whole arena
-			var textureBitmapData:BitmapData = Bitmap(new ArenaTexture()).bitmapData;
-			var bitmapTexture:BitmapTexture = new BitmapTexture(textureBitmapData);
-			_arenaTexture = new TextureMaterial(bitmapTexture, true, true, false);
-			
-			prepareTexture();
-			
-			// create texture for spawning arena
-			var cropCircle:Sprite = new Sprite();
-			var g:Graphics = cropCircle.graphics;
-			g.beginFill(0xcccccc, 0.6);
-			/*
-			var m:Matrix = new Matrix();
-			m.createGradientBox(128, 128, 0, 0, 0);
-			g.beginGradientFill("radial", [0xCCCCCC, 0xFFFFFF], [ 0.6, 0.0 ], [ 0, 255 ], m);
-			*/
-			g.drawCircle(64, 64, 60);
-			g.endFill();
-			textureBitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
-			textureBitmapData.draw(cropCircle);
-			bitmapTexture = new BitmapTexture(textureBitmapData);
-			_spawnArenaTexture = new TextureMaterial(bitmapTexture);
-			_spawnArenaTexture.alphaBlending = true;
+			prepareTextures();
 			
 			// prepare list of Meshes
 			_meshesToLoad = [
@@ -137,10 +128,6 @@ package sabelas.graphics
 			}
 			
 			disposeTextures();
-			
-			// destroy other
-			_arenaTexture.dispose();
-			_arenaTexture = null;
 		}
 		
 		protected function disposeTextures():void
@@ -152,13 +139,14 @@ package sabelas.graphics
 		}
 		
 		/**
-		 * Prepare textures
+		 * Prepare all textures
 		 */
-		protected function prepareTexture():void
+		protected function prepareTextures():void
 		{
 			// create bitmap textures for block characters
 			var bitmapTexture:BitmapTexture;
 			var tempTexture:TextureMaterial;
+			var textureBitmapData:BitmapData;
 			
 			disposeTextures();
 			
@@ -188,6 +176,54 @@ package sabelas.graphics
 			tempTexture = new TextureMaterial(bitmapTexture);
 			//tempTexture.alphaBlending = true;
 			_texturesDictionary[TEXTURE_BULLET] = tempTexture;
+			
+			// create texture for the whole arena
+			bitmapTexture = new BitmapTexture(Bitmap(new ArenaTexture()).bitmapData);
+			tempTexture = new TextureMaterial(bitmapTexture, true, true, false);
+			_texturesDictionary[TEXTURE_ARENA] = tempTexture;
+			
+			// create texture for spawning arena
+			var cropCircle:Sprite = new Sprite();
+			var g:Graphics = cropCircle.graphics;
+			g.clear();
+			g.beginFill(0xcccccc, 0.6);
+			/*
+			var m:Matrix = new Matrix();
+			m.createGradientBox(128, 128, 0, 0, 0);
+			g.beginGradientFill("radial", [0xCCCCCC, 0xFFFFFF], [ 0.6, 0.0 ], [ 0, 255 ], m);
+			*/
+			g.drawCircle(64, 64, 60);
+			g.endFill();
+			textureBitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
+			textureBitmapData.draw(cropCircle);
+			bitmapTexture = new BitmapTexture(textureBitmapData);
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.alphaBlending = true;
+			_texturesDictionary[TEXTURE_SPAWN_ARENA] = tempTexture;
+			
+			// create deposit textures
+			var group:Sprite = new Sprite();
+			var depositCircle:Sprite = new Sprite();
+			g = depositCircle.graphics;
+			g.clear();
+			g.beginFill(0x009eef, 0.4);
+			g.drawCircle(64, 64, 64);
+			g.endFill();
+			var textLabel:TextField = new TextField();
+			textLabel.width = 128;
+			textLabel.y = 30;
+			textLabel.alpha = 0.5;
+			textLabel.defaultTextFormat = new TextFormat('Courier', 90, 0x666666,
+				true, false, false, null, null, 'center');
+			group.addChild(depositCircle);
+			group.addChild(textLabel);
+			textLabel.text = '1';
+			textureBitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
+			textureBitmapData.draw(group);
+			bitmapTexture = new BitmapTexture(textureBitmapData);
+			tempTexture = new TextureMaterial(bitmapTexture);
+			tempTexture.alphaBlending = true;
+			_texturesDictionary[TEXTURE_DEPOSIT_ARENA_01] = tempTexture;
 		}
 		
 		/**
@@ -350,7 +386,7 @@ package sabelas.graphics
 			}
 			else // no color, assume using arena texture
 			{
-				mesh.material = _arenaTexture;
+				mesh.material = _texturesDictionary[TEXTURE_ARENA];
 			}
 			tempResult.addChild(mesh);
 			
@@ -358,12 +394,12 @@ package sabelas.graphics
 		}
 		
 		/**
-		 * Creates a flat plane for the spawning arena
+		 * Creates a flat plane for the spawning or deposit arena
 		 *
 		 * @param	config
 		 * @return
 		 */
-		public function createSpawnPlane(config:Object = null):ObjectContainer3D
+		public function createTexturedPlane(config:Object = null):ObjectContainer3D
 		{
 			config = (config == null) ? { } : config;
 			
@@ -375,12 +411,19 @@ package sabelas.graphics
 			var mesh:Mesh = new Mesh(new PlaneGeometry(planeWidth, planeHeight, 1, 1));
 			
 			// create plane material
-			var planeColor:uint = config.hasOwnProperty('color') ? config.color : 0xcccccc;
-			mesh.material = _spawnArenaTexture;
+			var planeType:String = config.hasOwnProperty('type') ? config.type: null;
+			switch (planeType)
+			{
+			case 'deposit1':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_01];
+				break;
+				
+			case 'spawn_arena':
+			default:
+				mesh.material = _texturesDictionary[TEXTURE_SPAWN_ARENA];
+				break;
+			}
 			tempResult.addChild(mesh);
-			
-			trace(DEBUG_TAG, 'made a plane with width=' + planeWidth +
-				' height=' + planeHeight + ' color=' + planeColor);
 			
 			return tempResult;
 		}

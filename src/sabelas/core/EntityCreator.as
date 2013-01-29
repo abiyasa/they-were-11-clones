@@ -281,7 +281,8 @@ package sabelas.core
 				.add(arenaPosition)
 				.add(new Display3D(_assetManager.createArenaPlane({
 					width: _config.arenaWidth,
-					height: _config.arenaHeight
+					height: _config.arenaHeight,
+					type: 'arena'
 				})));
 				
 			_engine.addEntity(arena);
@@ -382,10 +383,10 @@ package sabelas.core
 			spawn
 				.add(new StateMachine(stateMachine))
 				.add(new Position(x, y, 0))
-				.add(new Display3D(_assetManager.createSpawnPlane({
+				.add(new Display3D(_assetManager.createTexturedPlane({
 					width: SPAWN_RADIUS * 2,
 					height: SPAWN_RADIUS * 2,
-					color: 0xcccccc
+					type: 'spawn_arena'
 				})));
 			
 			// state when start
@@ -463,10 +464,10 @@ package sabelas.core
 				.add(new Position(x, y, 0))
 				.add(new Collision(DEPOSIT_RADIUS))
 				.add(new MapPoint(MapPoint.TYPE_CLONE_DEPOSIT))
-				.add(new Display3D(_assetManager.createArenaPlane({
+				.add(new Display3D(_assetManager.createTexturedPlane({
 					width: DEPOSIT_RADIUS * 2,
 					height: DEPOSIT_RADIUS * 2,
-					color: 0x009eef
+					type: 'deposit1'
 				})));
 			
 			_engine.addEntity(deposit);
