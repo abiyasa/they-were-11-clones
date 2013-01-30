@@ -201,29 +201,58 @@ package sabelas.graphics
 			tempTexture.alphaBlending = true;
 			_texturesDictionary[TEXTURE_SPAWN_ARENA] = tempTexture;
 			
-			// create deposit textures
+			generateDepositArenaTextures();
+		}
+		
+		/**
+		 * Generate spawn textures with number
+		 */
+		private function generateDepositArenaTextures():void
+		{
+			// create base circle
 			var group:Sprite = new Sprite();
 			var depositCircle:Sprite = new Sprite();
-			g = depositCircle.graphics;
+			var g:Graphics = depositCircle.graphics;
 			g.clear();
 			g.beginFill(0x009eef, 0.4);
 			g.drawCircle(64, 64, 64);
 			g.endFill();
+			
+			// prepare text
 			var textLabel:TextField = new TextField();
 			textLabel.width = 128;
-			textLabel.y = 30;
+			textLabel.y = 20;
 			textLabel.alpha = 0.5;
 			textLabel.defaultTextFormat = new TextFormat('Courier', 90, 0x666666,
 				true, false, false, null, null, 'center');
 			group.addChild(depositCircle);
 			group.addChild(textLabel);
-			textLabel.text = '1';
-			textureBitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
-			textureBitmapData.draw(group);
-			bitmapTexture = new BitmapTexture(textureBitmapData);
-			tempTexture = new TextureMaterial(bitmapTexture);
-			tempTexture.alphaBlending = true;
-			_texturesDictionary[TEXTURE_DEPOSIT_ARENA_01] = tempTexture;
+			
+			// prepare textures
+			var info:Array = [
+				{ label: '01', name: TEXTURE_DEPOSIT_ARENA_01 },
+				{ label: '02', name: TEXTURE_DEPOSIT_ARENA_02 },
+				{ label: '03', name: TEXTURE_DEPOSIT_ARENA_03 },
+				{ label: '04', name: TEXTURE_DEPOSIT_ARENA_04 },
+				{ label: '05', name: TEXTURE_DEPOSIT_ARENA_05 },
+				{ label: '06', name: TEXTURE_DEPOSIT_ARENA_06 },
+				{ label: '07', name: TEXTURE_DEPOSIT_ARENA_07 },
+				{ label: '08', name: TEXTURE_DEPOSIT_ARENA_08 },
+				{ label: '09', name: TEXTURE_DEPOSIT_ARENA_09 },
+				{ label: '10', name: TEXTURE_DEPOSIT_ARENA_10 },
+				{ label: '11', name: TEXTURE_DEPOSIT_ARENA_11 }
+			];
+			for each (var infoObject:Object in info)
+			{
+				textLabel.text = String(infoObject.label);
+				
+				var textureBitmapData:BitmapData = new BitmapData(128, 128, true, 0x00FFFFFF);
+				textureBitmapData.draw(group);
+				var tempTexture:TextureMaterial = new TextureMaterial(new BitmapTexture(textureBitmapData));
+				tempTexture.alphaBlending = true;
+				
+				_texturesDictionary[infoObject.name] = tempTexture;
+			}
 		}
 		
 		/**
@@ -414,8 +443,48 @@ package sabelas.graphics
 			var planeType:String = config.hasOwnProperty('type') ? config.type: null;
 			switch (planeType)
 			{
-			case 'deposit1':
+			case 'deposit01':
 				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_01];
+				break;
+				
+			case 'deposit02':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_02];
+				break;
+
+			case 'deposit03':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_03];
+				break;
+				
+			case 'deposit04':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_04];
+				break;
+				
+			case 'deposit05':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_05];
+				break;
+				
+			case 'deposit06':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_06];
+				break;
+				
+			case 'deposit07':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_07];
+				break;
+				
+			case 'deposit08':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_08];
+				break;
+				
+			case 'deposit09':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_09];
+				break;
+				
+			case 'deposit10':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_10];
+				break;
+				
+			case 'deposit11':
+				mesh.material = _texturesDictionary[TEXTURE_DEPOSIT_ARENA_11];
 				break;
 				
 			case 'spawn_arena':

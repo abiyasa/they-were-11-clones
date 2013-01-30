@@ -463,12 +463,19 @@ package sabelas.core
 				.add(new CloneDeposit(clonesRequired))
 				.add(new Position(x, y, 0))
 				.add(new Collision(DEPOSIT_RADIUS))
-				.add(new MapPoint(MapPoint.TYPE_CLONE_DEPOSIT))
-				.add(new Display3D(_assetManager.createTexturedPlane({
-					width: DEPOSIT_RADIUS * 2,
-					height: DEPOSIT_RADIUS * 2,
-					type: 'deposit1'
+				.add(new MapPoint(MapPoint.TYPE_CLONE_DEPOSIT));
+			var stateMachine:EntityStateMachine = new EntityStateMachine(deposit);
+			
+			// TODO create states based on clonesRequired & loop
+			stateMachine.createState('require01')
+				.add(Display3D).withInstance(new Display3D(_assetManager.createTexturedPlane({
+					width: (DEPOSIT_RADIUS * 2) - 100,
+					height: (DEPOSIT_RADIUS * 2) - 100,
+					type: 'deposit10'
 				})));
+			
+			// TODO prepare initial state based on clonesRequired
+			stateMachine.changeState('require01');
 			
 			_engine.addEntity(deposit);
 			return deposit;
