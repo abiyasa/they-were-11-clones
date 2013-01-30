@@ -459,23 +459,43 @@ package sabelas.core
 		 */
 		public function createCloneDeposit(x:int, y:int, clonesRequired:int):Entity
 		{
-			var deposit:Entity = new Entity()
-				.add(new CloneDeposit(clonesRequired))
+			var deposit:Entity = new Entity();
+			var cloneDepositComponent:CloneDeposit = new CloneDeposit(clonesRequired);
+			var stateMachine:EntityStateMachine = new EntityStateMachine(deposit);
+			
+			deposit
+				.add(new StateMachine(stateMachine))
+				.add(cloneDepositComponent)
 				.add(new Position(x, y, 0))
 				.add(new Collision(DEPOSIT_RADIUS))
 				.add(new MapPoint(MapPoint.TYPE_CLONE_DEPOSIT));
-			var stateMachine:EntityStateMachine = new EntityStateMachine(deposit);
 			
-			// TODO create states based on clonesRequired & loop
-			stateMachine.createState('require01')
-				.add(Display3D).withInstance(new Display3D(_assetManager.createTexturedPlane({
-					width: (DEPOSIT_RADIUS * 2) - 100,
-					height: (DEPOSIT_RADIUS * 2) - 100,
-					type: 'deposit10'
-				})));
+			// create states based on clonesRequired & loop
+			for each (var stateInfo:Object in CloneDeposit.STATES_INFO)
+			{
+				if (stateInfo == '00')
+				{
+					// TODO prepare remove animation & delayed removal
+					stateMachine.createState('require' + stateInfo)
+						.add(Display3D).withInstance(new Display3D(_assetManager.createTexturedPlane({
+							width: (DEPOSIT_RADIUS * 2) - 100,
+							height: (DEPOSIT_RADIUS * 2) - 100,
+							type: 'deposit01'
+						})));
+				}
+				else
+				{
+					stateMachine.createState('require' + stateInfo)
+						.add(Display3D).withInstance(new Display3D(_assetManager.createTexturedPlane({
+							width: (DEPOSIT_RADIUS * 2) - 100,
+							height: (DEPOSIT_RADIUS * 2) - 100,
+							type: 'deposit' + stateInfo
+						})));
+				}
+			}
 			
-			// TODO prepare initial state based on clonesRequired
-			stateMachine.changeState('require01');
+			// prepare initial state based on clonesRequired
+			stateMachine.changeState(cloneDepositComponent.getStateString());
 			
 			_engine.addEntity(deposit);
 			return deposit;

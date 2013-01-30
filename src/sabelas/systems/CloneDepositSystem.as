@@ -154,6 +154,14 @@ package sabelas.systems
 							}
 							break;
 						}
+						
+						// update the entity state based on cloneDeposit.cloneDeposit.clonesRequired
+						stateMachine = cloneDeposit.entity.get(StateMachine);
+						if (stateMachine != null)
+						{
+							stateMachine.stateMachine.changeState(cloneDeposit.cloneDeposit.getStateString());
+						}
+
 					}
 				}
 				
