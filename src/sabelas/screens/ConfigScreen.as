@@ -1,16 +1,15 @@
 package sabelas.screens
 {
-	import flash.display.Bitmap;
-	import flash.geom.Rectangle;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import sabelas.configs.ScreenConfig;
 	import sabelas.screens.ScreenWithButtonBase;
-	import starling.display.Button;
-	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
-	import starling.textures.Texture;
-	import starling.utils.Color;
 	
 	/**
 	 * Configuration/option screen
@@ -21,13 +20,8 @@ package sabelas.screens
 	{
 		public static const DEBUG_TAG:String = 'ConfigScreen';
 		
-		[Embed(source="../../../assets/ubuntu-bold-48_0.png")]
-		private static const MainBitmapFont:Class;
-		
-		[Embed(source="../../../assets/ubuntu-bold-48.fnt", mimeType="application/octet-stream")]
-		private static const MainBitmapFontXML:Class;
-		
-		protected var _title:TextField;
+		protected var _mainTitle:TextField;
+		protected var _subTitle:TextField;
 		
 		/**
 		 * Constructor
@@ -35,8 +29,6 @@ package sabelas.screens
 		public function ConfigScreen()
 		{
 			super();
-			
-			prepareBitmapFonts();
 			
 			createButtons([
 				{
@@ -49,26 +41,21 @@ package sabelas.screens
 				
 			]);
 			
-			_title = new TextField(400, 400, 'They were 11 Clones', 'Ubuntu', 32, 0x534741, true);
-			_title.fontSize = BitmapFont.NATIVE_SIZE;  // use defined bitmap font size
-			//_title.color = Color.WHITE;  // use real color (white)
-			_title.text = 'They were 11 Clones\nby Abiyasa (Papatong Mobi)\n2012'
-			_title.hAlign = 'center';
-			_title.vAlign = 'top';
-			_title.touchable = false;
-			this.addChild(_title);
-		}
-		
-		/**
-		 * Prepares the bitmap fonts for Starling text field
-		 */
-		protected function prepareBitmapFonts():void
-		{
-			var fontBitmap:Bitmap = new MainBitmapFont() as Bitmap;
-			var fontTexture:Texture = Texture.fromBitmap(fontBitmap);
-			var fontXMLdata:XML = XML(new MainBitmapFontXML());
+			_mainTitle = new TextField(600, 50, 'They were 11 Clones', 'Ubuntu', 32, 0x534741, true);
+			_mainTitle.fontSize = BitmapFont.NATIVE_SIZE;  // use defined bitmap font size
+			//_mainTitle.color = Color.WHITE;  // use real color (white)
+			_mainTitle.hAlign = 'center';
+			_mainTitle.vAlign = 'top';
+			_mainTitle.touchable = false;
+			this.addChild(_mainTitle);
 			
-			TextField.registerBitmapFont(new BitmapFont(fontTexture, fontXMLdata));
+			// prepare sub title
+			_subTitle = new TextField(600, 100, 'by\nAbiyasa (Papatong Mobi)\n2013', 'Ubuntu', 28, 0x534741, true);
+			_subTitle.hAlign = 'center';
+			_subTitle.vAlign = 'top';
+			_subTitle.touchable = true;
+			_subTitle.addEventListener(TouchEvent.TOUCH, onClickSubTitle);
+			this.addChild(_subTitle);
 		}
 		
 		override protected function init(e:Event):void
@@ -78,8 +65,19 @@ package sabelas.screens
 			trace(DEBUG_TAG, 'init()');
 			
 			// repositions label
-			_title.y = 200;
-			_title.x = (stage.stageWidth - _title.width) / 2;
+			_mainTitle.y = 100;
+			_mainTitle.x = (stage.stageWidth - _mainTitle.width) / 2;
+			_subTitle.y = _mainTitle.y + _mainTitle.height + 10;
+			_subTitle.x = (stage.stageWidth - _subTitle.width) / 2;
+		}
+		
+		protected function onClickSubTitle(event:TouchEvent):void
+		{
+			var touch:Touch = event.getTouch(_subTitle, TouchPhase.ENDED);
+			if (touch)
+			{
+				navigateToURL(new URLRequest('http://abiyasa.com/blog/'), '_blank');
+			}
 		}
 	}
 }

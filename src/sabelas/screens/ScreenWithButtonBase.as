@@ -1,12 +1,15 @@
 package sabelas.screens
 {
+	import flash.display.Bitmap;
 	import flash.utils.Dictionary;
 	import sabelas.events.ShowScreenEvent;
 	import starling.display.Button;
 	import starling.events.Event;
+	import starling.text.BitmapFont;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
-	
+
 	/**
 	 * Screens with buttons.
 	 * Handle button click and button creations
@@ -26,6 +29,14 @@ package sabelas.screens
 		/** shared button texture atlas */
 		protected var _textureAtlas:TextureAtlas;
 		
+		[Embed(source="../../../assets/ubuntu-bold-48_0.png")]
+		private static const MainBitmapFont:Class;
+		
+		[Embed(source="../../../assets/ubuntu-bold-48.fnt", mimeType="application/octet-stream")]
+		private static const MainBitmapFontXML:Class;
+		
+		protected static var _hasInitBitmapFont:Boolean = false;
+		
 		protected var _buttons:Array = [];
 		
 		/** Mapping between button name and event name */
@@ -38,6 +49,8 @@ package sabelas.screens
 			// allocate texture atlas
 			var atlasTexture:Texture = Texture.fromBitmap(new AtlasTexture());
 			_textureAtlas = new TextureAtlas(atlasTexture, XML(new AtlasXML()));
+			
+			prepareBitmapFonts();
 		}
 		
 		override protected function destroy(e:Event):void
@@ -48,6 +61,24 @@ package sabelas.screens
 			_textureAtlas = null;
 			
 			super.destroy(e);
+		}
+		
+		/**
+		 * Prepares the bitmap fonts for Starling text field
+		 */
+		protected function prepareBitmapFonts():void
+		{
+			if (!_hasInitBitmapFont)
+			{
+				// do it once
+				_hasInitBitmapFont = true;
+				
+				var fontBitmap:Bitmap = new MainBitmapFont() as Bitmap;
+				var fontTexture:Texture = Texture.fromBitmap(fontBitmap);
+				var fontXMLdata:XML = XML(new MainBitmapFontXML());
+				
+				TextField.registerBitmapFont(new BitmapFont(fontTexture, fontXMLdata));
+			}
 		}
 		
 		/**
