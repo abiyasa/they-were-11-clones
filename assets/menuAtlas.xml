@@ -8,4 +8,5 @@
     <SubTexture name="button_about_small" x="55" y="450" width="41" height="41" />
     <SubTexture name="button_pause" x="104" y="450" width="41" height="41" />
     <SubTexture name="button_resume" x="160" y="450" width="41" height="41" />
+    <SubTexture name="icon_clone" x="215" y="450" width="19" height="40" />
 </TextureAtlas>
