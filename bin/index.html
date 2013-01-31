@@ -18,11 +18,11 @@
 			wmode: "direct"
 		};
 		var attributes = {
-			id:"they-were-11-clones"
+			id:"game-swf"
 		};
 		swfobject.embedSWF(
 			"they-were-11-clones.swf",
-			"altContent", "640", "480", "11.3.0",
+			"alt-content", "640", "480", "11.3.0",
 			"expressInstall.swf",
 			flashvars, params, attributes);
 		
@@ -38,30 +38,50 @@
 		})();
 	</script>
 
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+
 	<style>
 		html, body { height:100%; }
 		body {
-            margin: 20px;
-            font-family: Tahoma, Geneva, sans-serif;
-            color: #534741;
-        }
+			margin: 20px;
+			font-family: 'Ubuntu', sans-serif;
+			color: #534741;
+		}
+		h3 { color: #009eef; }
+		#game-container {
+			margin: 10px auto;
+			padding: 5px;
+			width: 660px;
+			border: 1px solid #e1e1e8;
+			
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+		}
+		#game-info { margin: 0px auto; width: 660px; }
 	</style>
+	
 </head>
 <body>
-	<div id="altContent">
-		<h2>This game requires Adobe Flash Player 11.3 (minimum) installed on your browser</h2>
-		<p><a href="http://www.adobe.com/go/getflashplayer">Get Adobe Flash player</a></p>
+	<div id="game-container">
+		<div id="alt-content">
+			<h2>This game requires Adobe Flash Player 11.3 (minimum) installed on your browser</h2>
+			<p><a href="http://www.adobe.com/go/getflashplayer">Get Adobe Flash player</a></p>
+		</div>
 	</div>
-	<h2>They were 11 Clones</h2>
-	<h3>Control</h3>
-	<p><strong>WASD</strong> for movement, <strong>mouse</strong> for aiming &amp; shooting, <strong>Space</strong> for cloning, <strong>Esc:</strong>End game</p>
-	<h3>How to play</h3>
-	<ol>
-		<li>Shoot as many enemies as possible &amp; gain energy bonus</li>
-		<li>Use energy bonus to add a clone of yourself (up to 11 clones at a time!!)</li>
-		<li>Deposit your clone at the deposit point to gain score</li>
-		<li>Repeat</li>
-	</ol>
-	<p>Source code available at <a href="https://github.com/abiyasa/they-were-11-clones">GitHub</a></p>
+	
+	<div id="game-info">
+		<h2>They were 11 Clones</h2>
+		<h3>Control</h3>
+		<p><strong>WASD</strong> for movement, <strong>mouse</strong> for aiming &amp; shooting, <strong>Esc:</strong>End game</p>
+		<h3>How to play</h3>
+		<ol>
+			<li>Shoot as many enemies as possible &amp; get a clone of yourself </li>
+			<li>Up to 11 clones at a time!</li>
+			<li>Deposit your clones at the deposit point to gain score</li>
+			<li>Repeat!</li>
+		</ol>
+		<p>Source code available at <a href="https://github.com/abiyasa/they-were-11-clones">GitHub</a></p>
+	</div>
 </body>
 </html>
