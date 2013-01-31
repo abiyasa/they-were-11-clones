@@ -7,6 +7,8 @@ package sabelas.graphics
 	import starling.display.Sprite;
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
@@ -19,15 +21,26 @@ package sabelas.graphics
 	public class SimpleHUD extends Sprite
 	{
 		private var _background:Quad;
-		private var _textField:TextField;
+
+		private var _labelScore:TextField;
+		private var _labelClone:TextField;
 		
 		private var _gameState:GameState;
+		private var _textureAtlas:TextureAtlas;
+		
+		private var _iconClone:Image;
 		
 		/** Map display for enemies & deposit points */
 		private var _mapDisplay:Sprite;
 		public function get mapDisplay():Sprite { return _mapDisplay; }
 		
-		public function SimpleHUD(gameState:GameState)
+		/**
+		 * Create a simple HUD
+		 *
+		 * @param	gameState The gamestate which will be displayed
+		 * @param	textureAtlas Shared texture atlas which contains additional icon
+		 */
+		public function SimpleHUD(gameState:GameState, textureAtlas:TextureAtlas)
 		{
 			super();
 			
@@ -35,35 +48,63 @@ package sabelas.graphics
 			
 			_background = new Quad(100, 30, 0xffffff);
 			_background.alpha = 0.4;
-			_textField = new TextField(96, 26, '', BitmapFont.MINI, 12, 0x009eef);
-			_textField.x = 82;
-			_textField.y = 2;
-			_textField.hAlign = HAlign.LEFT;
-			_textField.vAlign = VAlign.TOP;
-			
 			addChild(_background);
-			addChild(_textField);
+			
+			// label for score
+			_labelScore = new TextField(400, 100, '', 'Ubuntu', 36, 0x009eef, true);
+			_labelScore.hAlign = HAlign.LEFT;
+			_labelScore.vAlign = VAlign.TOP;
+			_labelScore.x = 90;
+			_labelScore.y = 5;
+			addChild(_labelScore);
 			
 			// init map
 			_mapDisplay = new Sprite();
-			_mapDisplay.x = 2;
-			_mapDisplay.y = 2;
+			_mapDisplay.x = 5;
+			_mapDisplay.y = 5;
 			addChild(_mapDisplay);
 			
-			updateText();
+			// get icon from the texture atlas
+			_textureAtlas = textureAtlas;
+			if (_textureAtlas != null)
+			{
+				var texture:Texture = _textureAtlas.getTexture('icon_clone');
+				if (texture != null)
+				{
+					_iconClone = new Image(texture);
+					_iconClone.x = 400;
+					_iconClone.y = 5;
+					
+					addChild(_iconClone);
+				}
+			}
+			
+			// show label for clone
+			_labelClone = new TextField(100, 100, 'Clone', 'Ubuntu', 36, 0x009eef, true);
+			_labelClone.hAlign = HAlign.LEFT;
+			_labelClone.vAlign = VAlign.TOP;
+			_labelClone.x = 425;
+			_labelClone.y = 5;
+			addChild(_labelClone);
+			
+			updateLabels();
 		}
 		
-		private function updateText():void
+		private function updateLabels():void
 		{
-			var displayString:String = "clones=" + _gameState.numOfClones +
-				" Score=" + _gameState.score +
-				" Energy=" + _gameState.energy;
-			_textField.text = displayString;
+			var scoreString:String = _gameState.score.toString();
+			while (scoreString.length < 6)
+			{
+				scoreString = '0' + scoreString;
+			}
+			_labelScore.text = scoreString;
+			
+			_labelClone.text = 'x' + _gameState.numOfClones;
 		}
 		
 		public function update(time:Number):void
 		{
-			updateText();
+			updateLabels();
 		}
 	}
 

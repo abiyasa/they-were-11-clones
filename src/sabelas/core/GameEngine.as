@@ -39,6 +39,7 @@ package sabelas.core
 	import starling.core.Starling;
 	import starling.events.EventDispatcher;
 	import starling.display.DisplayObjectContainer;
+	import starling.textures.TextureAtlas;
 	
 	/**
 	 * The main game engine which will control the main game context.
@@ -58,6 +59,18 @@ package sabelas.core
 		private var _gameState:GameState;
 		private var _keyPoll:KeyPoll;
 		private var _hud:SimpleHUD;
+		
+		private var _textureAtlas:TextureAtlas;
+		
+		/**
+		 * Texture atlas shared from the play screen
+		 */
+		public function set textureAtlas(value:TextureAtlas):void
+		{
+			_textureAtlas = value;
+		}
+		public function get textureAtlas():TextureAtlas { return _textureAtlas; }
+		
 		
 		/**
 		 * The shared Stage3D context
@@ -132,7 +145,7 @@ package sabelas.core
 		
 		private function initHUD():void
 		{
-			_hud = new SimpleHUD(_gameState);
+			_hud = new SimpleHUD(_gameState, _textureAtlas);
 			_container.addChild(_hud);
 			
 			// TODO reposition & re-scale HUD using _container.stage

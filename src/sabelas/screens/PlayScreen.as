@@ -51,6 +51,7 @@ package sabelas.screens
 				
 			// init game engine
 			_gameEngine = new GameEngine(this);
+			_gameEngine.textureAtlas = _textureAtlas;
 			_gameEngine.init();
 			_gameEngine.addEventListener(GameOverEvent.GAME_OVER, onGameOver);
 			
