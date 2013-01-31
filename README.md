@@ -6,11 +6,10 @@
 * Clone yourself up to 11 clones!
 
 ## Demo
-Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/) (requires Flash PLayer 11.3)
+Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/) (requires Flash Player 11.3)
 
 ## How to play
-* Shoot as many enemies as possible & gain energy bonus
-* Use energy bonus to add a clone of yourself (up to 11 clones at a time!!)
+* Shoot as many enemies as possible & gain a clone of yourself (up to 11 clones at a time!!)
 * Deposit your clone at the deposit point to gain score
 * Repeat
 
@@ -21,5 +20,5 @@ Click [here for online demo!](http://abiyasa.com/lab/away3d/they-were-11-clones/
 * [Adobe Flash Stage3D](http://gaming.adobe.com/)
 * [Starling](http://starling-framework.org)
 * [Away3D 4.0](http://away3d.com/)
-* [Ash Framework](github.com/richardlord/Ash/)
+* [Ash Framework](http://www.ashframework.org/)
 * [FlashDevelop](http://flashdevelop.org) for IDE
