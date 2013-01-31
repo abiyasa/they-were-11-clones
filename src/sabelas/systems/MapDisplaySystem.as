@@ -22,10 +22,13 @@ package sabelas.systems
 	{
 		public static const DEBUG_TAG:String = '[MapDisplaySystem]';
 		
-		public static const MAP_DISPLAY_WIDTH:int = 80;
+		public static const MAP_PADDING:int = 4;
+		public static const MAP_DISPLAY_WIDTH:int = 100;
 		public static const MAP_DISPLAY_HEIGHT:int = 80;
 		public static const MAP_DISPLAY_CENTER_X:int = MAP_DISPLAY_WIDTH / 2;
 		public static const MAP_DISPLAY_CENTER_Y:int = MAP_DISPLAY_HEIGHT / 2;
+		public static const MAP_DISPLAY_USABLE_WIDTH:int = MAP_DISPLAY_WIDTH - MAP_PADDING;
+		public static const MAP_DISPLAY_USABLE_HEIGHT:int = MAP_DISPLAY_HEIGHT - MAP_PADDING;
 		
 		public static const MAP_SCALE:Number = 0.01;
 		
@@ -181,8 +184,8 @@ package sabelas.systems
 					mapPosY = MAP_DISPLAY_CENTER_Y - (mapPosY - heroPos.y) * MAP_SCALE;
 					
 					// hide or show pin if it's outside the map area
-					if ((mapPosX < 0) || (mapPosX > MAP_DISPLAY_WIDTH) || (mapPosY < 0)
-						|| (mapPosY > MAP_DISPLAY_HEIGHT))
+					if ((mapPosX < 0) || (mapPosX > MAP_DISPLAY_USABLE_WIDTH) || (mapPosY < 0)
+						|| (mapPosY > MAP_DISPLAY_USABLE_HEIGHT))
 					{
 						// map point outside the map area
 						mapPintObject.visible = false;

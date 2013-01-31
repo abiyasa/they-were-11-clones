@@ -54,7 +54,7 @@ package sabelas.graphics
 			_labelScore = new TextField(400, 100, '', 'Ubuntu', 36, 0x009eef, true);
 			_labelScore.hAlign = HAlign.LEFT;
 			_labelScore.vAlign = VAlign.TOP;
-			_labelScore.x = 90;
+			_labelScore.x = 110;
 			_labelScore.y = 5;
 			addChild(_labelScore);
 			
